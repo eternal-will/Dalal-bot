@@ -6,6 +6,7 @@ from discord.ext import commands
 import praw
 
 client=commands.Bot(command_prefix = '.')
+client.remove_command("help")
 
 @client.event
 async def on_ready():
@@ -42,7 +43,17 @@ async def nsfw(ctx, subred = "nsfw"):
 
 @client.command()
 async def invite(ctx):
-    em2 = discord.Embed(title = "Bot Invite Link", description = "[Invite Link](https://discord.com/api/oauth2/authorize?client_id=846816510306549770&permissions=388288&scope=bot)")
+    em2 = discord.Embed(title = "Uh oh", description = "This bot is meant for this server only and can't be invited. If you want to have a similar bot in your server then contact **_sshashwat#5784**")
     await ctx.send(embed = em2)
+
+@client.command()
+async def help(ctx, ):
+    em3 = discord.Embed(title = "Available Commands", description = "**Following commands are available currently:**", color=16737536)
+    em3.add_field(name = "nsfw", value = "**Command format:** `.nsfw <subreddit name>`\n• Provides an nsfw post from the mentioned subreddit.\n• __r/nsfw__ is default and is used if no subreddit is provided.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)", inline=False)
+    em3.add_field(name = "ping", value = "**Command format:** `.ping`\n• Shows bot's latency", inline=False)
+    em3.add_field(name = "help", value = "**Command format:** `.help`\n• Provides list of commands and their usage.", inline=False)
+    em3.set_footer(text = "More commands will be added later.")
+    await ctx.send(embed = em3)
+
 
 client.run('ODQ2ODE2NTEwMzA2NTQ5Nzcw.YK1BVQ.3K6hDm0B4b-s8PuVOLk7FOEzdek')
