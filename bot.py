@@ -6,7 +6,9 @@ from discord.ext import commands
 import praw
 import random
 
-client=commands.Bot(command_prefix=commands.when_mentioned_or("."))
+intents = discord.Intents.default()
+intents.members = True
+client=commands.Bot(command_prefix=commands.when_mentioned_or("."), intents = intents)
 client.remove_command("help")
 
 @client.event
@@ -45,6 +47,41 @@ async def nsfw(ctx, subred = "justthejewels"):
             em1.set_image(url = url)
     await ctx.send(embed = em1)
 
+@client.command()
+async def rnsfw(ctx):
+    if not ctx.channel.is_nsfw():
+        em5 = discord.Embed(title = "This is not an NSFW Channel!", description= "This command can only be used in <#846803716149739541> channel.", color=16737536)
+    else:
+        async with ctx.channel.typing():
+            subreddit = reddit.subreddit("nsfw")
+            submission = subreddit.random()
+            name = submission.title
+            url = submission.url
+
+            em5 = discord.Embed(title = name, color=16737536)
+            em5.set_image(url = url)
+    await ctx.send(embed = em5)
+
+@client.command()
+async def hentai(ctx):
+    if not ctx.channel.is_nsfw():
+        em5 = discord.Embed(title = "This is not an NSFW Channel!", description= "This command can only be used in <#846803716149739541> channel.", color=16737536)
+        await ctx.send(embed = em5)
+    else:
+        async with ctx.channel.typing():
+            subreddit = reddit.subreddit("hentai")
+            all_subs = []
+            top = subreddit.hot(limit=50)
+            for submission in top:
+                all_subs.append(submission)
+            random_sub = random.choice(all_subs)
+            url = random_sub.url
+        await ctx.send(url)
+
+@client.event
+async def on_member_join(member):
+    channel = discord.utils.get(member.guild.channels , name="🚩┊swagat-hai")
+    await channel.send(f"Hello {member.mention}, you are now an esteemed member of {member.guild.name} !")
 
 
 @client.command()
@@ -56,6 +93,8 @@ async def invite(ctx):
 async def help(ctx):
     em3 = discord.Embed(title = "Available Commands", description = "Bot Prefix: **.** \n**Following commands are available currently:**", color=16737536)
     em3.add_field(name = "nsfw", value = "**Command format:** `.nsfw <subreddit name>`\n• Provides an nsfw post from the mentioned subreddit.\n• __r/justthejewels__ is default and is used if no subreddit is provided.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)", inline=False)
+    em3.add_field(name = "rnsfw", value = "**Command format:** `.rnsfw`\n• Shows an nsfw post from r/nsfw.\n• For some reasons, `.nsfw` crashes when used for r/nsfw :\ \n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)", inline=False)
+    em3.add_field(name = "rnsfw", value = "**Command format:** `.hentai`\n• Shows an nsfw post from r/hentai.\n• `.nsfw` sometimes shows error when used for r/hentai :\ \n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)", inline=False)
     em3.add_field(name = "ping", value = "**Command format:** `.ping`\n• Shows bot's latency", inline=False)
     em3.add_field(name = "info", value = "**Command format:** `.info`\n• Shows information about bot", inline=False)
     em3.add_field(name = "help", value = "**Command format:** `.help`\n• Provides list of commands and their usage.", inline=False)
