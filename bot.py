@@ -14,6 +14,7 @@ client.remove_command("help")
 @client.event
 async def on_ready():
     print(f'Bot is online!')
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="r/nsfw"))
 
 @client.command()
 async def ping(ctx):
