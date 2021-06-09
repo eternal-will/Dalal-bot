@@ -75,7 +75,7 @@ async def hentai(ctx):
         await ctx.send(url)
 
 @client.command()
-async def boob(ctx):
+async def boob(ctx, pass_context = True, aliases = ['tits', 'tit', 'boobs', 'boobies', 'titties', 'titty', 'tittie']):
     if not ctx.channel.is_nsfw():
         em6 = discord.Embed(title = "This is not an NSFW Channel!", description= "This command can only be used in <#846803716149739541> channel.", color=16737536)
         await ctx.send(embed = em6)
@@ -99,7 +99,7 @@ async def boob(ctx):
                 all_subs.append(submission)
             random_sub = random.choice(all_subs)
             url = random_sub.url
-            msg = f'`This post was sent from`: **r/{subred}** /n {url}' 
+            msg = f'`This post was sent from`: **r/{subred}** \n {url}' 
             await ctx.send(msg)
 
 @client.event
