@@ -11,11 +11,6 @@ intents.members = True
 client=commands.Bot(command_prefix=commands.when_mentioned_or("."), intents = intents)
 client.remove_command("help")
 
-@client.event
-async def on_ready():
-    print(f'Bot is online!')
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="r/nsfw"))
-
 @client.command()
 async def ping(ctx):
     await ctx.send(f'Pong! {round(client.latency * 1000)}ms!')
@@ -79,6 +74,34 @@ async def hentai(ctx):
             url = random_sub.url
         await ctx.send(url)
 
+@client.command()
+async def boob(ctx):
+    if not ctx.channel.is_nsfw():
+        em6 = discord.Embed(title = "This is not an NSFW Channel!", description= "This command can only be used in <#846803716149739541> channel.", color=16737536)
+        await ctx.send(embed = em6)
+    else:
+        async with ctx.channel.typing():
+            #subreddit configuration
+            REDDIT_BOOB_SUBREDDITS = [
+                "boobs",
+                "tittydrop",
+                "burstingout",
+                "bustypetite",
+                "biggerthanyouthought",
+                "2busty2hide",
+                "femalepov",
+            ]
+            subred = random.choice(REDDIT_BOOB_SUBREDDITS)
+            subreddit = reddit.subreddit(subred)
+            all_subs = []
+            top = subreddit.hot(limit=50)
+            for submission in top:
+                all_subs.append(submission)
+            random_sub = random.choice(all_subs)
+            url = random_sub.url
+            msg = f'`This post was sent from`: **r/{subred}** /n {url}' 
+            await ctx.send(msg)
+
 @client.event
 async def on_member_join(member):
     channel = discord.utils.get(member.guild.channels , name="🚩┊swagat-hai")
@@ -107,5 +130,13 @@ async def info(ctx):
     em4 = discord.Embed(title = "Dalal#6970", description ="A discord bot built with love :heart: for **Preksha W Discord Cult**.", color=16737536)
     em4.set_author(name = "Preksha Wandile#0001", url = "https://www.instagram.com/_iampreksha/", icon_url="https://i.imgur.com/WJG7LVfs.png")
     await ctx.send(embed = em4)
+
+@client.event
+async def on_ready():
+    print('Logged in as:')
+    print(client.user.name)
+    print(client.user.id)
+    print('--------------------------------------')
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="r/nsfw"))
 
 client.run('ODQ2ODE2NTEwMzA2NTQ5Nzcw.YK1BVQ.3K6hDm0B4b-s8PuVOLk7FOEzdek')
