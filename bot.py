@@ -15,7 +15,6 @@ client.remove_command("help")
 async def ping(ctx):
     await ctx.send(f'Pong! {round(client.latency * 1000)}ms!')
 
-
 reddit = praw.Reddit(
     client_id = "egV4aKzEA1IYPw",
     client_secret = "yr40rC2zEIlxT9hdNrFpriJGZCnedw",
@@ -106,7 +105,6 @@ async def boob(ctx):
 async def on_member_join(member):
     channel = discord.utils.get(member.guild.channels , name="🚩┊swagat-hai")
     await channel.send(f"Hello {member.mention}, you are now an esteemed member of {member.guild.name} !")
-
 
 @client.command()
 async def invite(ctx):
