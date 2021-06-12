@@ -13,7 +13,7 @@ class Startup(commands.Cog):
         print(self.client.user.name)
         print(self.client.user.id)
         print('--------------------------------------')
-        await self.client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="r/nsfw"))
+        await self.client.change_presence(activity=discord.Game(name=".help"))
 
 def setup(client):
     client.add_cog(Startup(client))

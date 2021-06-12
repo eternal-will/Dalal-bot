@@ -19,10 +19,10 @@ class NSFWSub(commands.Cog):
     async def boob(self, ctx):
         if not ctx.channel.is_nsfw():
             em6 = discord.Embed(
-                    title = "This is not an NSFW Channel!",
-                    description= "This command can only be used in <#846803716149739541> channel.",
-                    color=16737536
-                    )
+                            title = "This is not an NSFW Channel!",
+                            description= "This command can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)",
+                            color=16737536
+                            )
             await ctx.send(embed = em6)
         else:
             async with ctx.channel.typing():
@@ -52,10 +52,10 @@ class NSFWSub(commands.Cog):
 
         if not ctx.channel.is_nsfw():
             em1 =  discord.Embed(
-                    title = "This is not an NSFW Channel!",
-                    description= "This command can only be used in <#846803716149739541> channel.",
-                    color=16737536
-                    )
+                            title = "This is not an NSFW Channel!",
+                            description= "This command can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)",
+                            color=16737536
+                            )
         else:
             async with ctx.channel.typing():
                 subreddit = reddit.subreddit(subred)
@@ -76,10 +76,10 @@ class NSFWSub(commands.Cog):
     async def hentai(self, ctx):
         if not ctx.channel.is_nsfw():
             em5 = discord.Embed(
-                title = "This is not an NSFW Channel!",
-                description= "This command can only be used in <#846803716149739541> channel.",
-                color=16737536
-                )
+                            title = "This is not an NSFW Channel!",
+                            description= "This command can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)",
+                            color=16737536
+                            )
             await ctx.send(embed = em5)
         else:
             async with ctx.channel.typing():
@@ -93,9 +93,13 @@ class NSFWSub(commands.Cog):
             await ctx.send(url)
 
     @commands.command()
-    async def rnsfw(ctx):
+    async def rnsfw(self, ctx):
         if not ctx.channel.is_nsfw():
-            em5 = discord.Embed(title = "This is not an NSFW Channel!", description= "This command can only be used in <#846803716149739541> channel.", color=16737536)
+            em5 = discord.Embed(
+                            title = "This is not an NSFW Channel!",
+                            description= "This command can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)",
+                            color=16737536
+                            )
         else:
             async with ctx.channel.typing():
                 subreddit = reddit.subreddit("nsfw")
