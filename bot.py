@@ -1,7 +1,6 @@
 # bot.py
 import os
 import discord
-from discord import embeds
 from discord.ext import commands
 
 intents = discord.Intents.default()
