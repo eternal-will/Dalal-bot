@@ -12,7 +12,7 @@ class OwnerCommands(commands.Cog):
     async def on_ready(self):
         print("OwnerCommands Is Ready")
 
-    @commands.command()
+    @commands.command(hidden = True)
     @commands.is_owner()
     async def servers(self, ctx):
         activeservers = self.client.guilds
