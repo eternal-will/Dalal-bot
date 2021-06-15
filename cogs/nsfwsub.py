@@ -14,7 +14,7 @@ class NSFWSub(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command()
+    @commands.command(name="boob", aliases = ['tits', 'tit', 'boobs', 'boobies', 'titties', 'titty', 'tittie'])
     async def boob(self, ctx):
         if not ctx.channel.is_nsfw():
             em6 = discord.Embed(
