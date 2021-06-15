@@ -13,7 +13,7 @@ class Startup(commands.Cog):
         print(self.client.user.name)
         print(self.client.user.id)
         print('--------------------------------------')
-        print('List of servers with this bot:')
+        print('List of servers having this bot:')
         activeservers = self.client.guilds
         for guild in activeservers:
             print(guild.name)
