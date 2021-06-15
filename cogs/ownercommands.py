@@ -13,6 +13,7 @@ class OwnerCommands(commands.Cog):
         print("OwnerCommands Is Ready")
 
     @commands.command()
+    @commands.is_owner()
     async def servers(self, ctx):
         activeservers = self.client.guilds
         for guild in activeservers:
