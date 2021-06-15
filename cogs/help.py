@@ -6,6 +6,10 @@ class Help(commands.Cog):
     def __init__(self, client):
         self.client = client
 
+    @commands.Cog.listener()
+    async def on_ready(self):
+        print("HelpCommand Is Ready")
+
     @commands.command()
     async def help(self, ctx):
         em3 = discord.Embed(title = "Available Commands", description = "Bot Prefix: **.** \n**Following commands are available currently:**", color=16737536)

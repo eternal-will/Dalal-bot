@@ -6,6 +6,10 @@ class Basic(commands.Cog):
     def __init__(self, client):
         self.client = client
 
+    @commands.Cog.listener()
+    async def on_ready(self):
+        print("BasicCommands are Ready")
+
     @commands.command()
     async def invite(self, ctx):
         em2 = discord.Embed(title = "Invite Link", description = "**__[Invite Link for the Bot](https://discord.com/api/oauth2/authorize?client_id=846816510306549770&permissions=2751851713&scope=bot)__**", color=16737536)
