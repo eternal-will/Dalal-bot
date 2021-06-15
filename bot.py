@@ -3,8 +3,7 @@ import os
 import discord
 from discord.ext import commands
 
-intents = discord.Intents.default()
-intents.members = True
+intents = discord.Intents.all()
 client=commands.Bot(command_prefix=commands.when_mentioned_or("."), intents = intents)
 client.remove_command("help")
 

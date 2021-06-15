@@ -14,7 +14,7 @@ class OwnerCommands(commands.Cog):
 
     @commands.command()
     async def servers(self, ctx):
-        activeservers = client.guilds
+        activeservers = self.client.guilds
         for guild in activeservers:
             await ctx.send(guild.name)
             print(guild.name)
