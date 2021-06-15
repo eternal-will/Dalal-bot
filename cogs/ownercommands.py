@@ -16,8 +16,7 @@ class OwnerCommands(commands.Cog):
     async def servers(self, ctx):
         activeservers = self.client.guilds
         for guild in activeservers:
-            await ctx.send(f' {guild.name}')
-            print(guild.name)
+            await ctx.send(f'• {guild.name}')
 
 def setup(client):
     client.add_cog(OwnerCommands(client))
