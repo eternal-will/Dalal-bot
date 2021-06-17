@@ -28,7 +28,7 @@ class Basic(commands.Cog):
         ping = (time.monotonic() - before) * 1000
         em2 = discord.Embed(
             title = "Pong! :ping_pong:",
-            description = f"Client Latency: `{int(ping)}ms`",
+            description = f"Client Latency: `{round(self.client.latency * 1000)}ms`",
             color = 16737536
         )
         em2.set_footer(text=f"issued by {ctx.author.name}")
