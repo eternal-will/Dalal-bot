@@ -46,6 +46,7 @@ def restart_bot():
   os.execv(sys.executable, ['python'] + sys.argv)
 
 @client.command(hidden=True)
+@commands.is_owner()
 async def restart(ctx):
   await ctx.send("Restarting bot...")
   restart_bot()
