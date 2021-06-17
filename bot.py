@@ -25,19 +25,17 @@ async def unload(ctx, extension):
 @client.command(hidden = True)
 @commands.is_owner()
 async def reload(ctx, extension):
-    client.unload_extension(f'cogs.{extension}')
-    client.load_extension(f'cogs.{extension}')
-    print(f'successfully reloaded {extension}!')
-    await ctx.send(f'successfully reloaded {extension}!')
-
-@client.command(hidden=True)
-@commands.is_owner()
-async def allreload(ctx):
-    for filename in os.listdir('./cogs'):
-        if filename.endswith('.py'):
-            client.unload_extension(f'cogs.{filename[:-3]}')
-            client.load_extension(f'cogs.{filename[:-3]}')
-            await ctx.send(f'• successfully reloaded `{filename[:-3]}`')
+    if extension == 'all':
+            for filename in os.listdir('./cogs'):
+                if filename.endswith('.py'):
+                    client.unload_extension(f'cogs.{filename[:-3]}')
+                    client.load_extension(f'cogs.{filename[:-3]}')
+                    await ctx.send(f'• successfully reloaded `{filename[:-3]}`')
+    else:
+        client.unload_extension(f'cogs.{extension}')
+        client.load_extension(f'cogs.{extension}')
+        print(f'successfully reloaded {extension}!')
+        await ctx.send(f'successfully reloaded {extension}!')
 
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
