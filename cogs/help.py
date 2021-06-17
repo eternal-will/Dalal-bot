@@ -5,7 +5,8 @@ class Help(commands.Cog):
 
     def __init__(self, client):
         self.client = client
-
+        self.client.remove_command("help")
+        
     @commands.Cog.listener()
     async def on_ready(self):
         print("HelpCommand Is Ready")

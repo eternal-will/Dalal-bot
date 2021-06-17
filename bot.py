@@ -5,7 +5,6 @@ from discord.ext import commands
 
 intents = discord.Intents.all()
 client=commands.Bot(command_prefix=commands.when_mentioned_or("."), intents = intents)
-client.remove_command("help")
 
 @client.command(hidden = True)
 @commands.is_owner()
