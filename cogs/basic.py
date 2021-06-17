@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import time
+import asyncio
 
 class Basic(commands.Cog):
 
@@ -33,6 +34,7 @@ class Basic(commands.Cog):
             color = 16737536
         )
         em2.set_footer(text=f"issued by {ctx.author.name}")
+        await asyncio.sleep(1)
         await message.edit(embed = em2)
 
 def setup(client):
