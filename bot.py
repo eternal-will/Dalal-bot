@@ -1,5 +1,6 @@
 # bot.py
 import os
+import sys
 import discord
 from discord.ext import commands
 
@@ -40,5 +41,13 @@ async def reload(ctx, extension):
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
+
+def restart_bot(): 
+  os.execv(sys.executable, ['python'] + sys.argv)
+
+@client.command(hidden=True)
+async def restart(ctx):
+  await ctx.send("Restarting bot...")
+  restart_bot()
 
 client.run(TOKEN)
