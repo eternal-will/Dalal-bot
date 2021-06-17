@@ -3,6 +3,8 @@ import os
 import discord
 from discord.ext import commands
 
+TOKEN = 'ODQ2ODE2NTEwMzA2NTQ5Nzcw.YK1BVQ.3K6hDm0B4b-s8PuVOLk7FOEzdek'
+
 intents = discord.Intents.all()
 client=commands.Bot(command_prefix=commands.when_mentioned_or("."), intents = intents)
 
@@ -32,4 +34,4 @@ for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
 
-client.run('ODQ2ODE2NTEwMzA2NTQ5Nzcw.YK1BVQ.3K6hDm0B4b-s8PuVOLk7FOEzdek')
+client.run(TOKEN)
