@@ -18,7 +18,7 @@ class Startup(commands.Cog):
         for guild in activeservers:
             print(f"{guild.name} - {guild.id}")
         print('--------------------------------------')
-        await self.client.change_presence(activity=discord.Game(name=".help"))
+        await self.client.change_presence(activity=discord.Game(name=".help | bit.ly/support-dalal"))
 
 def setup(client):
     client.add_cog(Startup(client))
