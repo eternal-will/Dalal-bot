@@ -18,7 +18,7 @@ class OwnerCommands(commands.Cog):
         await ctx.send('**List of servers with this bot:**')
         activeservers = self.client.guilds
         for guild in activeservers:
-            await ctx.send(f'• {guild.name}')
+            await ctx.send(f'• **__{guild.name}__** - `{guild.id}`')
 
 def setup(client):
     client.add_cog(OwnerCommands(client))

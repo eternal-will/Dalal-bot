@@ -16,7 +16,7 @@ class Startup(commands.Cog):
         print('List of servers having this bot:')
         activeservers = self.client.guilds
         for guild in activeservers:
-            print(guild.name)
+            print(guild.name - guild.id)
         print('--------------------------------------')
         await self.client.change_presence(activity=discord.Game(name=".help"))
 
