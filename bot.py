@@ -37,7 +37,7 @@ async def allreload(ctx):
         if filename.endswith('.py'):
             client.unload_extension(f'cogs.{filename[:-3]}')
             client.load_extension(f'cogs.{filename[:-3]}')
-            await ctx.send(f'successfully reloaded all cogs')
+            await ctx.send(f'successfully reloaded {filename[:-3]}')
 
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
