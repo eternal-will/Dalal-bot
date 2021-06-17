@@ -22,7 +22,7 @@ class NSFWSub(commands.Cog):
     async def on_ready(self):
         print("NSFWSub Is Ready")
 
-    @commands.command(name="boob", aliases = ['tits', 'tit', 'boobs', 'boobies', 'titties', 'titty', 'tittie'])
+    @commands.command(name="boob", aliases = ['tits', 'tit', 'boobs', 'boobies', 'titties', 'titty', 'tittie'], description = "Command for titty lovers :wink:. \n• Fetches a post containing boobies.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def boob(self, ctx):
         if not ctx.channel.is_nsfw():
             em6 = discord.Embed(
@@ -34,7 +34,7 @@ class NSFWSub(commands.Cog):
         else:
             async with ctx.channel.typing():
             #subreddit configuration
-                REDDIT_BOOB_SUBREDDITS = [
+                REDDIT_BOOB_SUB = [
                 "boobs",
                 "tittydrop",
                 "burstingout",
@@ -43,7 +43,7 @@ class NSFWSub(commands.Cog):
                 "2busty2hide",
                 "femalepov",
                 ]
-            subred = random.choice(REDDIT_BOOB_SUBREDDITS)
+            subred = random.choice(REDDIT_BOOB_SUB)
             subreddit = reddit.subreddit(subred)
             all_subs = []
             top = subreddit.hot(limit=50)
@@ -54,7 +54,7 @@ class NSFWSub(commands.Cog):
             msg = f'`This post was sent from`: **r/{subred}** \n {url}' 
             await ctx.send(msg)
 
-    @commands.command()
+    @commands.command(name = "nsfw", description = "**Command format:** `.nsfw <subreddit name>`\n• Provides an nsfw post from the mentioned subreddit.\n• __r/justthejewels__ is default and is used if no subreddit is provided.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def nsfw(self, ctx, subred = "justthejewels"):
 
         if not ctx.channel.is_nsfw():
@@ -79,7 +79,7 @@ class NSFWSub(commands.Cog):
             em1.set_image(url = url)
         await ctx.send(embed = em1)
 
-    @commands.command()
+    @commands.command(name = "hentai", description = "**Command format:** `.hentai`\n• Shows an nsfw post from r/hentai.\n• `.nsfw` sometimes shows error when used for r/hentai :\ \n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def hentai(self, ctx):
         if not ctx.channel.is_nsfw():
             em5 = discord.Embed(
@@ -99,7 +99,7 @@ class NSFWSub(commands.Cog):
             url = random_sub.url
             await ctx.send(url)
 
-    @commands.command()
+    @commands.command(name = "rnsfw", description = "**Command format:** `.rnsfw`\n• Shows an nsfw post from r/nsfw.\n• For some reasons, `.nsfw` crashes when used for r/nsfw :\ \n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def rnsfw(self, ctx):
         if not ctx.channel.is_nsfw():
             em5 = discord.Embed(
@@ -117,6 +117,38 @@ class NSFWSub(commands.Cog):
                 em5 = discord.Embed(title = name, color=16737536)
                 em5.set_image(url = url)
         await ctx.send(embed = em5)
+
+    @commands.command(name= "malenudes", aliases = ['dick', 'male', 'nudemale', 'nudemales', 'malenude', 'penis', 'cock', 'boy', 'boys', 'nakedboy', 'nakedmales', 'nakedmale'], description = "**Command format:** `.malenudes`• Why shud boys have all the fun? <:catwink:855150695597604875>\n• Displays a post containing **__Male Nudes__**\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
+    async def malenudes(self, ctx):
+        if not ctx.channel.is_nsfw():
+            em5 = discord.Embed(
+                            title = "This is not an NSFW Channel!",
+                            description= "This command can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)",
+                            color=16737536
+                            )
+            await ctx.send(embed = em5)
+        else:
+            async with ctx.channel.typing():
+                #subreddit configuration
+                REDDIT_MN_SUB = [
+                    "DadsGoneWild",
+                    "Cunnilingus",
+                    "BHMGoneWild",
+                    "NormalNudes",
+                    "ladybonersgw",
+                    "FullFrontalMaleNudity",
+                    "ondww"
+                ]
+            subred = random.choice(REDDIT_MN_SUB)
+            subreddit = reddit.subreddit(subred)
+            all_subs = []
+            top = subreddit.hot(limit=50)
+            for submission in top:
+                all_subs.append(submission)
+            random_sub = random.choice(all_subs)
+            url = random_sub.url
+            msg = f'`This post was sent from`: **r/{subred}** \n {url}' 
+            await ctx.send(msg)
 
 
 def setup(client):

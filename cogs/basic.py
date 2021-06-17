@@ -22,7 +22,7 @@ class Basic(commands.Cog):
         before = time.monotonic()
         em = discord.Embed(
             title = "Pinging...",
-            description = "<a:CH_IconTyping:854905456551657513>",
+            description = "<a:atyping:854905456551657513>",
             color = 16737536
         )
         em.set_author(name = 'Checking bot latency...', icon_url = 'https://cdn.discordapp.com/emojis/854906394453344256.gif')
