@@ -10,6 +10,7 @@ class ShutDown(commands.Cog):
     @commands.is_owner()
     async def shutdown(self, ctx):
         await ctx.send('shutting down <a:aloading:854906394453344256>')
+        print('shutting the bot down, command recieved from discord...')
         await ctx.bot.logout()
 
 def setup(client):
