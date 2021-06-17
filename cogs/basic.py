@@ -24,7 +24,7 @@ class Basic(commands.Cog):
             description = "<a:CH_IconTyping:854905456551657513>",
             color = 16737536
         )
-        em.set_thumbnail(url = 'https://cdn.discordapp.com/emojis/854906394453344256.gif')
+        em.set_author(name = 'Checking bot latency...', icon_url = 'https://cdn.discordapp.com/emojis/854906394453344256.gif')
         message = await ctx.send(embed=em)
         ping = (time.monotonic() - before) * 1000
         em2 = discord.Embed(
