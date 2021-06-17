@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-class ShutDown(commands.Cog):
+class Power(commands.Cog):
 
     def __init__(self, client):
         self.client = client
@@ -14,4 +14,4 @@ class ShutDown(commands.Cog):
         await ctx.bot.logout()
 
 def setup(client):
-    client.add_cog(ShutDown(client))
+    client.add_cog(Power(client))
