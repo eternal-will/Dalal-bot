@@ -34,7 +34,7 @@ class Basic(commands.Cog):
             color = 16737536
         )
         em2.set_footer(text=f"issued by {ctx.author.name}")
-        await asyncio.sleep(1)
+        await asyncio.sleep(0.5)
         await message.edit(embed = em2)
 
 def setup(client):
