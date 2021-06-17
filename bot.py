@@ -10,12 +10,14 @@ client=commands.Bot(command_prefix=commands.when_mentioned_or("."), intents = in
 @commands.is_owner()
 async def load(ctx, extension):
     client.load_extension(f'cogs.{extension}')
+    print(f'successfully loaded {extension}!')
     await ctx.send(f'successfully loaded {extension}!')
 
 @client.command(hidden = True)
 @commands.is_owner()
 async def unload(ctx, extension):
     client.unload_extension(f'cogs.{extension}')
+    print(f'successfully unloaded {extension}!')
     await ctx.send(f'successfully unloaded {extension}!')
 
 @client.command(hidden = True)
@@ -23,6 +25,7 @@ async def unload(ctx, extension):
 async def reload(ctx, extension):
     client.unload_extension(f'cogs.{extension}')
     client.load_extension(f'cogs.{extension}')
+    print(f'successfully reloaded {extension}!')
     await ctx.send(f'successfully reloaded {extension}!')
 
 for filename in os.listdir('./cogs'):
