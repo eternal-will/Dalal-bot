@@ -26,7 +26,7 @@ class Help(commands.Cog):
         em.add_field(name = "ping", value = "**Command format:** `.ping`\n• Shows bot's latency", inline=False)
         em.add_field(name = "invite", value = "**Command format:** `.invite`\n• Provides **__[Invite Link for the Bot](https://discord.com/api/oauth2/authorize?client_id=846816510306549770&permissions=2751851713&scope=bot)__**", inline=False)
         em.add_field(name = "help", value = "**Command format:** `.help`\n• Provides list of commands and their usage.", inline=False)
-        em.add_field(name = "support", value = "**Command format:** `.help`\n• Provides **__[Support Server Link](https://bit.ly/support-dalal) :__**.", inline=False)
+        em.add_field(name = "support", value = "**Command format:** `.help`\n• Provides **__[Support Server Link](https://bit.ly/support-dalal)__**.", inline=False)
         em.set_footer(text = "For more help, join support server...")
         await ctx.send(embed = em)
 
