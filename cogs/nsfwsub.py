@@ -1,11 +1,15 @@
+import os
 import discord
 from discord.ext import commands
+from dotenv import load_dotenv
 import random
 import praw
 
+load_dotenv('.env')
+
 reddit = praw.Reddit(
-    client_id = "egV4aKzEA1IYPw",
-    client_secret = "yr40rC2zEIlxT9hdNrFpriJGZCnedw",
+    client_id = os.getenv('client_id'),
+    client_secret = os.getenv('client_secret'),
     user_agent = "pythonPraw"
 )
 
