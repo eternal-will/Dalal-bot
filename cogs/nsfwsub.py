@@ -55,7 +55,7 @@ class NSFWSub(commands.Cog):
             await ctx.send(msg)
 
     @commands.command(name = "nsfw", description = "**Command format:** `.nsfw <subreddit name>`\n• Provides an nsfw post from the mentioned subreddit.\n• __r/justthejewels__ is default and is used if no subreddit is provided.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
-    async def nsfw(self, ctx, subred = "justthejewels"):
+    async def nsfw(self, ctx, subred = "nsfw"):
 
         if not ctx.channel.is_nsfw():
             em1 =  discord.Embed(
@@ -75,7 +75,7 @@ class NSFWSub(commands.Cog):
             url = random_sub.url
 
             em1 = discord.Embed(title = name, color=16737536)
-            em1.set_footer(text="Command usage: .nsfw <subreddit_name>, r/justthejewels is default.")
+            em1.set_footer(text=f"This post was shown from: r/{subred}.")
             em1.set_image(url = url)
         await ctx.send(embed = em1)
 
@@ -118,7 +118,7 @@ class NSFWSub(commands.Cog):
                 em5.set_image(url = url)
         await ctx.send(embed = em5)
 
-    @commands.command(name= "malenudes", aliases = ['dick', 'male', 'nudemale', 'nudemales', 'malenude', 'penis', 'cock', 'boy', 'boys', 'nakedboy', 'nakedmales', 'nakedmale'], description = "**Command format:** `.malenudes`• Why shud boys have all the fun? <:catwink:855150695597604875>\n• Displays a post containing **__Male Nudes__**\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
+    @commands.command(name= "malenudes", aliases = ['dick', 'male', 'nudemale', 'nudemales', 'malenude', 'penis', 'cock', 'boy', 'boys', 'nakedboy', 'nakedmales', 'nakedmale'], description = "**Command format:** `.malenudes`• Why shud boys have all the fun? <a:awink_thumbsup:855303753011691520>\n• Displays a post containing **__Male Nudes__**\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def malenudes(self, ctx):
         if not ctx.channel.is_nsfw():
             em5 = discord.Embed(
