@@ -75,7 +75,7 @@ class NSFWSub(commands.Cog):
             url = random_sub.url
 
             em1 = discord.Embed(title = name, color=16737536)
-            em1.set_footer(text=f"This post was shown from: r/{subred}.")
+            em1.set_footer(text=f"This post was sent from: r/{subred}.")
             em1.set_image(url = url)
         await ctx.send(embed = em1)
 
