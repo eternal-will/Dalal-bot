@@ -99,25 +99,6 @@ class NSFWSub(commands.Cog):
             url = random_sub.url
             await ctx.send(url)
 
-    @commands.command(name = "rnsfw", description = "**Command format:** `.rnsfw`\n• Shows an nsfw post from r/nsfw.\n• For some reasons, `.nsfw` crashes when used for r/nsfw :\ \n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
-    async def rnsfw(self, ctx):
-        if not ctx.channel.is_nsfw():
-            em5 = discord.Embed(
-                            title = "This is not an NSFW Channel!",
-                            description= "This command can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)",
-                            color=16737536
-                            )
-        else:
-            async with ctx.channel.typing():
-                subreddit = reddit.subreddit("nsfw")
-                submission = subreddit.random()
-                name = submission.title
-                url = submission.url
-
-                em5 = discord.Embed(title = name, color=16737536)
-                em5.set_image(url = url)
-        await ctx.send(embed = em5)
-
     @commands.command(name= "malenudes", aliases = ['dick', 'male', 'nudemale', 'nudemales', 'malenude', 'penis', 'cock', 'boy', 'boys', 'nakedboy', 'nakedmales', 'nakedmale'], description = "**Command format:** `.malenudes`• Why shud boys have all the fun? <a:awink_thumbsup:855303753011691520>\n• Displays a post containing **__Male Nudes__**\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def malenudes(self, ctx):
         if not ctx.channel.is_nsfw():
