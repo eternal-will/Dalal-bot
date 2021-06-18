@@ -56,20 +56,17 @@ class NSFWSub(commands.Cog):
 
     @commands.command(name = "nsfw", description = "**Command format:** `.nsfw <subreddit name>`\n• Provides an nsfw post from the mentioned subreddit.\n• __r/justthejewels__ is default and is used if no subreddit is provided.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def nsfw(self, ctx, subred = "nsfw"):
-
-        if not ctx.channel.is_nsfw():
-            em =  discord.Embed(
-                            title = "This is not an NSFW Channel!",
-                            description= "This command can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)",
-                            color=16737536
-                            )
-            await ctx.send(embed = em)
+        if subred == 'sshashwat' or 'shashwat' or '_sshashwat' or 'shswt' or 'susuwant':
+            url1 = 'https://imgur.com/a/e9RlA8c'
+            msg = f"Looking for **Shashwat's** nudes?\n`Rather have some Jawline pics <a:awink_thumbsup:855303753011691520>`\n{url1}"
+            await ctx.send(msg)
         else:
-            if subred == ['sshashwat', '_sshashwat', 'shashwat']:
-                url1 = 'https://imgur.com/a/k3fTVfV'
-                url2 = 'https://imgur.com/a/I06014a'
-                msg = f"Looking for Shashwat's nudes?\nHave some Jawline pics\n{url1}\n{url2}"
-                await ctx.send(msg)
+            if not ctx.channel.is_nsfw():
+                em1 =  discord.Embed(
+                                title = "This is not an NSFW Channel!",
+                                description= "This command can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)",
+                                color=16737536
+                                )
             else:
                 async with ctx.channel.typing():
                     subreddit = reddit.subreddit(subred)
@@ -84,7 +81,7 @@ class NSFWSub(commands.Cog):
                 em1 = discord.Embed(title = name, color=16737536)
                 em1.set_footer(text=f"This post was sent from: r/{subred}.")
                 em1.set_image(url = url)
-                await ctx.send(embed = em1)
+            await ctx.send(embed = em1)
 
     @commands.command(name = "hentai", description = "**Command format:** `.hentai`\n• Shows an nsfw post from r/hentai.\n• `.nsfw` sometimes shows error when used for r/hentai :\ \n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def hentai(self, ctx):
