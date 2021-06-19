@@ -19,7 +19,6 @@ class Basic(commands.Cog):
 
     @commands.command()
     async def ping(self, ctx):
-        before = time.monotonic()
         em = discord.Embed(
             title = "Pinging...",
             description = "<a:atyping:854905456551657513>",
@@ -27,10 +26,9 @@ class Basic(commands.Cog):
         )
         em.set_author(name = 'Checking bot latency...', icon_url = 'https://cdn.discordapp.com/emojis/854906394453344256.gif')
         message = await ctx.send(embed=em)
-        ping = (time.monotonic() - before) * 1000
         em2 = discord.Embed(
             title = "Pong! :ping_pong:",
-            description = f"Client Latency: `{int(ping)}ms`",
+            description = f"Client Latency: `{round(self.client.latency * 1000)}ms`",
             color = 16737536
         )
         em2.set_footer(text=f"issued by {ctx.author.name}")

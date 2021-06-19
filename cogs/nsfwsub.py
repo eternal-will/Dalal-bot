@@ -53,9 +53,9 @@ class NSFWSub(commands.Cog):
             url = random_sub.url
             msg = f'`This post was sent from`: **r/{subred}** \n {url}' 
             await ctx.send(msg)
-
-    @commands.command(name = "nsfw", description = "**Command format:** `.nsfw <subreddit name>`\n• Provides an nsfw post from the mentioned subreddit.\n• __r/justthejewels__ is default and is used if no subreddit is provided.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
-    async def nsfw(self, ctx, subred = "nsfw"):
+    default_sub = 'sfwnudes'
+    @commands.command(name = "nsfw", description = f"**Command format:** `.nsfw <subreddit name>`\n• Provides an nsfw post from the mentioned subreddit.\n• __r/{default_sub}__ is default and is used if no subreddit is provided.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
+    async def nsfw(self, ctx, subred = f"{default_sub}"):
         if subred == 'sshashwat' or subred == 'shswt' or subred == 'shashwat' or subred == '_sshashwat' or subred == 'susuwant':
             url1 = 'https://i.imgur.com/OpRMyR5.jpg'
             msg = f"Looking for **Shashwat's** nudes?\n`Rather have some Jawline pics` <a:awink_thumbsup:855303753011691520>"
@@ -89,6 +89,16 @@ class NSFWSub(commands.Cog):
                 em1.set_footer(text=f"This post was sent from: r/{subred}.")
                 em1.set_image(url = url)
                 await ctx.send(embed = em1)
+
+    @nsfw.error
+    async def nsfw_error(self, ctx, error):
+        if isinstance(error, commands.CommandInvokeError):
+            channel = self.client.get_channel(855092929928364032)
+            await channel.send(f'nsfw_error, {error}')
+            await ctx.send('Failed to find such subreddit.')
+            raise error
+        else:
+            raise error
 
     @commands.command(name = "hentai", description = "**Command format:** `.hentai`\n• Shows an nsfw post from r/hentai.\n• `.nsfw` sometimes shows error when used for r/hentai :\ \n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def hentai(self, ctx):

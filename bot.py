@@ -44,4 +44,19 @@ for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
 
+@client.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.CommandNotFound):
+        em = discord.Embed(
+            title = '',
+            description = 'No such command found :(',
+            color = 16737536
+        )
+        channel = client.get_channel(855092772242194482)
+        await channel.send(error)
+        await ctx.send(embed=em)
+        raise error
+    else:
+        raise error
+
 client.run(os.getenv('TOKEN'))
