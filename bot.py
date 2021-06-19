@@ -27,7 +27,7 @@ async def unload(ctx, extension):
 
 @client.command(hidden = True)
 @commands.is_owner()
-async def reload(ctx, extension):
+async def reload(ctx, extension='all'):
     if extension == 'all':
             for filename in os.listdir('./cogs'):
                 if filename.endswith('.py'):
