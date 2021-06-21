@@ -22,7 +22,7 @@ class NSFWSub(commands.Cog):
     async def on_ready(self):
         print("NSFWSub Is Ready")
 
-    @commands.command(name="boob", aliases = ['tits', 'tit', 'boobs', 'boobies', 'titties', 'titty', 'tittie'], description = "Command for titty lovers :wink:. \n• Fetches a post containing boobies.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
+    @commands.command(name="boob", aliases = ['tits', 'tit', 'boobs', 'boobies', 'boobie', 'titties', 'titty', 'tittie'], description = "Command for titty lovers :wink:. \n• Fetches a post containing boobies.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def boob(self, ctx):
         if not ctx.channel.is_nsfw():
             em6 = discord.Embed(
