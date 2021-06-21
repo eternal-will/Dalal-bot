@@ -171,6 +171,45 @@ class NSFWSub(commands.Cog):
             msg = f'`This post was sent from`: **r/{subred}** \n {url}' 
             await ctx.send(msg)
 
-
+    @commands.command(name="ass", aliases = ['butt', 'booty',], description = "Command for booty lovers :peach:. \n• Fetches a post containing ass.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
+    async def ass(self, ctx):
+        if not ctx.channel.is_nsfw():
+            em6 = discord.Embed(
+                            title = "This is not an NSFW Channel!",
+                            description= "This command can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)",
+                            color=16737536
+                            )
+            await ctx.send(embed = em6)
+        else:
+            async with ctx.channel.typing():
+            #subreddit configuration
+                REDDIT_ASS_SUB = [
+                "AssOnTheGlass",
+                "BoltedOnBooty",
+                "ButtsAndBareFeet",
+                "HighResASS",
+                "HungryButts",
+                "LoveToWatchYouLeave",
+                "SpreadEm",
+                "TheUnderbun",
+                "Tushy",
+                "Underbun",
+                "ass",
+                "assgifs",
+                "booty",
+                "pawg",
+                "twerking"
+                ]
+            subred = random.choice(REDDIT_ASS_SUB)
+            subreddit = reddit.subreddit(subred)
+            all_subs = []
+            top = subreddit.hot(limit=50)
+            for submission in top:
+                all_subs.append(submission)
+            random_sub = random.choice(all_subs)
+            url = random_sub.url
+            msg = f'`This post was sent from`: **r/{subred}** \n {url}' 
+            await ctx.send(msg)
+            
 def setup(client):
     client.add_cog(NSFWSub(client))
