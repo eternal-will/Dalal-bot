@@ -85,8 +85,12 @@ class NSFWSub(commands.Cog):
                 name = random_sub.title
                 url = random_sub.url
 
-                em1 = discord.Embed(title = name, color=16737536)
-                em1.set_footer(text=f"This post was sent from: r/{subred}.")
+                em1 = discord.Embed(
+                    title = name,
+                    description = f"`This post was sent from:` __r/{subred}__.",
+                    color=16737536
+                )
+                em1.set_footer(text= "Command usage: .nsfw <subreddit_name>")
                 em1.set_image(url = url)
                 await ctx.send(embed = em1)
 
