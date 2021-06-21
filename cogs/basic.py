@@ -15,7 +15,7 @@ class Basic(commands.Cog):
     @commands.command()
     async def invite(self, ctx):
         em3 = discord.Embed(title = "Invite Link", description = "**__[Invite Link for the Bot](https://discord.com/api/oauth2/authorize?client_id=846816510306549770&permissions=2751851713&scope=bot)__**", color=16737536)
-        await ctx.send(embed = em3)
+        await ctx.reply(embed = em3)
 
     @commands.command()
     async def ping(self, ctx):
@@ -25,7 +25,7 @@ class Basic(commands.Cog):
             color = 16737536
         )
         em.set_author(name = 'Checking bot latency...', icon_url = 'https://cdn.discordapp.com/emojis/854906394453344256.gif')
-        message = await ctx.send(embed=em)
+        message = await ctx.reply(embed=em)
         em2 = discord.Embed(
             title = "Pong! :ping_pong:",
             description = f"Client Latency: `{round(self.client.latency * 1000)}ms`",

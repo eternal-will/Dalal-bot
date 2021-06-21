@@ -32,7 +32,7 @@ class Help(commands.Cog):
         em.add_field(name = "help", value = "**Command format:** `.help`\n• Provides list of commands and their usage.", inline=False)
         em.add_field(name = "support", value = "**Command format:** `.support`\n• Provides **__[Support Server Link](https://bit.ly/support-dalal)__**.", inline=False)
         em.set_footer(text = "For more help, join support server...")
-        await ctx.send(embed = em)
+        await ctx.reply(embed = em)
 
 def setup(client):
     client.add_cog(Help(client))
