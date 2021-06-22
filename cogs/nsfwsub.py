@@ -186,7 +186,7 @@ class NSFWSub(commands.Cog):
             msg = f'`This post was sent from`: **r/{subred}** \n {url}' 
             await ctx.reply(msg, mention_author=False)
 
-    @commands.command(name="ass", aliases = ['butt', 'booty',], description = "Command for booty lovers :peach:. \n• Fetches a post containing ass.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
+    @commands.command(name="ass", aliases = ['butt', 'booty'], description = "Command for booty lovers :peach:. \n• Fetches a post containing ass.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def ass(self, ctx):
         if not ctx.channel.is_nsfw():
             em6 = discord.Embed(
