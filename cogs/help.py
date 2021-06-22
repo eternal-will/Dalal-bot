@@ -1,38 +1,102 @@
-import discord
 from discord.ext import commands
 
-class Help(commands.Cog):
+from utils.util import Pag
 
+class Help(commands.Cog, name="Help command"):
     def __init__(self, client):
         self.client = client
         self.client.remove_command("help")
-        
+        self.cmds_per_page = 5
+
+    def get_command_signature(self, command: commands.Command, ctx: commands.Context):
+        aliases = "|".join(command.aliases)
+        cmd_invoke = f"[{command.name}|{aliases}]" if command.aliases else command.name
+
+        full_invoke = command.qualified_name.replace(command.name, "")
+
+        signature = f"{ctx.prefix}{full_invoke}{cmd_invoke} {command.signature}"
+        return signature
+
+    async def return_filtered_commands(self, walkable, ctx):
+        filtered = []
+
+        for c in walkable.walk_commands():
+            try:
+                if c.hidden:
+                    continue
+
+                elif c.parent:
+                    continue
+
+                await c.can_run(ctx)
+                filtered.append(c)
+            except commands.CommandError:
+                continue
+
+        return self.return_sorted_commands(filtered)
+
+    def return_sorted_commands(self, commandList):
+        return sorted(commandList, key=lambda x: x.name)
+
+    async def setup_help_pag(self, ctx, entity=None, title=None):
+        entity = entity or self.client
+        title = title or self.client.description
+
+        pages = []
+
+        if isinstance(entity, commands.Command):
+            filtered_commands = (
+                list(set(entity.all_commands.values()))
+                if hasattr(entity, "all_commands")
+                else []
+            )
+            filtered_commands.insert(0, entity)
+
+        else:
+            filtered_commands = await self.return_filtered_commands(entity, ctx)
+
+        for i in range(0, len(filtered_commands), self.cmds_per_page):
+            next_commands = filtered_commands[i : i + self.cmds_per_page]
+            commands_entry = ""
+
+            for cmd in next_commands:
+                desc = cmd.short_doc or cmd.description
+                signature = self.get_command_signature(cmd, ctx)
+                subcommand = "Has subcommands" if hasattr(cmd, "all_commands") else ""
+
+                commands_entry += (
+                    f"• **__{cmd.name}__**\n```\n{signature}\n```\n{desc}\n"
+                    if isinstance(entity, commands.Command)
+                    else f"• **__{cmd.name}__**\n{desc}\n    {subcommand}\n"
+                )
+            pages.append(commands_entry)
+
+        await Pag(title=title, color=0xCE2029, entries=pages, length=1).start(ctx)
+
     @commands.Cog.listener()
     async def on_ready(self):
-        print("HelpCommand Is Ready")
+        print(f"{self.__class__.__name__} is ready")
 
-    @commands.command()
-    async def support(self, ctx):
-        em2 = discord.Embed(title = "Join Support Server", description = "**__[Server Link](https://bit.ly/support-dalal) :__** https://bit.ly/support-dalal")
-        em2.set_footer(text = "use .help to know about commands and their usage.")
-        await ctx.reply(embed = em2)
-    
-    @commands.command()
-    async def help(self, ctx):
-        default_sub = 'sfwnudes'
-        em = discord.Embed(title = "Available Commands", description = "**__[Support Server Link](https://bit.ly/support-dalal) :__** https://bit.ly/support-dalal \nBot Prefix: **.** \n**Following commands are available currently:**", color=16737536)
-        em.add_field(name = "nsfw", value = f"**Command format:** `.nsfw <subreddit name>`\n• Provides an nsfw post from the mentioned subreddit.\n• __r/{default_sub}__ is default and is used if no subreddit is provided.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)", inline=False)
-        em.add_field(name = "rnsfw", value = "**Command format:** `.rnsfw`\n• Shows an nsfw post from r/nsfw.\n• For some reasons, `.nsfw` crashes when used for r/nsfw :\ \n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)", inline=False)
-        em.add_field(name = "boob", value = "**Command format:** `.boob` \n**Aliases:** `.boobs`, `.boobies`, `.tit`, `.tits`, `.titty`, `.tittie` & `.titties` \n• Command for titty lovers :wink:. \n• Fetches a post having boobies.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)", inline=False)
-        em.add_field(name= "malenudes", value = "**Command format:** `.malenudes`\n**Aliases:** `.nudemale`, `.nudemales`, `.malenude`, `.nakedmales`, `.nakedmale`\n• Why shud boys have all the fun? <a:awink_thumbsup:855303753011691520>\n• Displays a post containing **__Male Nudes__**\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)", inline=False)
-        em.add_field(name="ass", value = "**Command format:** `.ass`\n**Aliases:** `.butt`, `.booty`\n• Command for booty lovers :peach:. \n• Fetches a post having ass.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)", inline=False)
-        em.add_field(name = "hentai", value = "**Command format:** `.hentai`\n• Shows an nsfw post from r/hentai.\n• `.nsfw` sometimes shows error when used for r/hentai :\ \n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)", inline=False)
-        em.add_field(name = "ping", value = "**Command format:** `.ping`\n• Shows bot's latency", inline=False)
-        em.add_field(name = "invite", value = "**Command format:** `.invite`\n• Provides **__[Invite Link for the Bot](https://discord.com/api/oauth2/authorize?client_id=846816510306549770&permissions=2751851713&scope=bot)__**", inline=False)
-        em.add_field(name = "help", value = "**Command format:** `.help`\n• Provides list of commands and their usage.", inline=False)
-        em.add_field(name = "support", value = "**Command format:** `.support`\n• Provides **__[Support Server Link](https://bit.ly/support-dalal)__**.", inline=False)
-        em.set_footer(text = "For more help, join support server...")
-        await ctx.reply(embed = em)
+    @commands.command(
+        name="help", aliases=["h", "commands"], description="Provides list of commands and their usage!"
+    )
+    async def help_command(self, ctx, *, entity=None):
+        if not entity:
+            await self.setup_help_pag(ctx)
 
-def setup(client):
-    client.add_cog(Help(client))
+        else:
+            cog = self.client.get_cog(entity)
+            if cog:
+                await self.setup_help_pag(ctx, cog, f"{cog.qualified_name}'s commands")
+
+            else:
+                command = self.client.get_command(entity)
+                if command:
+                    await self.setup_help_pag(ctx, command, command.name)
+
+                else:
+                    await ctx.send("Entity not found.")
+
+
+def setup(bot):
+    bot.add_cog(Help(bot))

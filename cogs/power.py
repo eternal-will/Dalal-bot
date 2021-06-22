@@ -10,7 +10,7 @@ class Power(commands.Cog):
     async def on_ready(self):
         print("Power comms is Ready")
 
-    @commands.command(aliases = ['sd'])
+    @commands.command(aliases = ['sd'], hidden=True)
     @commands.is_owner()
     async def shutdown(self, ctx):
         await ctx.send('shutting down <a:aloading:854906394453344256>')
