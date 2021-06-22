@@ -15,7 +15,7 @@ class Help(commands.Cog):
     async def support(self, ctx):
         em2 = discord.Embed(title = "Join Support Server", description = "**__[Server Link](https://bit.ly/support-dalal) :__** https://bit.ly/support-dalal")
         em2.set_footer(text = "use .help to know about commands and their usage.")
-        await ctx.send(embed = em2)
+        await ctx.reply(embed = em2)
     
     @commands.command()
     async def help(self, ctx):

@@ -16,14 +16,14 @@ client=commands.Bot(command_prefix=commands.when_mentioned_or(f"{prefix}"), inte
 async def load(ctx, extension):
     client.load_extension(f'cogs.{extension}')
     print(f'successfully loaded {extension}!')
-    await ctx.reply(f'successfully loaded `{extension}`!')
+    await ctx.reply(f'successfully loaded `{extension}`!', mention_author=False)
 
 @client.command(hidden = True)
 @commands.is_owner()
 async def unload(ctx, extension):
     client.unload_extension(f'cogs.{extension}')
     print(f'successfully unloaded {extension}!')
-    await ctx.reply(f'successfully unloaded `{extension}`!')
+    await ctx.reply(f'successfully unloaded `{extension}`!', mention_author=False)
 
 @client.command(hidden = True)
 @commands.is_owner()
@@ -33,12 +33,12 @@ async def reload(ctx, extension='all'):
                 if filename.endswith('.py'):
                     client.unload_extension(f'cogs.{filename[:-3]}')
                     client.load_extension(f'cogs.{filename[:-3]}')
-                    await ctx.reply(f'• successfully reloaded `{filename[:-3]}`')
+                    await ctx.send(f'• successfully reloaded `{filename[:-3]}`')
     else:
         client.unload_extension(f'cogs.{extension}')
         client.load_extension(f'cogs.{extension}')
         print(f'successfully reloaded {extension}!')
-        await ctx.reply(f'successfully reloaded `{extension}`!')
+        await ctx.reply(f'successfully reloaded `{extension}`!', mention_author=False)
 
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
@@ -48,13 +48,12 @@ for filename in os.listdir('./cogs'):
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         em = discord.Embed(
-            title = '',
             description = 'No such command found :(',
             color = 16737536
         )
         channel = client.get_channel(855092772242194482)
         await channel.send(error)
-        await ctx.reply(embed=em)
+        await ctx.reply(embed=em, mention_author=False)
         raise error
     else:
         channel = client.get_channel(855092929928364032)

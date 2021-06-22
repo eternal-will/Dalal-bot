@@ -30,7 +30,7 @@ class NSFWSub(commands.Cog):
                             description= "This command can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)",
                             color=16737536
                             )
-            await ctx.reply(embed = em6)
+            await ctx.reply(embed = em6, mention_author=False)
         else:
             async with ctx.channel.typing():
             #subreddit configuration
@@ -52,10 +52,10 @@ class NSFWSub(commands.Cog):
             random_sub = random.choice(all_subs)
             url = random_sub.url
             msg = f'`This post was sent from`: **r/{subred}** \n {url}' 
-            await ctx.reply(msg)
-    default_sub = 'sfwnudes'
-    @commands.command(name = "nsfw", description = f"**Command format:** `.nsfw <subreddit name>`\n• Provides an nsfw post from the mentioned subreddit.\n• __r/{default_sub}__ is default and is used if no subreddit is provided.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
-    async def nsfw(self, ctx, subred = f"{default_sub}"):
+            await ctx.reply(msg, mention_author=False)
+
+    @commands.command(name = "nsfw", description = f"**Command format:** `.nsfw <subreddit name>`\n• Provides an nsfw post from the mentioned subreddit.\n• __r/sfwnudes__ is default and is used if no subreddit is provided.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
+    async def nsfw(self, ctx, subred = f"sfwnudes"):
         if subred == 'sshashwat' or subred == 'shswt' or subred == 'shashwat' or subred == '_sshashwat' or subred == 'susuwant':
             url1 = 'https://i.imgur.com/OpRMyR5.jpg'
             msg = f"Looking for **Shashwat's** nudes?\n`Rather have some Jawline pics` <a:awink_thumbsup:855303753011691520>"
@@ -65,7 +65,7 @@ class NSFWSub(commands.Cog):
                 color=16737536
             )
             em2.set_image(url = url1)
-            await ctx.reply(embed = em2)
+            await ctx.reply(embed = em2, mention_author=False)
         else:
             if not ctx.channel.is_nsfw():
                 em =  discord.Embed(
@@ -73,7 +73,7 @@ class NSFWSub(commands.Cog):
                                 description= "This command can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)",
                                 color=16737536
                                 )
-                await ctx.reply(embed = em)
+                await ctx.reply(embed = em, mention_author=False)
             else:
                 async with ctx.channel.typing():
                     subreddit = reddit.subreddit(subred)
@@ -92,16 +92,18 @@ class NSFWSub(commands.Cog):
                 )
                 em1.set_footer(text= "Command usage: .nsfw <subreddit_name>")
                 em1.set_image(url = url)
-                await ctx.reply(embed = em1)
+                await ctx.reply(embed = em1, mention_author=False)
 
     @nsfw.error
     async def nsfw_error(self, ctx, error):
         if isinstance(error, commands.CommandInvokeError):
             channel = self.client.get_channel(855092929928364032)
             await channel.send(f'nsfw_error, {error}')
-            await ctx.reply('Failed to find such subreddit.')
+            await ctx.reply('Failed to find such subreddit.', mention_author=False)
             raise error
         else:
+            channel = self.client.get_channel(855092929928364032)
+            await channel.send(f'nsfw_error, {error}')
             raise error
 
     @commands.command(name = "rnsfw", description = "**Command format:** `.rnsfw`\n• Shows an nsfw post from r/nsfw.\n• For some reasons, `.nsfw` crashes when used for r/nsfw :\ \n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
@@ -112,16 +114,25 @@ class NSFWSub(commands.Cog):
                             description= "This command can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)",
                             color=16737536
                             )
+            await ctx.reply(embed = em5, mention_author=False)
         else:
             async with ctx.channel.typing():
                 subreddit = reddit.subreddit("nsfw")
                 submission = subreddit.random()
                 name = submission.title
                 url = submission.url
+                await ctx.reply(f'**{name}**\n{url}', mention_author=False)
 
-                em5 = discord.Embed(title = name, color=16737536)
-                em5.set_image(url = url)
-        await ctx.reply(embed = em5)
+    @rnsfw.error
+    async def rnsfw_error(self, ctx, error):
+        if isinstance(error, commands.CommandInvokeError):
+            channel = self.client.get_channel(855092929928364032)
+            await channel.send(f'rnsfw_error, {error}')
+            raise error
+        else:
+            channel = self.client.get_channel(855092929928364032)
+            await channel.send(f'rnsfw_error, {error}')
+            raise error
 
     @commands.command(name = "hentai", description = "**Command format:** `.hentai`\n• Shows an nsfw post from r/hentai.\n• `.nsfw` sometimes shows error when used for r/hentai :\ \n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def hentai(self, ctx):
@@ -131,7 +142,7 @@ class NSFWSub(commands.Cog):
                             description= "This command can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)",
                             color=16737536
                             )
-            await ctx.reply(embed = em5)
+            await ctx.reply(embed = em5, mention_author=False)
         else:
             async with ctx.channel.typing():
                 subreddit = reddit.subreddit("hentai")
@@ -141,7 +152,7 @@ class NSFWSub(commands.Cog):
                 all_subs.append(submission)
             random_sub = random.choice(all_subs)
             url = random_sub.url
-            await ctx.reply(url)
+            await ctx.reply(url, mention_author=False)
 
     @commands.command(name= "malenudes", aliases = ['dick', 'male', 'nudemale', 'nudemales', 'malenude', 'penis', 'cock', 'boy', 'boys', 'nakedboy', 'nakedmales', 'nakedmale'], description = "**Command format:** `.malenudes`• Why shud boys have all the fun? <a:awink_thumbsup:855303753011691520>\n• Displays a post containing **__Male Nudes__**\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def malenudes(self, ctx):
@@ -151,7 +162,7 @@ class NSFWSub(commands.Cog):
                             description= "This command can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)",
                             color=16737536
                             )
-            await ctx.reply(embed = em5)
+            await ctx.reply(embed = em5, mention_author=False)
         else:
             async with ctx.channel.typing():
                 #subreddit configuration
@@ -173,7 +184,7 @@ class NSFWSub(commands.Cog):
             random_sub = random.choice(all_subs)
             url = random_sub.url
             msg = f'`This post was sent from`: **r/{subred}** \n {url}' 
-            await ctx.reply(msg)
+            await ctx.reply(msg, mention_author=False)
 
     @commands.command(name="ass", aliases = ['butt', 'booty',], description = "Command for booty lovers :peach:. \n• Fetches a post containing ass.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def ass(self, ctx):
@@ -183,7 +194,7 @@ class NSFWSub(commands.Cog):
                             description= "This command can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)",
                             color=16737536
                             )
-            await ctx.reply(embed = em6)
+            await ctx.reply(embed = em6, mention_author=False)
         else:
             async with ctx.channel.typing():
             #subreddit configuration
@@ -213,7 +224,7 @@ class NSFWSub(commands.Cog):
             random_sub = random.choice(all_subs)
             url = random_sub.url
             msg = f'`This post was sent from`: **r/{subred}** \n {url}' 
-            await ctx.reply(msg)
+            await ctx.reply(msg, mention_author=False)
             
 def setup(client):
     client.add_cog(NSFWSub(client))

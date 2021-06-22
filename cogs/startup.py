@@ -24,12 +24,12 @@ class Startup(commands.Cog):
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
         channel = self.client.get_channel(855340868597055508)
-        await channel.send(f"**{self.client.user.name}** was added to `{guild.name}` - `{guild.id}`")
+        await channel.send(f"**{self.client.user.name}** was added to **{guild.name}** - `{guild.id}`")
 
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):
         channel = self.client.get_channel(855340868597055508)
-        await channel.send(f"**{self.client.user.name}** was removed from `{guild.name}` - `{guild.id}`")
+        await channel.send(f"**{self.client.user.name}** was removed from **{guild.name}** - `{guild.id}`")
 
 def setup(client):
     client.add_cog(Startup(client))

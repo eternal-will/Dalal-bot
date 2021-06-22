@@ -25,7 +25,7 @@ class Basic(commands.Cog):
             color = 16737536
         )
         em.set_author(name = 'Checking bot latency...', icon_url = 'https://cdn.discordapp.com/emojis/854906394453344256.gif')
-        message = await ctx.reply(embed=em)
+        message = await ctx.reply(embed=em, mention_author=False)
         em2 = discord.Embed(
             title = "Pong! :ping_pong:",
             description = f"Client Latency: `{round(self.client.latency * 1000)}ms`",
