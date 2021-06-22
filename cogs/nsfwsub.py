@@ -225,6 +225,107 @@ class NSFWSub(commands.Cog):
             url = random_sub.url
             msg = f'`This post was sent from`: **r/{subred}** \n {url}' 
             await ctx.reply(msg, mention_author=False)
-            
+
+    @commands.command(name="pussy", aliases = ['clit', 'vulva', 'vagina'], description = "Command for pussy lovers :cat:. \n• Fetches a post containing pussy :smiley_cat: .\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
+    async def pussy(self, ctx):
+        if not ctx.channel.is_nsfw():
+            em6 = discord.Embed(
+                            title = "This is not an NSFW Channel!",
+                            description= "This command can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)",
+                            color=16737536
+                            )
+            await ctx.reply(embed = em6, mention_author=False)
+        else:
+            async with ctx.channel.typing():
+                #subreddit configuration
+                REDDIT_PUSSY_SUB = [
+                'LipsThatGrip',
+                'pussy',
+                'GodPussy',
+                'grool',
+                'rearpussy',
+                'simps',
+                'Innie',
+                'LabiaGW',
+                'pelfie',
+                'CelebrityPussy',
+                'MoundofVenus',
+                'BreakingTheSeal',
+                'PussyMound',
+                'spreadeagle',
+                'spreading',
+                'wetspot',
+                'pussyjobs',
+                'PussyWedgie',
+                'PerfectPussies',
+                'Ratemypussy',
+                'vagina',
+                'GushingGirls',
+                'SideLips',
+                'pussyrating',
+                'beef_flaps',
+                'bigclit',
+                'Creaming',
+                'WomenLookingDown',
+                'PussyFlashing',
+                'ButterflyWings',
+                'AsianPussy',
+                'shavedpussies',
+                'PussyBeforeAndAfter',
+                'vulva',
+                'OpeningPussy',
+                'PinkChocolate',
+                'closeup',
+                'PinkandBare',
+                'PussyJuices',
+                'DarkBitsNPieces',
+                'Innies',
+                'PussySlip',
+                'TheRearPussy',
+                'pussypump',
+                'RubbingHerPussy',
+                'LipsThatUsedToGrip',
+                'beachpussy',
+                'puffypussy',
+                'ThePussyPop',
+                'Pink',
+                'legsSpread',
+                'BeefFlaps',
+                'NSFW_Pussy_Teen_Ass',
+                'labia',
+                'peachlips',
+                'shavedgirls',
+                'GROOLGW',
+                'Clits',
+                'pussystacking',
+                'shaved_asians',
+                'PerfectPussy',
+                'TinyAsianPussy',
+                'cutecunts',
+                'pumpedpussy',
+                'Outies',
+                'PUSSY_GIRLS',
+                'pantiesaside',
+                'clit',
+                'sidepussy',
+                'NSFW_PUSSY_HD',
+                'nsfwcloseups',
+                'Pumping',
+                'Pelfies',
+                'Creamywetpussies',
+                'PussyJuicy',
+                'TINYlips'
+                ]
+            subred = random.choice(REDDIT_PUSSY_SUB)
+            subreddit = reddit.subreddit(subred)
+            all_subs = []
+            top = subreddit.hot(limit=50)
+            for submission in top:
+                all_subs.append(submission)
+            random_sub = random.choice(all_subs)
+            url = random_sub.url
+            msg = f'`This post was sent from`: **r/{subred}** \n {url}' 
+            await ctx.reply(msg, mention_author=False)
+
 def setup(client):
     client.add_cog(NSFWSub(client))
