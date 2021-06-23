@@ -154,7 +154,6 @@ class NSFWSub(commands.Cog):
                     em1.set_image(url = url)
                     await ctx.reply(embed = em1, mention_author=False)
 
-
     @rnsfw.error
     async def rnsfw_error(self, ctx, error):
         if isinstance(error, commands.CommandInvokeError):
