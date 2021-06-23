@@ -55,6 +55,8 @@ async def on_command_error(ctx, error):
         await channel.send(error)
         await ctx.reply(embed=em, mention_author=False)
         raise error
+    elif isinstance(error, commands.NotOwner):
+        await ctx.reply(f'Owner-only command,\n{error}', mention_author=False)
     else:
         channel = client.get_channel(855092929928364032)
         await channel.send(error)
