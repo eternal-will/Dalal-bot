@@ -47,7 +47,7 @@ class NSFWSub(commands.Cog):
             subred = random.choice(REDDIT_BOOB_SUB)
             subreddit = reddit.subreddit(subred)
             all_subs = []
-            top = subreddit.hot(limit=50)
+            top = subreddit.hot(limit=100)
             for submission in top:
                 all_subs.append(submission)
             random_sub = random.choice(all_subs)
@@ -90,7 +90,7 @@ class NSFWSub(commands.Cog):
                 async with ctx.channel.typing():
                     subreddit = reddit.subreddit(subred)
                 all_subs = []
-                top = subreddit.hot(limit=50)
+                top = subreddit.hot(limit=100)
                 for submission in top:
                     all_subs.append(submission)
                 random_sub = random.choice(all_subs)
@@ -134,10 +134,13 @@ class NSFWSub(commands.Cog):
         else:
             async with ctx.channel.typing():
                 subreddit = reddit.subreddit("nsfw")
-                submission = subreddit.random()
-                name = submission.title
-                url = submission.url
-                name = submission.title
+                all_subs = []
+                top = subreddit.hot(limit=100)
+                for submission in top:
+                    all_subs.append(submission)
+                random_sub = random.choice(all_subs)
+                name = random_sub.title
+                url = random_sub.url
                 site = urlparse(url).netloc
                 if site == 'redgifs.com' or site == 'imgur.com':
                     msg = f'`This post was sent from`: **r/nsfw** \n {url}' 
@@ -176,7 +179,7 @@ class NSFWSub(commands.Cog):
             async with ctx.channel.typing():
                 subreddit = reddit.subreddit("hentai")
             all_subs = []
-            top = subreddit.hot(limit=50)
+            top = subreddit.hot(limit=100)
             for submission in top:
                 all_subs.append(submission)
             random_sub = random.choice(all_subs)
@@ -219,7 +222,7 @@ class NSFWSub(commands.Cog):
             subred = random.choice(REDDIT_MN_SUB)
             subreddit = reddit.subreddit(subred)
             all_subs = []
-            top = subreddit.hot(limit=50)
+            top = subreddit.hot(limit=100)
             for submission in top:
                 all_subs.append(submission)
             random_sub = random.choice(all_subs)
@@ -270,7 +273,7 @@ class NSFWSub(commands.Cog):
             subred = random.choice(REDDIT_ASS_SUB)
             subreddit = reddit.subreddit(subred)
             all_subs = []
-            top = subreddit.hot(limit=50)
+            top = subreddit.hot(limit=100)
             for submission in top:
                 all_subs.append(submission)
             random_sub = random.choice(all_subs)
@@ -382,7 +385,7 @@ class NSFWSub(commands.Cog):
             subred = random.choice(REDDIT_PUSSY_SUB)
             subreddit = reddit.subreddit(subred)
             all_subs = []
-            top = subreddit.hot(limit=50)
+            top = subreddit.hot(limit=100)
             for submission in top:
                 all_subs.append(submission)
             random_sub = random.choice(all_subs)
