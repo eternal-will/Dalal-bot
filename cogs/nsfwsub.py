@@ -4,6 +4,7 @@ from discord.ext import commands
 from dotenv import load_dotenv
 import random
 import praw
+from urllib.parse import urlparse
 
 load_dotenv('.env')
 
@@ -51,8 +52,19 @@ class NSFWSub(commands.Cog):
                 all_subs.append(submission)
             random_sub = random.choice(all_subs)
             url = random_sub.url
-            msg = f'`This post was sent from`: **r/{subred}** \n {url}' 
-            await ctx.reply(msg, mention_author=False)
+            name = random_sub.title
+            site = urlparse(url).netloc
+            if site == 'redgifs.com' or site == 'imgur.com':
+                msg = f'`This post was sent from`: **r/{subred}** \n {url}' 
+                await ctx.reply(msg, mention_author=False)
+            else:
+                em1 = discord.Embed(
+                    title = name,
+                    description = f"`This post was sent from:` __r/{subred}__.",
+                    color=16737536
+                )
+                em1.set_image(url = url)
+                await ctx.reply(embed = em1, mention_author=False)
 
     @commands.command(name = "nsfw", description = f"**Command format:** `.nsfw <subreddit name>`\n• Provides an nsfw post from the mentioned subreddit.\n• __r/sfwnudes__ is default and is used if no subreddit is provided.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def nsfw(self, ctx, subred = f"sfwnudes"):
@@ -84,15 +96,19 @@ class NSFWSub(commands.Cog):
                 random_sub = random.choice(all_subs)
                 name = random_sub.title
                 url = random_sub.url
-
-                em1 = discord.Embed(
-                    title = name,
-                    description = f"`This post was sent from:` __r/{subred}__.",
-                    color=16737536
-                )
-                em1.set_footer(text= "Command usage: .nsfw <subreddit_name>")
-                em1.set_image(url = url)
-                await ctx.reply(embed = em1, mention_author=False)
+                site = urlparse(url).netloc
+                if site == 'redgifs.com' or site == 'imgur.com':
+                    msg = f'`This post was sent from`: **r/{subred}** \n {url}' 
+                    await ctx.reply(msg, mention_author=False)
+                else:
+                    em1 = discord.Embed(
+                        title = name,
+                        description = f"`This post was sent from:` __r/{subred}__.",
+                        color=16737536
+                    )
+                    em1.set_footer(text= "Command usage: .nsfw <subreddit_name>")
+                    em1.set_image(url = url)
+                    await ctx.reply(embed = em1, mention_author=False)
 
     @nsfw.error
     async def nsfw_error(self, ctx, error):
@@ -121,7 +137,20 @@ class NSFWSub(commands.Cog):
                 submission = subreddit.random()
                 name = submission.title
                 url = submission.url
-                await ctx.reply(f'**{name}**\n{url}', mention_author=False)
+                name = submission.title
+                site = urlparse(url).netloc
+                if site == 'redgifs.com' or site == 'imgur.com':
+                    msg = f'`This post was sent from`: **r/nsfw** \n {url}' 
+                    await ctx.reply(msg, mention_author=False)
+                else:
+                    em1 = discord.Embed(
+                        title = name,
+                        description = f"`This post was sent from:` __r/nsfw__.",
+                        color=16737536
+                    )
+                    em1.set_image(url = url)
+                    await ctx.reply(embed = em1, mention_author=False)
+
 
     @rnsfw.error
     async def rnsfw_error(self, ctx, error):
@@ -152,7 +181,19 @@ class NSFWSub(commands.Cog):
                 all_subs.append(submission)
             random_sub = random.choice(all_subs)
             url = random_sub.url
-            await ctx.reply(url, mention_author=False)
+            name = random_sub.title
+            site = urlparse(url).netloc
+            if site == 'redgifs.com' or site == 'imgur.com':
+                msg = f'`This post was sent from`: **r/hentai** \n {url}' 
+                await ctx.reply(msg, mention_author=False)
+            else:
+                em1 = discord.Embed(
+                    title = name,
+                    description = f"`This post was sent from:` __r/hentai__.",
+                    color=16737536
+                )
+                em1.set_image(url = url)
+                await ctx.reply(embed = em1, mention_author=False)
 
     @commands.command(name= "malenudes", aliases = ['dick', 'male', 'nudemale', 'nudemales', 'malenude', 'penis', 'cock', 'boy', 'boys', 'nakedboy', 'nakedmales', 'nakedmale'], description = "**Command format:** `.malenudes`\n• Why shud boys have all the fun? <a:awink_thumbsup:855303753011691520>\n• Displays a post containing **__Male Nudes__**\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def malenudes(self, ctx):
@@ -183,8 +224,19 @@ class NSFWSub(commands.Cog):
                 all_subs.append(submission)
             random_sub = random.choice(all_subs)
             url = random_sub.url
-            msg = f'`This post was sent from`: **r/{subred}** \n {url}' 
-            await ctx.reply(msg, mention_author=False)
+            name = random_sub.title
+            site = urlparse(url).netloc
+            if site == 'redgifs.com' or site == 'imgur.com':
+                msg = f'`This post was sent from`: **r/{subred}** \n {url}' 
+                await ctx.reply(msg, mention_author=False)
+            else:
+                em1 = discord.Embed(
+                    title = name,
+                    description = f"`This post was sent from:` __r/{subred}__.",
+                    color=16737536
+                )
+                em1.set_image(url = url)
+                await ctx.reply(embed = em1, mention_author=False)
 
     @commands.command(name="ass", aliases = ['butt', 'booty'], description = "**Command format:** `.ass`\n**Aliases:** `.butt`, `.booty`\nCommand for booty lovers :peach:. \n• Fetches a post containing ass.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def ass(self, ctx):
@@ -223,8 +275,19 @@ class NSFWSub(commands.Cog):
                 all_subs.append(submission)
             random_sub = random.choice(all_subs)
             url = random_sub.url
-            msg = f'`This post was sent from`: **r/{subred}** \n {url}' 
-            await ctx.reply(msg, mention_author=False)
+            name = random_sub.title
+            site = urlparse(url).netloc
+            if site == 'redgifs.com' or site == 'imgur.com':
+                msg = f'`This post was sent from`: **r/{subred}** \n {url}' 
+                await ctx.reply(msg, mention_author=False)
+            else:
+                em1 = discord.Embed(
+                    title = name,
+                    description = f"`This post was sent from:` __r/{subred}__.",
+                    color=16737536
+                )
+                em1.set_image(url = url)
+                await ctx.reply(embed = em1, mention_author=False)
 
     @commands.command(name="pussy", aliases = ['clit', 'vulva', 'vagina'], description = "**Command format:** `.pussy`\n• Command for pussy lovers :cat:. \n• Fetches a post containing pussy :smiley_cat: .\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def pussy(self, ctx):
@@ -324,8 +387,19 @@ class NSFWSub(commands.Cog):
                 all_subs.append(submission)
             random_sub = random.choice(all_subs)
             url = random_sub.url
-            msg = f'`This post was sent from`: **r/{subred}** \n {url}' 
-            await ctx.reply(msg, mention_author=False)
+            name = random_sub.title
+            site = urlparse(url).netloc
+            if site == 'redgifs.com' or site == 'imgur.com':
+                msg = f'`This post was sent from`: **r/{subred}** \n {url}' 
+                await ctx.reply(msg, mention_author=False)
+            else:
+                em1 = discord.Embed(
+                    title = name,
+                    description = f"`This post was sent from:` __r/{subred}__.",
+                    color=16737536
+                )
+                em1.set_image(url = url)
+                await ctx.reply(embed = em1, mention_author=False)
 
 def setup(client):
     client.add_cog(NSFWSub(client))
