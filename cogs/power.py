@@ -8,7 +8,7 @@ class Power(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print("Power comms is Ready")
+        print(f"{self.__class__.__name__} is ready")
 
     @commands.command(aliases = ['sd'], hidden=True)
     @commands.is_owner()

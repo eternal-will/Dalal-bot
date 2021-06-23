@@ -8,7 +8,7 @@ class Startup(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print("Startup is done")
+        print(f"{self.__class__.__name__} is ready")
         print('--------------------------------------')
         print('Logged in as:')
         print(self.client.user.name)

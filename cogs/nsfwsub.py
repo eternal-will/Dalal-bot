@@ -21,7 +21,7 @@ class NSFWSub(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print("NSFWSub Is Ready")
+        print(f"{self.__class__.__name__} is ready")
 
     @commands.command(name="boob", aliases = ['tits', 'tit', 'boobs', 'boobies', 'boobie', 'titties', 'titty', 'tittie'], description = "**Command format:** `.boob` \n**Aliases:** `.boobs`, `.boobies`, `.tit`, `.tits`, `.titty`, `.tittie` & `.titties` \nCommand for titty lovers :wink:. \n• Fetches a post containing boobies.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def boob(self, ctx):

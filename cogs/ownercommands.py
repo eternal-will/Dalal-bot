@@ -8,7 +8,7 @@ class OwnerCommands(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print("OwnerCommands Is Ready")
+        print(f"{self.__class__.__name__} is ready")
 
     @commands.command(hidden = True)
     @commands.is_owner()

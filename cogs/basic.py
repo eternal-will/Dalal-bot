@@ -9,7 +9,7 @@ class Basic(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print("BasicCommands are Ready")
+        print(f"{self.__class__.__name__} is ready")
 
     @commands.command(name = "invite", description = "**Command format:** `.invite`\n• Provides **__[Invite Link for the Bot](https://discord.com/api/oauth2/authorize?client_id=846816510306549770&permissions=67497153&scope=bot)__**")
     async def invite(self, ctx):
