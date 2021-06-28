@@ -1,15 +1,20 @@
 # bot.py
 import os
+import json
 from dotenv import load_dotenv
 import discord
 from discord.ext import commands
 
 load_dotenv('.env')
 
-prefix = os.getenv('PREFIX')
+def get_prefix(client, message):
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+        pre = prefixes[str(message.guild.id)]
+    return commands.when_mentioned_or(pre)(client, message)
 
 intents = discord.Intents.all()
-client=commands.Bot(command_prefix=commands.when_mentioned_or(f"{prefix}"), intents = intents)
+client=commands.Bot(command_prefix=get_prefix, case_insensitive=True, intents = intents)
 
 @client.command(hidden = True)
 @commands.is_owner()
@@ -61,5 +66,58 @@ async def on_command_error(ctx, error):
         channel = client.get_channel(855092929928364032)
         await channel.send(error)
         raise error
+
+@client.event
+async def on_guild_join(guild):
+    channel = client.get_channel(855340868597055508)
+    await channel.send(f"**{client.user.name}** was added to **{guild.name}** - `{guild.id}`")
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+
+    prefixes[str(guild.id)] = '.'
+
+    with open('prefixes.json', 'w') as f:
+        json.dump(prefixes, f, indent=4)
+
+@client.event
+async def on_guild_remove(guild):
+    channel = client.get_channel(855340868597055508)
+    await channel.send(f"**{client.user.name}** was removed from **{guild.name}** - `{guild.id}`")
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+
+    prefixes.pop(str(guild.id))
+
+    with open('prefixes.json', 'w') as f:
+        json.dump(prefixes, f, indent=4)
+
+@client.command(name = 'prefix', description ="**Command format:** `.prefix`\n• Shows bot's current prefix\n**Command format:** `.prefix <prefix>`\n• Set's the bot prefix to supplied value.")
+async def prefix(ctx, new_prefix=""):
+    if not new_prefix:
+        #Shows the server's current prefix
+        with open('prefixes.json', 'r') as f:
+            prefixes = json.load(f)
+            pre = prefixes[str(ctx.guild.id)]
+            em = discord.Embed(
+                description = f'Current bot prefix: `{pre}`',
+                color=16737536
+            )
+            em.set_footer(text="to change it, use .prefix <new_prefix>")
+        await ctx.reply(embed = em, mention_author=False)
+    else:
+        #preceeds to set new prefix for server
+        if commands.has_permissions(manage_guild=True):
+            with open('prefixes.json', 'r') as f:
+                prefixes = json.load(f)
+
+            prefixes[str(ctx.guild.id)] = new_prefix
+
+            with open('prefixes.json', 'w') as f:
+                json.dump(prefixes, f, indent=4)
+            await ctx.reply(f"Bot prefix changed to: `{new_prefix}`", mention_author=False)
+        else:
+            await ctx.reply('You lack the required permissions, i.e. **Manage Server**', mention_author=False)
+
+
 
 client.run(os.getenv('TOKEN'))
