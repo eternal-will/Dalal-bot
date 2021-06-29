@@ -106,8 +106,27 @@ class NSFWSub(commands.Cog):
         if not ctx.channel.is_nsfw():
             await ctx.reply(embed = self.em_notnsfw, mention_author=False)
         else:
-            subred = reddit.subreddit("nsfw")
-            await self.nsfw_post(ctx, subred)
+            async with ctx.channel.typing():
+                subreddit = reddit.subreddit("nsfw")
+                all_subs = []
+                top = subreddit.hot(limit=100)
+                for submission in top:
+                    all_subs.append(submission)
+                random_sub = random.choice(all_subs)
+                name = random_sub.title
+                url = random_sub.url
+                site = urlparse(url).netloc
+                if site == 'redgifs.com' or site == 'imgur.com':
+                    msg = f'`This post was sent from`: **r/nsfw** \n {url}' 
+                    await ctx.reply(msg, mention_author=False)
+                else:
+                    em1 = discord.Embed(
+                        title = name,
+                        description = f"`This post was sent from:` __r/nsfw__.",
+                        color=16737536
+                    )
+                    em1.set_image(url = url)
+                    await ctx.reply(embed = em1, mention_author=False)
 
     @rnsfw.error
     async def rnsfw_error(self, ctx, error):
@@ -125,8 +144,27 @@ class NSFWSub(commands.Cog):
         if not ctx.channel.is_nsfw():
             await ctx.reply(embed = self.em_notnsfw, mention_author=False)
         else:
-            subred = reddit.subreddit("hentai")
-            await self.nsfw_post(ctx, subred)
+            async with ctx.channel.typing():
+                subreddit = reddit.subreddit("hentai")
+            all_subs = []
+            top = subreddit.hot(limit=100)
+            for submission in top:
+                all_subs.append(submission)
+            random_sub = random.choice(all_subs)
+            url = random_sub.url
+            name = random_sub.title
+            site = urlparse(url).netloc
+            if site == 'redgifs.com' or site == 'imgur.com':
+                msg = f'`This post was sent from`: **r/hentai** \n {url}' 
+                await ctx.reply(msg, mention_author=False)
+            else:
+                em1 = discord.Embed(
+                    title = name,
+                    description = f"`This post was sent from:` __r/hentai__.",
+                    color=16737536
+                )
+                em1.set_image(url = url)
+                await ctx.reply(embed = em1, mention_author=False)
 
     @commands.command(name= "malenudes", aliases = ['dick', 'male', 'nudemale', 'nudemales', 'malenude', 'penis', 'cock', 'boy', 'boys', 'nakedboy', 'nakedmales', 'nakedmale'], description = "**Command format:** `.malenudes`\n• Why shud boys have all the fun? <a:awink_thumbsup:855303753011691520>\n• Displays a post containing **__Male Nudes__**\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def malenudes(self, ctx):
