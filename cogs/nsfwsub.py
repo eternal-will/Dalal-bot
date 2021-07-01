@@ -52,7 +52,7 @@ class NSFWSub(commands.Cog, name='NSFW Commands'):
             em_nsfw.set_image(url = url)
             await ctx.reply(embed = em_nsfw, mention_author=False)
 
-    @commands.command(name="boob", aliases = ['tits', 'tit', 'boobs', 'boobies', 'boobie', 'titties', 'titty', 'tittie'], description = "**Command format:** `.boob` \n**Aliases:** `.boobs`, `.boobies`, `.tit`, `.tits`, `.titty`, `.tittie` & `.titties` \nCommand for titty lovers :wink:. \n• Fetches a post containing boobies.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
+    @commands.command(name="boob", aliases = ['tits', 'tit', 'boobs', 'boobies', 'boobie', 'titties', 'titty', 'tittie'], description = "• Command for titty lovers :wink:. \n• Fetches a post containing boobies.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def boob(self, ctx):
         if not ctx.channel.is_nsfw():
             await ctx.reply(embed = self.em_notnsfw, mention_author=False)
@@ -101,7 +101,7 @@ class NSFWSub(commands.Cog, name='NSFW Commands'):
             await channel.send(f'nsfw_error, {error}')
             raise error
 
-    @commands.command(name = "rnsfw", description = "**Command format:** `.rnsfw`\n• Shows an nsfw post from __r/nsfw__.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
+    @commands.command(name = "rnsfw", description = "• Shows an nsfw post from __r/nsfw__.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def rnsfw(self, ctx):
         if not ctx.channel.is_nsfw():
             await ctx.reply(embed = self.em_notnsfw, mention_author=False)
@@ -139,7 +139,7 @@ class NSFWSub(commands.Cog, name='NSFW Commands'):
             await channel.send(f'rnsfw_error, {error}')
             raise error
 
-    @commands.command(name = "hentai", description = "**Command format:** `.hentai`\n• Shows an nsfw post from r/hentai.\n• `.nsfw` sometimes shows error when used for r/hentai :\ \n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
+    @commands.command(name = "hentai", description = "• Shows an nsfw post from r/hentai.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def hentai(self, ctx):
         if not ctx.channel.is_nsfw():
             await ctx.reply(embed = self.em_notnsfw, mention_author=False)
@@ -166,7 +166,7 @@ class NSFWSub(commands.Cog, name='NSFW Commands'):
                 em1.set_image(url = url)
                 await ctx.reply(embed = em1, mention_author=False)
 
-    @commands.command(name= "malenudes", aliases = ['dick', 'male', 'nudemale', 'nudemales', 'malenude', 'penis', 'cock', 'boy', 'boys', 'nakedboy', 'nakedmales', 'nakedmale'], description = "**Command format:** `.malenudes`\n• Why shud boys have all the fun? <a:awink_thumbsup:855303753011691520>\n• Displays a post containing **__Male Nudes__**\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
+    @commands.command(name= "malenudes", aliases = ['nudemale', 'nudemales', 'malenude', 'nakedmales', 'nakedmale'], description = "• Why shud boys have all the fun? <a:awink_thumbsup:855303753011691520>\n• Displays a post containing **__Male Nudes__**\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def malenudes(self, ctx):
         if not ctx.channel.is_nsfw():
             await ctx.reply(embed = self.em_notnsfw, mention_author=False)
@@ -185,7 +185,7 @@ class NSFWSub(commands.Cog, name='NSFW Commands'):
             subred = random.choice(REDDIT_MN_SUB)
             await self.nsfw_post(ctx, subred)
 
-    @commands.command(name="ass", aliases = ['butt', 'booty'], description = "**Command format:** `.ass`\n**Aliases:** `.butt`, `.booty`\nCommand for booty lovers :peach:. \n• Fetches a post containing ass.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
+    @commands.command(name="ass", aliases = ['butt', 'booty'], description = "• Command for booty lovers :peach:. \n• Fetches a post containing ass.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def ass(self, ctx):
         if not ctx.channel.is_nsfw():
             await ctx.reply(embed = self.em_notnsfw, mention_author=False)
@@ -212,7 +212,7 @@ class NSFWSub(commands.Cog, name='NSFW Commands'):
             subred = random.choice(REDDIT_ASS_SUB)
             await self.nsfw_post(ctx, subred)
 
-    @commands.command(name="pussy", aliases = ['clit', 'vulva', 'vagina'], description = "**Command format:** `.pussy`\n• Command for pussy lovers :cat:. \n• Fetches a post containing pussy :smiley_cat: .\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
+    @commands.command(name="pussy", aliases = ['clit', 'vulva', 'vagina'], description = "• Command for pussy lovers :cat:. \n• Fetches a post containing pussy :smiley_cat: .\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def pussy(self, ctx):
         if not ctx.channel.is_nsfw():
             await ctx.reply(embed = self.em_notnsfw, mention_author=False)

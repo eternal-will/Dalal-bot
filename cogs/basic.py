@@ -11,12 +11,12 @@ class Basic(commands.Cog, name='Basic Commands'):
     async def on_ready(self):
         print(f"{self.__class__.__name__} are ready")
 
-    @commands.command(name = "invite", description = "**Command format:** `.invite`\n• Provides **__[Invite Link for the Bot](https://discord.com/api/oauth2/authorize?client_id=846816510306549770&permissions=67497153&scope=bot)__**")
+    @commands.command(name = "invite", description = "• Provides **__[Invite Link for the Bot](https://discord.com/api/oauth2/authorize?client_id=846816510306549770&permissions=67497153&scope=bot)__**")
     async def invite(self, ctx):
         em3 = discord.Embed(title = "Invite Link", description = "**__[Invite Link for the Bot](https://discord.com/api/oauth2/authorize?client_id=846816510306549770&permissions=67497153&scope=bot)__**", color=16737536)
         await ctx.reply(embed = em3)
 
-    @commands.command(name = "ping", description="**Command format:** `.ping`\n• Shows bot's latency")
+    @commands.command(name = "ping", description="• Shows bot's latency")
     async def ping(self, ctx):
         em = discord.Embed(
             title = "Pinging...",

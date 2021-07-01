@@ -48,6 +48,8 @@ async def on_command_error(ctx, error):
         raise error
     elif isinstance(error, commands.NotOwner):
         await ctx.reply(f'Owner-only command,\n{error}', mention_author=False)
+    elif isinstance(error, commands.MissingRequiredArgument):
+        await ctx.reply(f'{error}\nUse `.help` to know the proper usage of this command.', mention_author=False)
     else:
         channel = client.get_channel(855092929928364032)
         await channel.send(error)
@@ -77,33 +79,32 @@ async def on_guild_remove(guild):
     with open('prefixes.json', 'w') as f:
         json.dump(prefixes, f, indent=4)
 
-@client.command(name = 'prefix', description ="**Command format:** `.prefix`\n• Shows bot's current prefix\n**Command format:** `.prefix <prefix>`\n• Set's the bot prefix to supplied value.")
-async def prefix(ctx, new_prefix=""):
-    if not new_prefix:
-        #Shows the server's current prefix
-        with open('prefixes.json', 'r') as f:
-            prefixes = json.load(f)
-            pre = prefixes[str(ctx.guild.id)]
-            em = discord.Embed(
-                description = f'Current bot prefix: `{pre}`',
-                color=16737536
-            )
-            em.set_footer(text="to change it, use .prefix <new_prefix>")
-        await ctx.reply(embed = em, mention_author=False)
-    else:
-        #preceeds to set new prefix for server
-        if commands.has_permissions(manage_guild=True):
-            with open('prefixes.json', 'r') as f:
-                prefixes = json.load(f)
+@client.group(invoke_without_command=True, name = 'prefix', description ="• Shows bot's current prefix.")
+async def prefix(ctx):
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+        pre = prefixes[str(ctx.guild.id)]
+        em = discord.Embed(
+            description = f'Current bot prefix: `{pre}`',
+            color=16737536
+        )
+        em.set_footer(text="to change it, use .prefix set <new_prefix>")
+    await ctx.reply(embed = em, mention_author=False)
 
-            prefixes[str(ctx.guild.id)] = new_prefix
+@prefix.command(name='set', description="• Changes bot's prefix to supplied value.")
+@commands.has_permissions(manage_guild=True)
+async def set(ctx, new_prefix):
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
 
-            with open('prefixes.json', 'w') as f:
-                json.dump(prefixes, f, indent=4)
-            await ctx.reply(f"Bot prefix changed to: `{new_prefix}`", mention_author=False)
-        else:
-            await ctx.reply('You lack the required permissions, i.e. **Manage Server**', mention_author=False)
+    prefixes[str(ctx.guild.id)] = new_prefix
 
+    with open('prefixes.json', 'w') as f:
+        json.dump(prefixes, f, indent=4)
+    await ctx.reply(f"Bot prefix changed to: `{new_prefix}`", mention_author=False)
 
-
+@set.error
+async def prefix_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.reply(f'{error}', mention_author=False)
 client.run(os.getenv('TOKEN'))

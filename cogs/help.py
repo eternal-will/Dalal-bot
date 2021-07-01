@@ -1,12 +1,11 @@
 from discord.ext import commands
-
 from utils.util import Pag
 
 class Help(commands.Cog, name="Help command"):
     def __init__(self, client):
         self.client = client
         self.client.remove_command("help")
-        self.cmds_per_page = 5
+        self.cmds_per_page = 4
 
     def get_command_signature(self, command: commands.Command, ctx: commands.Context):
         aliases = "|".join(command.aliases)
@@ -15,6 +14,15 @@ class Help(commands.Cog, name="Help command"):
         full_invoke = command.qualified_name.replace(command.name, "")
 
         signature = f"{ctx.prefix}{full_invoke}{cmd_invoke} {command.signature}"
+        return signature
+
+    def get_command_aliases(self, command: commands.Command, ctx: commands.Context):
+        aliases = "|".join(command.aliases)
+        cmd_invoke = f"[{command.name}|{aliases}]" if command.aliases else command.name
+        
+        full_invoke = command.qualified_name.replace(command.name, "")
+
+        signature = f"{ctx.prefix}{full_invoke}{cmd_invoke}"
         return signature
 
     async def return_filtered_commands(self, walkable, ctx):
@@ -60,14 +68,15 @@ class Help(commands.Cog, name="Help command"):
             commands_entry = ""
 
             for cmd in next_commands:
+                aliases = self.get_command_aliases(cmd, ctx)
                 desc = cmd.short_doc or cmd.description
                 signature = self.get_command_signature(cmd, ctx)
-                subcommand = "Has subcommands" if hasattr(cmd, "all_commands") else ""
+                subcommand = f"**This command has subcommands:**\n• Use `{ctx.prefix}help {cmd}` to know more.\n" if hasattr(cmd, "all_commands") else ""
 
                 commands_entry += (
                     f"• **__{cmd.name}__**\n```\n{signature}\n```\n{desc}\n"
                     if isinstance(entity, commands.Command)
-                    else f"• **__{cmd.name}__**\n{desc}\n    {subcommand}\n"
+                    else f"• **__{cmd.name}__**\n`{aliases}`\n{desc}\n{subcommand}\n"
                 )
             pages.append(commands_entry)
 
