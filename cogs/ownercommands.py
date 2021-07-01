@@ -18,5 +18,19 @@ class OwnerCommands(commands.Cog, name='Owner only Commands'):
         for guild in activeservers:
             await ctx.send(f'• **__{guild.name}__** - `{guild.id}`')
 
+    @commands.command(hidden = True)
+    @commands.is_owner()
+    async def load(self, ctx, extension):
+        self.client.load_extension(f'cogs.{extension}')
+        print(f'successfully loaded {extension}!')
+        await ctx.reply(f'successfully loaded `{extension}`!', mention_author=False)
+
+    @commands.command(hidden = True)
+    @commands.is_owner()
+    async def unload(self, ctx, extension):
+        self.client.unload_extension(f'cogs.{extension}')
+        print(f'successfully unloaded {extension}!')
+        await ctx.reply(f'successfully unloaded `{extension}`!', mention_author=False)
+
 def setup(client):
     client.add_cog(OwnerCommands(client))
