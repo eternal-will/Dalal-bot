@@ -2,14 +2,14 @@ import discord
 from discord.ext import commands
 import asyncio
 
-class Basic(commands.Cog):
+class Basic(commands.Cog, name='Basic Commands'):
 
     def __init__(self, client):
         self.client = client
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print(f"{self.__class__.__name__} is ready")
+        print(f"{self.__class__.__name__} are ready")
 
     @commands.command(name = "invite", description = "**Command format:** `.invite`\n• Provides **__[Invite Link for the Bot](https://discord.com/api/oauth2/authorize?client_id=846816510306549770&permissions=67497153&scope=bot)__**")
     async def invite(self, ctx):

@@ -14,10 +14,14 @@ reddit = praw.Reddit(
     user_agent = "pythonPraw"
 )
 
-class NSFWSub(commands.Cog):
+class NSFWSub(commands.Cog, name='NSFW Commands'):
 
     def __init__(self, client):
         self.client = client
+
+    @commands.Cog.listener()
+    async def on_ready(self):
+        print(f"{self.__class__.__name__} are ready")
 
     em_notnsfw = discord.Embed(
                 title = "This is not an NSFW Channel!",
@@ -47,10 +51,6 @@ class NSFWSub(commands.Cog):
             )
             em_nsfw.set_image(url = url)
             await ctx.reply(embed = em_nsfw, mention_author=False)
-
-    @commands.Cog.listener()
-    async def on_ready(self):
-        print(f"{self.__class__.__name__} is ready")
 
     @commands.command(name="boob", aliases = ['tits', 'tit', 'boobs', 'boobies', 'boobie', 'titties', 'titty', 'tittie'], description = "**Command format:** `.boob` \n**Aliases:** `.boobs`, `.boobies`, `.tit`, `.tits`, `.titty`, `.tittie` & `.titties` \nCommand for titty lovers :wink:. \n• Fetches a post containing boobies.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def boob(self, ctx):

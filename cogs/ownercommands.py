@@ -1,14 +1,14 @@
 import discord
 from discord.ext import commands
 
-class OwnerCommands(commands.Cog):
+class OwnerCommands(commands.Cog, name='Owner only Commands'):
 
     def __init__(self, client):
         self.client = client
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print(f"{self.__class__.__name__} is ready")
+        print(f"{self.__class__.__name__} are ready")
 
     @commands.command(hidden = True)
     @commands.is_owner()
