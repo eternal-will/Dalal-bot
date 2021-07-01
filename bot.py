@@ -108,4 +108,5 @@ async def set(ctx, new_prefix):
 async def prefix_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         await ctx.reply(f'{error}', mention_author=False)
+        
 client.run(os.getenv('TOKEN'))
