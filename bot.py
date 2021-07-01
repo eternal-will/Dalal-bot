@@ -39,7 +39,8 @@ for filename in os.listdir('./cogs'):
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         em = discord.Embed(
-            description = 'No such command found :(',
+            title = 'No such command found :(',
+            description =f"**Prefix clash** with other bot?\nTry using `{ctx.prefix}prefix set <new_prefix>` to change the prefix of this bot.",
             color = 16737536
         )
         channel = client.get_channel(855092772242194482)
