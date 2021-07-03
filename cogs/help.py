@@ -1,7 +1,7 @@
 from discord.ext import commands
 from utils.util import Pag
 
-class Help(commands.Cog, name="Help command"):
+class Help(commands.Cog, name="Help_command"):
     def __init__(self, client):
         self.client = client
         self.client.remove_command("help")
@@ -19,7 +19,7 @@ class Help(commands.Cog, name="Help command"):
     def get_command_aliases(self, command: commands.Command, ctx: commands.Context):
         aliases = "|".join(command.aliases)
         cmd_invoke = f"[{command.name}|{aliases}]" if command.aliases else command.name
-        
+
         full_invoke = command.qualified_name.replace(command.name, "")
 
         signature = f"{ctx.prefix}{full_invoke}{cmd_invoke}"

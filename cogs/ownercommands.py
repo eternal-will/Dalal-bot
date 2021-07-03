@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-class OwnerCommands(commands.Cog, name='Owner only Commands'):
+class OwnerCommands(commands.Cog, name='Owner_only_Commands'):
 
     def __init__(self, client):
         self.client = client

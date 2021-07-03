@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-class Startup(commands.Cog, name='Startup Cog'):
+class Startup(commands.Cog, name='Startup_Cog'):
 
     def __init__(self, client):
         self.client = client

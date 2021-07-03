@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-class Power(commands.Cog, name='Power Command'):
+class Power(commands.Cog, name='Power_Command'):
 
     def __init__(self, client):
         self.client = client

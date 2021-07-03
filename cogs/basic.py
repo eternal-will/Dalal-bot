@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import asyncio
 
-class Basic(commands.Cog, name='Basic Commands'):
+class Basic(commands.Cog, name='Basic_Commands'):
 
     def __init__(self, client):
         self.client = client

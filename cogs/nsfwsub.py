@@ -14,7 +14,7 @@ reddit = praw.Reddit(
     user_agent = "pythonPraw"
 )
 
-class NSFWSub(commands.Cog, name='NSFW Commands'):
+class NSFWSub(commands.Cog, name='NSFW_Commands'):
 
     def __init__(self, client):
         self.client = client
@@ -40,8 +40,8 @@ class NSFWSub(commands.Cog, name='NSFW Commands'):
         name = random_sub.title
         url = random_sub.url
         site = urlparse(url).netloc
-        if site == 'redgifs.com' or site == 'imgur.com':
-            msg = f'`This post was sent from`: **r/{subred}** \n {url}' 
+        if site == 'redgifs.com' or site == 'imgur.com'or url[23:30]== 'gallery':
+            msg = f'`This post was sent from`: **r/{subred}** \n {url}'
             await ctx.reply(msg, mention_author=False)
         else:
             em_nsfw = discord.Embed(
@@ -116,8 +116,8 @@ class NSFWSub(commands.Cog, name='NSFW Commands'):
                 name = random_sub.title
                 url = random_sub.url
                 site = urlparse(url).netloc
-                if site == 'redgifs.com' or site == 'imgur.com':
-                    msg = f'`This post was sent from`: **r/nsfw** \n {url}' 
+                if site == 'redgifs.com' or site == 'imgur.com'or url[23:30]== 'gallery':
+                    msg = f'`This post was sent from`: **r/nsfw** \n {url}'
                     await ctx.reply(msg, mention_author=False)
                 else:
                     em1 = discord.Embed(
@@ -154,8 +154,8 @@ class NSFWSub(commands.Cog, name='NSFW Commands'):
             url = random_sub.url
             name = random_sub.title
             site = urlparse(url).netloc
-            if site == 'redgifs.com' or site == 'imgur.com':
-                msg = f'`This post was sent from`: **r/hentai** \n {url}' 
+            if site == 'redgifs.com' or site == 'imgur.com'or url[23:30]== 'gallery':
+                msg = f'`This post was sent from`: **r/hentai** \n {url}'
                 await ctx.reply(msg, mention_author=False)
             else:
                 em1 = discord.Embed(
