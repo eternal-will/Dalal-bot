@@ -34,5 +34,9 @@ class Basic(commands.Cog, name='Basic_Commands'):
         await asyncio.sleep(0.5)
         await message.edit(embed = em2)
 
+    @commands.command(name='hi', hidden=True, aliases=['helo', 'hello', 'sup', 'hey'])
+    async def greet(self, ctx):
+        await ctx.reply(f'Hello {ctx.author.name}! <a:aq_pika_hi:861121622634397746>')
+
 def setup(client):
     client.add_cog(Basic(client))
