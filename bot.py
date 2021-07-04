@@ -40,7 +40,6 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         em = discord.Embed(
             title = 'No such command found :(',
-            description =f"**Prefix clash** with other bot?\nTry using `{ctx.prefix}prefix set <new_prefix>` to change the prefix of this bot.",
             color = 16737536
         )
         channel = client.get_channel(855092772242194482)
@@ -108,5 +107,5 @@ async def set(ctx, new_prefix):
 async def prefix_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         await ctx.reply(f'{error}', mention_author=False)
-        
+
 client.run(os.getenv('TOKEN'))
