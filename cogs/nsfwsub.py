@@ -40,7 +40,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
         name = random_sub.title
         url = random_sub.url
         site = urlparse(url).netloc
-        if site == 'redgifs.com' or site == 'imgur.com'or url[23:30]== 'gallery':
+        if site == 'redgifs.com' or site == 'imgur.com'or url[23:30]== 'gallery' or site=='v.redd.it':
             msg = f'`This post was sent from`: **r/{subred}** \n {url}'
             await ctx.reply(msg, mention_author=False)
         else:
@@ -116,7 +116,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
                 name = random_sub.title
                 url = random_sub.url
                 site = urlparse(url).netloc
-                if site == 'redgifs.com' or site == 'imgur.com'or url[23:30]== 'gallery':
+                if site == 'redgifs.com' or site == 'imgur.com'or url[23:30]== 'gallery' or site=='v.redd.it':
                     msg = f'`This post was sent from`: **r/nsfw** \n {url}'
                     await ctx.reply(msg, mention_author=False)
                 else:
@@ -154,7 +154,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
             url = random_sub.url
             name = random_sub.title
             site = urlparse(url).netloc
-            if site == 'redgifs.com' or site == 'imgur.com'or url[23:30]== 'gallery':
+            if site == 'redgifs.com' or site == 'imgur.com'or url[23:30]== 'gallery' or site=='v.redd.it':
                 msg = f'`This post was sent from`: **r/hentai** \n {url}'
                 await ctx.reply(msg, mention_author=False)
             else:

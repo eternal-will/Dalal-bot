@@ -33,17 +33,17 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
         name = random_sub.title
         url = random_sub.url
         site = urlparse(url).netloc
-        if site == 'redgifs.com' or site == 'imgur.com' or url[23:30]== 'gallery':
+        if site == 'redgifs.com' or site == 'imgur.com' or url[23:30]== 'gallery' or site=='v.redd.it':
             msg = f'`This post was sent from`: **r/{subreddit_name}** \n {url}'
             await ctx.reply(msg, mention_author=False)
         else:
-            em_nsfw = discord.Embed(
+            em_sfw = discord.Embed(
                 title = name,
                 description = f"`This post was sent from:` __r/{subreddit_name}__.",
                 color=16737536
             )
-            em_nsfw.set_image(url = url)
-            await ctx.reply(embed = em_nsfw, mention_author=False)
+            em_sfw.set_image(url = url)
+            await ctx.reply(embed = em_sfw, mention_author=False)
 
     async def sfw_post(self, ctx, subreddit_name):
         async with ctx.channel.typing():
@@ -73,6 +73,38 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
             await self.sfw_post(ctx, subreddit_name)
         else:
             await self.sfw_post(ctx, subreddit_name)
+
+    @commands.command(name='cp', description='• <:troll_dark:861167655763705896>')
+    async def cp(self, ctx):
+        subreddit_name = 'cat'
+        async with ctx.channel.typing():
+            subreddit = reddit.subreddit(subreddit_name)
+        all_subs = []
+        top = subreddit.hot(limit=100)
+        for submission in top:
+            all_subs.append(submission)
+        random_sub = random.choice(all_subs)
+        name = random_sub.title
+        url = random_sub.url
+        site = urlparse(url).netloc
+        if site == 'redgifs.com' or site == 'imgur.com' or url[23:30]== 'gallery' or site=='v.redd.it':
+            msg = f'`This post was sent from`: **r/{subreddit_name}** \n {url}'
+            await ctx.reply(msg, mention_author=False)
+            await ctx.send("cp = 'cat pics' 😹")
+        else:
+            em_sfw = discord.Embed(
+                title = name,
+                description = f"`This post was sent from:` __r/{subreddit_name}__.",
+                color=16737536
+            )
+            em_sfw.set_image(url = url)
+            em_sfw.set_footer(text="cp = 'cat pics' 😹")
+            await ctx.reply(embed = em_sfw, mention_author=False)
+
+    @commands.command(name='cat', aliases=['cats', 'billi'], description='• Fetches cute cat pics <:CatBlush:861171913274949652>')
+    async def cat(self, ctx):
+        subreddit_name = 'cat'
+        await self.sfw_post(ctx, subreddit_name)
 
 def setup(client):
     client.add_cog(SFWSub(client))
