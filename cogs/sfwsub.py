@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import random
 import praw
 from urllib.parse import urlparse
+import asyncio
 
 load_dotenv('.env')
 
@@ -89,8 +90,9 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
         site = urlparse(url).netloc
         if site == 'redgifs.com' or site == 'imgur.com' or url[23:30]== 'gallery' or site=='v.redd.it':
             msg = f'`This post was sent from`: **r/{subreddit_name}** \n {url}'
-            await ctx.reply(msg, mention_author=False)
-            await ctx.send("cp = 'cat pics' 😹")
+            msg1 = await ctx.reply(msg, mention_author=False,delete_after=4)
+            msg2 = await ctx.send("cp = 'cat pics' 😹",delete_after=4)
+            await ctx.message.add_reaction('✅')
         else:
             em_sfw = discord.Embed(
                 title = name,
@@ -99,7 +101,8 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
             )
             em_sfw.set_image(url = url)
             em_sfw.set_footer(text="cp = 'cat pics' 😹")
-            await ctx.reply(embed = em_sfw, mention_author=False)
+            msg = await ctx.reply(embed = em_sfw, mention_author=False,delete_after=4)
+            await ctx.message.add_reaction('✅')
 
     @commands.command(name='cat', aliases=['cats', 'billi'], description='• Fetches cute cat pics <:CatBlush:861171913274949652>')
     async def cat(self, ctx):
