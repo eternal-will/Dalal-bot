@@ -14,13 +14,13 @@ class Startup(commands.Cog, name='Startup_Cog'):
         servers = len(self.client.guilds)
         members = 0
         for guild in self.client.guilds:
-            members += guild.member_count - 1
+            members += guild.member_count
 
             await self.client.change_presence(activity = discord.Activity(
                 type = discord.ActivityType.watching,
                 name = f'{servers} servers and {members} members'
             ))
-            await asyncio.sleep(120)
+            await asyncio.sleep(60)
 
     @commands.Cog.listener()
     async def on_ready(self):
