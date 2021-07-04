@@ -108,4 +108,10 @@ async def prefix_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         await ctx.reply(f'{error}', mention_author=False)
 
+@client.command(name='git_pull', aliases = ['gp'])
+@commands.is_owner()
+async def git_pull(ctx):
+    git_pull_repo = subprocess.Popen(os.getenv('GIT_PULL_SH_PATH'), shell=True)
+    await ctx.reply('git pull initiated...', mention_author=False)
+
 client.run(os.getenv('TOKEN'))
