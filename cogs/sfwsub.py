@@ -33,7 +33,7 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
         name = random_sub.title
         url = random_sub.url
         site = urlparse(url).netloc
-        if site == 'redgifs.com' or site == 'imgur.com' or url[23:30]== 'gallery' or site=='v.redd.it':
+        if site == 'redgifs.com' or site == 'imgur.com' or url[23:30]== 'gallery' or site=='v.redd.it' or site=='youtu.be':
             msg = f'`This post was sent from`: **r/{subreddit_name}** \n {url}'
             await ctx.reply(msg, mention_author=False)
         else:
