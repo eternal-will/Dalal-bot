@@ -11,9 +11,12 @@ class Startup(commands.Cog, name='Startup_Cog'):
         await self.client.wait_until_ready()
         await self.client.change_presence(activity=discord.Game(name=".help | bit.ly/support-dalal"))
         await asyncio.sleep(120)
-        servers = len(self.client.guilds)
+        servers = 0
+        activeservers = self.client.guilds
+        for guild in activeservers:
+            servers += 1
         members = 0
-        for guild in self.client.guilds:
+        for guild in activeservers:
             members += guild.member_count
 
             await self.client.change_presence(activity = discord.Activity(
