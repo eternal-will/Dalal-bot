@@ -48,7 +48,7 @@ class Help(commands.Cog, name="Help_command"):
 
     async def setup_help_pag(self, ctx, entity=None, title=None):
         entity = entity or self.client
-        title = title or self.client.description
+        title = f"{self.client.user.name} Help!!"
 
         pages = []
 
