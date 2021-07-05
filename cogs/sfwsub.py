@@ -44,7 +44,7 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
                 color = 16737536
             ).set_image(url=img)
             pages.append(em_gal)
-        pag = Paginator(pages=pages)
+        pag = Paginator(pages=pages, compact=True)
         await pag.start(ctx)
 
     async def post_to_send(self, ctx, subreddit_name, random_sub):
@@ -127,7 +127,7 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
                     color = 16737536
                 ).set_image(url=img).set_footer(text="cp = 'cat pics' 😹")
                 pages.append(em_cp)
-            pag = Paginator(pages=pages)
+            pag = Paginator(pages=pages, compact=True)
             await pag.start(ctx)
         else:
             em_sfw = discord.Embed(

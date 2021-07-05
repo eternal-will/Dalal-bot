@@ -44,7 +44,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
                 color = 16737536
             ).set_image(url=img)
             pages.append(em_gal)
-        pag = Paginator(pages=pages)
+        pag = Paginator(pages=pages, compact=True)
         await pag.start(ctx)
 
     async def nsfw_post(self, ctx, subreddit_name):
