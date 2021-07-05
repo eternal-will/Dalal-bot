@@ -51,7 +51,7 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
         name = random_sub.title
         url = random_sub.url
         site = urlparse(url).netloc
-        if site == 'redgifs.com' or site == 'imgur.com' or site=='v.redd.it' or site=='youtu.be':
+        if site == 'redgifs.com' or site == 'imgur.com' or site=='v.redd.it' or site=='youtu.be' or site=='youtube.com':
             msg = f'`This post was sent from`: **r/{subreddit_name}** \n {url}'
             await ctx.reply(msg, mention_author=False)
         elif url[23:30]== 'gallery':
@@ -107,7 +107,7 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
         name = random_sub.title
         url = random_sub.url
         site = urlparse(url).netloc
-        if site == 'redgifs.com' or site == 'imgur.com' or site=='v.redd.it':
+        if site == 'redgifs.com' or site == 'imgur.com' or site=='v.redd.it' or site=='youtu.be' or site=='youtube.com':
             msg = f'`This post was sent from`: **r/{subreddit_name}** \n {url}'
             await ctx.reply(msg, mention_author=False,delete_after=4)
             await ctx.send("cp = 'cat pics' 😹",delete_after=4)
