@@ -113,6 +113,7 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
             await ctx.send("cp = 'cat pics' 😹",delete_after=4)
             await ctx.message.add_reaction('✅')
         elif url[23:30]== 'gallery':
+            await ctx.message.add_reaction('✅')
             gallery = []
             for i in random_sub.media_metadata.items():
                 url = i[1]['p'][0]['u']
@@ -124,12 +125,10 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
                     title = name,
                     description = f"`This post was sent from:` __r/{subreddit_name}__.",
                     color = 16737536
-                ).set_image(url=img)
-                em_cp.set_footer(text="cp = 'cat pics' 😹")
+                ).set_image(url=img).set_footer(text="cp = 'cat pics' 😹")
                 pages.append(em_cp)
             pag = Paginator(pages=pages)
             await pag.start(ctx)
-            await ctx.message.add_reaction('✅')
         else:
             em_sfw = discord.Embed(
                 title = name,
