@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import random
 import praw
 from urllib.parse import urlparse
+from pygicord import Paginator
 
 load_dotenv('.env')
 
@@ -29,9 +30,26 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
                 color=16737536
                 )
 
-    async def nsfw_post(self, ctx, subred):
+    async def setup_gallery(self, ctx, name, random_sub, subreddit_name):
+        gallery = []
+        for i in random_sub.media_metadata.items():
+            url = i[1]['p'][0]['u']
+            url = url.split("?")[0].replace("preview", "i")
+            gallery.append(url)
+        pages = []
+        for img in gallery:
+            em_gal = discord.Embed(
+                title = name,
+                description = f"`This post was sent from:` __r/{subreddit_name}__.",
+                color = 16737536
+            ).set_image(url=img)
+            pages.append(em_gal)
+        pag = Paginator(pages=pages)
+        await pag.start(ctx)
+
+    async def nsfw_post(self, ctx, subreddit_name):
         async with ctx.channel.typing():
-            subreddit = reddit.subreddit(subred)
+            subreddit = reddit.subreddit(subreddit_name)
         all_subs = []
         top = subreddit.hot(limit=100)
         for submission in top:
@@ -40,13 +58,15 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
         name = random_sub.title
         url = random_sub.url
         site = urlparse(url).netloc
-        if site == 'redgifs.com' or site == 'imgur.com'or url[23:30]== 'gallery' or site=='v.redd.it':
-            msg = f'`This post was sent from`: **r/{subred}** \n {url}'
+        if site == 'redgifs.com' or site == 'imgur.com' or site=='v.redd.it':
+            msg = f'`This post was sent from`: **r/{subreddit_name}** \n {url}'
             await ctx.reply(msg, mention_author=False)
+        elif url[23:30]== 'gallery':
+            await self.setup_gallery(ctx, name, random_sub, subreddit_name)
         else:
             em_nsfw = discord.Embed(
                 title = name,
-                description = f"`This post was sent from:` __r/{subred}__.",
+                description = f"`This post was sent from:` __r/{subreddit_name}__.",
                 color=16737536
             )
             em_nsfw.set_image(url = url)
@@ -68,12 +88,12 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
                 "2busty2hide",
                 "femalepov",
                 ]
-            subred = random.choice(REDDIT_BOOB_SUB)
-            await self.nsfw_post(ctx, subred)
+            subreddit_name = random.choice(REDDIT_BOOB_SUB)
+            await self.nsfw_post(ctx, subreddit_name)
 
     @commands.command(name = "nsfw", description = f"**Command format:** `.nsfw <subreddit name>`\n• Provides an nsfw post from the mentioned subreddit.\n• __r/sfwnudes__ is default and is used if no subreddit is provided.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
-    async def nsfw(self, ctx, subred = f"sfwnudes"):
-        if subred == 'sshashwat' or subred == 'shswt' or subred == 'shashwat' or subred == '_sshashwat' or subred == 'susuwant':
+    async def nsfw(self, ctx, subreddit_name = f"sfwnudes"):
+        if subreddit_name == 'sshashwat' or subreddit_name == 'shswt' or subreddit_name == 'shashwat' or subreddit_name == '_sshashwat' or subreddit_name == 'susuwant':
             url1 = 'https://i.imgur.com/OpRMyR5.jpg'
             msg = f"Looking for **Shashwat's** nudes?\n`Rather have some Jawline pics` <a:awink_thumbsup:855303753011691520>"
             em2 = discord.Embed(
@@ -87,7 +107,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
             if not ctx.channel.is_nsfw():
                 await ctx.reply(embed = self.em_notnsfw, mention_author=False)
             else:
-                await self.nsfw_post(ctx, subred)
+                await self.nsfw_post(ctx, subreddit_name)
 
     @nsfw.error
     async def nsfw_error(self, ctx, error):
@@ -116,9 +136,11 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
                 name = random_sub.title
                 url = random_sub.url
                 site = urlparse(url).netloc
-                if site == 'redgifs.com' or site == 'imgur.com'or url[23:30]== 'gallery' or site=='v.redd.it':
+                if site == 'redgifs.com' or site == 'imgur.com'or site=='v.redd.it':
                     msg = f'`This post was sent from`: **r/nsfw** \n {url}'
                     await ctx.reply(msg, mention_author=False)
+                elif url[23:30]== 'gallery':
+                    await self.setup_gallery(ctx, name, random_sub, subreddit_name='nsfw')
                 else:
                     em1 = discord.Embed(
                         title = name,
@@ -154,9 +176,11 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
             url = random_sub.url
             name = random_sub.title
             site = urlparse(url).netloc
-            if site == 'redgifs.com' or site == 'imgur.com'or url[23:30]== 'gallery' or site=='v.redd.it' or site=='youtu.be':
+            if site == 'redgifs.com' or site == 'imgur.com'or site=='v.redd.it' or site=='youtu.be':
                 msg = f'`This post was sent from`: **r/hentai** \n {url}'
                 await ctx.reply(msg, mention_author=False)
+            elif url[23:30]== 'gallery':
+                await self.setup_gallery(ctx, name, random_sub, subreddit_name='hentai')
             else:
                 em1 = discord.Embed(
                     title = name,
@@ -182,8 +206,8 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
                     "FullFrontalMaleNudity",
                     "ondww"
                 ]
-            subred = random.choice(REDDIT_MN_SUB)
-            await self.nsfw_post(ctx, subred)
+            subreddit_name = random.choice(REDDIT_MN_SUB)
+            await self.nsfw_post(ctx, subreddit_name)
 
     @commands.command(name="ass", aliases = ['butt', 'booty'], description = "• Command for booty lovers :peach:. \n• Fetches a post containing ass.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def ass(self, ctx):
@@ -209,8 +233,8 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
                 "pawg",
                 "twerking"
                 ]
-            subred = random.choice(REDDIT_ASS_SUB)
-            await self.nsfw_post(ctx, subred)
+            subreddit_name = random.choice(REDDIT_ASS_SUB)
+            await self.nsfw_post(ctx, subreddit_name)
 
     @commands.command(name="pussy", aliases = ['clit', 'vulva', 'vagina'], description = "• Command for pussy lovers :cat:. \n• Fetches a post containing pussy :smiley_cat: .\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def pussy(self, ctx):
@@ -297,8 +321,8 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
                 'PussyJuicy',
                 'TINYlips'
                 ]
-            subred = random.choice(REDDIT_PUSSY_SUB)
-            await self.nsfw_post(ctx, subred)
+            subreddit_name = random.choice(REDDIT_PUSSY_SUB)
+            await self.nsfw_post(ctx, subreddit_name)
 
 def setup(client):
     client.add_cog(NSFWSub(client))
