@@ -35,24 +35,8 @@ class OwnerCommands(commands.Cog, name='Owner_only_Commands'):
 
     @commands.command(hidden = True)
     @commands.is_owner()
-    async def chngst(self, ctx, abc=''):
-        abc_opt = ['a', 'b']
-        if not abc:
-            abc = random.choice(abc_opt)
-            if abc == 'a':
-                await self.client.change_presence(activity=discord.Game(name=".help | bit.ly/support-dalal"))
-            elif abc == 'b':
-                servers = 0
-                members = 0
-                activeservers = self.client.guilds
-                for guild in activeservers:
-                    servers += 1
-                    members += guild.member_count
-                    await self.client.change_presence(activity = discord.Activity(
-                        type = discord.ActivityType.watching,
-                        name = f'{servers} servers and {members} members'
-                    ))
-        elif abc == 'a':
+    async def chngst(self, ctx, abc='a'):
+        if abc == 'a':
             await self.client.change_presence(activity=discord.Game(name=".help | bit.ly/support-dalal"))
         elif abc == 'b':
             servers = 0
