@@ -200,7 +200,6 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
                 REDDIT_MN_SUB = [
                     "DadsGoneWild",
                     "Cunnilingus",
-                    "BHMGoneWild",
                     "NormalNudes",
                     "ladybonersgw",
                     "FullFrontalMaleNudity",
