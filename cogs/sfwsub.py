@@ -143,7 +143,7 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
     @commands.command(name='cat', aliases=['cats', 'kitten', 'kitty'], description='• Fetches cute cat pics <:CatBlush:861171913274949652>')
     async def cat(self, ctx):
         #subreddit configuration
-        CAT_PIC_SUBREDDIT = {
+        CAT_PIC_SUBREDDIT = [
             'cat',
             'cats',
             'catpictures',
@@ -156,21 +156,21 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
             'CatLoaf',
             'TuckedInKitties',
             'Blep'
-        }
+        ]
         subreddit_name = random.choice(CAT_PIC_SUBREDDIT)
         await self.sfw_post(ctx, subreddit_name)
 
     @commands.command(name='dog', aliases=['dogs', 'puppy', 'puppies'], description='• Fetches cute dog pics <a:dog_vibe:861859566475542549>')
     async def dog(self, ctx):
         #subreddit configuration
-        DOG_PIC_SUBREDDIT={
+        DOG_PIC_SUBREDDIT=[
             'dogpictures',
             'RarePuppers',
             'Zoomies',
             'DogsWithJobs',
             'Barkour',
             'WhatsWrongWithYourDog'
-        }
+        ]
         subreddit_name = random.choice(DOG_PIC_SUBREDDIT)
         await self.sfw_post(ctx, subreddit_name)
 
