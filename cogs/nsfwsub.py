@@ -335,12 +335,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
                     'bdsm',
                     'SheLikesItRough',
                     'Spanking',
-                    'BDSMerotica',
-                    'BDSMvideo',
                     'BDSM_NoSpam',
-                    'NSFW_BDSM',
-                    'lesBDSM',
-                    'kinkyporn',
                     'Cuffed',
                     'boundgirls',
                     'lezdom'
