@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 import asyncio
 
+Invite_Link = 'https://discord.com/api/oauth2/authorize?client_id=846816510306549770&permissions=67497024&scope=bot'
+
 class Basic(commands.Cog, name='Basic_Commands'):
 
     def __init__(self, client):
@@ -11,9 +13,9 @@ class Basic(commands.Cog, name='Basic_Commands'):
     async def on_ready(self):
         print(f"{self.__class__.__name__} are ready")
 
-    @commands.command(name = "invite", description = "• Provides **__[Invite Link for the Bot](https://discord.com/api/oauth2/authorize?client_id=846816510306549770&permissions=67497153&scope=bot)__**")
+    @commands.command(name = "invite", description = f"• Provides **__[Invite Link for the Bot]({Invite_Link})__**")
     async def invite(self, ctx):
-        em3 = discord.Embed(title = "Invite Link", description = "**__[Invite Link for the Bot](https://discord.com/api/oauth2/authorize?client_id=846816510306549770&permissions=67497153&scope=bot)__**", color=16737536)
+        em3 = discord.Embed(title = "Invite Link", description = f"**__[Invite Link for the Bot]({Invite_Link})__**", color=16737536)
         await ctx.reply(embed = em3)
 
     @commands.command(name = "ping", description="• Shows bot's latency")
