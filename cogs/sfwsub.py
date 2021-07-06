@@ -140,9 +140,38 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
             await ctx.reply(embed = em_sfw, mention_author=False,delete_after=4)
             await ctx.message.add_reaction('✅')
 
-    @commands.command(name='cat', aliases=['cats', 'billi'], description='• Fetches cute cat pics <:CatBlush:861171913274949652>')
+    @commands.command(name='cat', aliases=['cats', 'kitten', 'kitty'], description='• Fetches cute cat pics <:CatBlush:861171913274949652>')
     async def cat(self, ctx):
-        subreddit_name = 'cat'
+        #subreddit configuration
+        CAT_PIC_SUBREDDIT = {
+            'cat',
+            'cats',
+            'catpictures',
+            'JellyBeanToes',
+            'Kittens',
+            'CatsStandingUp',
+            'CatsInBusinessAttire',
+            'CatsonGlass',
+            'CatsInSinks',
+            'CatLoaf',
+            'TuckedInKitties',
+            'Blep'
+        }
+        subreddit_name = random.choice(CAT_PIC_SUBREDDIT)
+        await self.sfw_post(ctx, subreddit_name)
+
+    @commands.command(name='dog', aliases=['dogs', 'puppy', 'puppies'], description='• Fetches cute dog pics <a:dog_vibe:861859566475542549>')
+    async def dog(self, ctx):
+        #subreddit configuration
+        DOG_PIC_SUBREDDIT={
+            'dogpictures',
+            'RarePuppers',
+            'Zoomies',
+            'DogsWithJobs',
+            'Barkour',
+            'WhatsWrongWithYourDog'
+        }
+        subreddit_name = random.choice(DOG_PIC_SUBREDDIT)
         await self.sfw_post(ctx, subreddit_name)
 
 def setup(client):
