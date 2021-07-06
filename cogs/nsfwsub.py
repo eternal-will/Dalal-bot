@@ -324,5 +324,29 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
             subreddit_name = random.choice(REDDIT_PUSSY_SUB)
             await self.nsfw_post(ctx, subreddit_name)
 
+    @commands.command(name='bdsm', aliases=['kink', 'kinky'], description="• Command for BDSM lovers :<:hunter:861866842065993778>:.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
+    async def bdsm(self, ctx):
+        if not ctx.channel.is_nsfw():
+            await ctx.reply(embed = self.em_notnsfw, mention_author=False)
+        else:
+            async with ctx.channel.typing():
+        #subreddit connfiguration
+                BDSM_SUBREDDIT = [
+                    'bdsm',
+                    'SheLikesItRough',
+                    'Spanking',
+                    'BDSMerotica',
+                    'BDSMvideo',
+                    'BDSM_NoSpam',
+                    'NSFW_BDSM',
+                    'lesBDSM',
+                    'kinkyporn',
+                    'Cuffed',
+                    'boundgirls',
+                    'lezdom'
+                ]
+            subreddit_name = random.choice(BDSM_SUBREDDIT)
+            await self.nsfw_post(ctx, subreddit_name)
+
 def setup(client):
     client.add_cog(NSFWSub(client))
