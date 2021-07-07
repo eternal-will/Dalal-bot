@@ -38,18 +38,12 @@ for filename in os.listdir('./cogs'):
 @client.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
-        em = discord.Embed(
-            title = 'No such command found :(',
-            color = 16737536
-        )
         channel = client.get_channel(855092772242194482)
         await channel.send(error)
-        await ctx.reply(embed=em, mention_author=False)
-        raise error
     elif isinstance(error, commands.NotOwner):
         await ctx.reply(f'Owner-only command,\n{error}', mention_author=False)
     elif isinstance(error, commands.MissingRequiredArgument):
-        await ctx.reply(f'{error}\nUse `.help` to know the proper usage of this command.', mention_author=False)
+        await ctx.reply(f'{error}\nUse `{ctx.prefix}help` to know the proper usage of this command.', mention_author=False)
     else:
         channel = client.get_channel(855092929928364032)
         await channel.send(error)
