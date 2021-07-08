@@ -22,7 +22,7 @@ class Help(commands.Cog, name="Help_command"):
 
         full_invoke = command.qualified_name.replace(command.name, "")
 
-        signature = f"{ctx.prefix}{full_invoke}{cmd_invoke}"
+        signature = f"{full_invoke}{cmd_invoke}"
         return signature
 
     async def return_filtered_commands(self, walkable, ctx):
@@ -71,12 +71,12 @@ class Help(commands.Cog, name="Help_command"):
                 aliases = self.get_command_aliases(cmd, ctx)
                 desc = cmd.short_doc or cmd.description
                 signature = self.get_command_signature(cmd, ctx)
-                subcommand = f"**This command has subcommands:**\n• Use `{ctx.prefix}help {cmd}` to know more.\n" if hasattr(cmd, "all_commands") else ""
+                subcommand = f"**This command has subcommands:**\n• Use {ctx.prefix}`help {cmd}` to know more.\n" if hasattr(cmd, "all_commands") else ""
 
                 commands_entry += (
                     f"• **__{cmd.name}__**\n```\n{signature}\n```\n{desc}\n"
                     if isinstance(entity, commands.Command)
-                    else f"• **__{cmd.name}__**\n`{aliases}`\n{desc}\n{subcommand}\n"
+                    else f"• **__{cmd.name}__**\n{ctx.prefix}`{aliases}`\n{desc}\n{subcommand}\n"
                 )
             pages.append(commands_entry)
 
