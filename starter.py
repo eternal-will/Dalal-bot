@@ -7,7 +7,7 @@ import asyncio
 
 load_dotenv('.env')
 intents = discord.Intents.all()
-client=commands.Bot(command_prefix='@!', intents = intents)
+client=commands.Bot(command_prefix='!', intents = intents)
 
 @client.event
 async def on_command_error(error):
