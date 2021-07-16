@@ -1,6 +1,4 @@
-import discord
 from discord.ext import commands
-import asyncio
 
 class Startup(commands.Cog, name='Startup_Cog'):
 

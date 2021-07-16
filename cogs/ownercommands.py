@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-import random
 
 class OwnerCommands(commands.Cog, name='Owner_only_Commands'):
 

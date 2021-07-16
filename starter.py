@@ -1,5 +1,4 @@
 import os
-import discord
 from discord.ext import commands
 import subprocess
 from dotenv import load_dotenv
@@ -18,13 +17,13 @@ async def on_command_error(error):
 @client.command(name='start_bot', aliases=['sb'])
 @commands.is_owner()
 async def start_bot(ctx):
-    dalal = subprocess.Popen(os.getenv('BOT_STARTSH_PATH'), shell=True)
+    subprocess.Popen(os.getenv('BOT_STARTSH_PATH'), shell=True)
     await ctx.reply('turning bot on...', mention_author=False)
 
 @client.command(name='git_pull', aliases = ['gp'])
 @commands.is_owner()
 async def git_pull(ctx):
-    git_pull_repo = subprocess.Popen(os.getenv('GIT_PULL_SH_PATH'), shell=True)
+    subprocess.Popen(os.getenv('GIT_PULL_SH_PATH'), shell=True)
     await ctx.reply('git pull initiated...', mention_author=False)
 
 client.run(os.getenv('TOKEN'))
