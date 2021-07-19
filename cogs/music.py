@@ -488,7 +488,7 @@ class Music(commands.Cog, name='Music-Comms'):
                 description = error,
                 color=16737536
             )
-            await ctx.reply(em, mention_author=False)
+            await ctx.reply(embed=em, mention_author=False)
             raise error
         else:
             channel = self.client.get_channel(855092929928364032)
