@@ -484,7 +484,11 @@ class Music(commands.Cog, name='Music-Comms'):
         if isinstance(error, commands.MissingRequiredArgument):
             pass
         elif isinstance(error, commands.CommandError):
-            await ctx.reply(error, mention_author=False)
+            em = discord.Embed(
+                description = error,
+                color=16737536
+            )
+            await ctx.reply(em, mention_author=False)
             raise error
         else:
             channel = self.client.get_channel(855092929928364032)
