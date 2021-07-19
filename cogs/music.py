@@ -71,14 +71,14 @@ class YTDLSource(discord.PCMVolumeTransformer):
         return '**{0.title}** by **{0.uploader}**'.format(self)
 
     @classmethod
-    async def create_source(cls, ctx: commands.Context, search: str, *, loop: asyncio.BaseEventLoop = None):
+    async def create_source(cls, ctx: commands.Context, song_name: str, *, loop: asyncio.BaseEventLoop = None):
         loop = loop or asyncio.get_event_loop()
 
-        partial = functools.partial(cls.ytdl.extract_info, search, download=False, process=False)
+        partial = functools.partial(cls.ytdl.extract_info, song_name, download=False, process=False)
         data = await loop.run_in_executor(None, partial)
 
         if data is None:
-            raise YTDLError('Couldn\'t find anything that matches `{}`'.format(search))
+            raise YTDLError('Couldn\'t find anything that matches `{}`'.format(song_name))
 
         if 'entries' not in data:
             process_info = data
@@ -90,7 +90,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
                     break
 
             if process_info is None:
-                raise YTDLError('Couldn\'t find anything that matches `{}`'.format(search))
+                raise YTDLError('Couldn\'t find anything that matches `{}`'.format(song_name))
 
         webpage_url = process_info['webpage_url']
         partial = functools.partial(cls.ytdl.extract_info, webpage_url, download=False)
@@ -283,9 +283,6 @@ class Music(commands.Cog, name='Music-Comms'):
     async def cog_before_invoke(self, ctx: commands.Context):
         ctx.voice_state = self.get_voice_state(ctx)
 
-    async def cog_command_error(self, ctx: commands.Context, error: commands.CommandError):
-        await ctx.send('An error occurred: {}'.format(str(error)))
-
     @commands.command(name='join', invoke_without_subcommand=True)
     async def _join(self, ctx: commands.Context):
         """Joins a voice channel."""
@@ -457,7 +454,7 @@ class Music(commands.Cog, name='Music-Comms'):
         await ctx.message.add_reaction('✅')
 
     @commands.command(name='play', aliases=['p'])
-    async def _play(self, ctx: commands.Context, *, search: str):
+    async def _play(self, ctx: commands.Context, *, song_name: str):
         """Plays a song.
         If there are songs in the queue, this will be queued until the
         other songs finished playing.
@@ -470,7 +467,7 @@ class Music(commands.Cog, name='Music-Comms'):
 
         async with ctx.typing():
             try:
-                source = await YTDLSource.create_source(ctx, search, loop=self.bot.loop)
+                source = await YTDLSource.create_source(ctx, song_name, loop=self.bot.loop)
             except YTDLError as e:
                 await ctx.send('An error occurred while processing this request: {}'.format(str(e)))
             else:
@@ -481,6 +478,18 @@ class Music(commands.Cog, name='Music-Comms'):
                 else:
                     await ctx.voice_state.songs.put(song)
                     await ctx.send('Enqueued {}'.format(str(source)))
+
+    @_play.error
+    async def play_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            pass
+        elif isinstance(error, commands.CommandError):
+            await ctx.reply(error, mention_author=False)
+            raise error
+        else:
+            channel = self.client.get_channel(855092929928364032)
+            await channel.send(f'`play_error`: {error}')
+            raise error
 
     @_join.before_invoke
     @_play.before_invoke
