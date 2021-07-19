@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import asyncio
 
-Invite_Link = 'https://discord.com/api/oauth2/authorize?client_id=846816510306549770&permissions=67497024&scope=bot'
+Invite_Link = 'https://discord.com/api/oauth2/authorize?client_id=846816510306549770&permissions=104197440&scope=bot'
 
 class Basic(commands.Cog, name='Basic_Commands'):
 
