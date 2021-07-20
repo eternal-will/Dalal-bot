@@ -276,7 +276,7 @@ class Music(commands.Cog, name='Music-Comms'):
 
     def cog_check(self, ctx: commands.Context):
         if not ctx.guild:
-            raise commands.NoPrivateMessage('This command can\'t be used in DM channels.')
+            raise commands.NoPrivateMessage("This command can't be used in DM channels.")
 
         return True
 
@@ -296,6 +296,7 @@ class Music(commands.Cog, name='Music-Comms'):
             return
 
         ctx.voice_state.voice = await destination.connect()
+        await ctx.message.add_reaction('<a:atick:854913619515015209>')
 
     @commands.command(name='summon')
     @commands.has_permissions(manage_guild=True)
@@ -313,6 +314,7 @@ class Music(commands.Cog, name='Music-Comms'):
             return
 
         ctx.voice_state.voice = await destination.connect()
+        await ctx.message.add_reaction('<a:atick:854913619515015209>')
 
     @commands.command(name='leave', aliases=['disconnect', 'dc', 'fuckoff'])
     @commands.has_permissions(manage_guild=True)
@@ -324,6 +326,7 @@ class Music(commands.Cog, name='Music-Comms'):
 
         await ctx.voice_state.stop()
         del self.voice_states[ctx.guild.id]
+        await ctx.message.add_reaction('<a:bubye:866983992833998848>')
 
     @commands.command(name='volume')
     async def _volume(self, ctx: commands.Context, *, volume: int):
@@ -407,7 +410,7 @@ class Music(commands.Cog, name='Music-Comms'):
         """
 
         if len(ctx.voice_state.songs) == 0:
-            return await ctx.send('Empty queue.')
+            return await ctx.reply('The queue is empty ;-;', mention_author=False)
 
         items_per_page = 10
         pages = math.ceil(len(ctx.voice_state.songs) / items_per_page)
