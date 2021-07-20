@@ -4,6 +4,7 @@ import json
 from dotenv import load_dotenv
 import discord
 from discord.ext import commands
+from datetime import datetime
 
 load_dotenv('.env')
 
@@ -15,6 +16,26 @@ def get_prefix(client, message):
 
 intents = discord.Intents.all()
 client=commands.Bot(command_prefix=get_prefix, case_insensitive=True, intents = intents)
+start_time = datetime.now()
+
+def format_seconds(time_seconds):
+    """Formats some number of seconds into a string of format d days, x hours, y minutes, z seconds"""
+    seconds = time_seconds
+    hours = 0
+    minutes = 0
+    days = 0
+    while seconds >= 60:
+        if seconds >= 60 * 60 * 24:
+            seconds -= 60 * 60 * 24
+            days += 1
+        elif seconds >= 60 * 60:
+            seconds -= 60 * 60
+            hours += 1
+        elif seconds >= 60:
+            seconds -= 60
+            minutes += 1
+
+    return f"{days}d {hours}h {minutes}m {seconds}s"
 
 @client.command(hidden = True)
 @commands.is_owner()
@@ -100,5 +121,14 @@ async def set(ctx, new_prefix):
 async def prefix_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         await ctx.reply(f'{error}', mention_author=False)
+
+@client.command(hidden = True)
+@commands.is_owner()
+async def uptime(ctx):
+    """Tells how long the bot has been running."""
+    uptime_seconds = round(
+        (datetime.now() - start_time).total_seconds())
+    await ctx.send(f"Current Uptime: {format_seconds(uptime_seconds)}"
+                    )
 
 client.run(os.getenv('TOKEN'))
