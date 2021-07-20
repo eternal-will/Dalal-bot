@@ -476,7 +476,7 @@ class Music(commands.Cog, name='Music-Comms'):
             else:
                 song = Song(source)
                 await ctx.voice_state.songs.put(song)
-                await ctx.reply('Enqueued **{}**'.format(str(source)), mention_author=False)
+                await ctx.reply('Enqueued {}'.format(str(source)), mention_author=False)
 
     @_play.error
     async def play_error(self, ctx, error):
