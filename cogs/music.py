@@ -283,6 +283,9 @@ class Music(commands.Cog, name='Music-Comms'):
     async def cog_before_invoke(self, ctx: commands.Context):
         ctx.voice_state = self.get_voice_state(ctx)
 
+    async def cog_command_error(self, ctx: commands.Context, error: commands.CommandError):
+        await ctx.reply('An error occurred: {}'.format(str(error)), mention_author=False)
+
     @commands.command(name='join', invoke_without_subcommand=True)
     async def _join(self, ctx: commands.Context):
         """Joins a voice channel."""
@@ -472,12 +475,8 @@ class Music(commands.Cog, name='Music-Comms'):
                 await ctx.send('An error occurred while processing this request: {}'.format(str(e)))
             else:
                 song = Song(source)
-
-                if len(ctx.voice_state.songs) == 0:
-                    await ctx.voice_state.songs.put(song)
-                else:
-                    await ctx.voice_state.songs.put(song)
-                    await ctx.send('Enqueued {}'.format(str(source)))
+                await ctx.voice_state.songs.put(song)
+                await ctx.reply('Enqueued **{}**'.format(str(source)), mention_author=False)
 
     @_play.error
     async def play_error(self, ctx, error):
