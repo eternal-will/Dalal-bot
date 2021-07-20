@@ -38,8 +38,7 @@ for filename in os.listdir('./cogs'):
 @client.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
-        channel = client.get_channel(855092772242194482)
-        await channel.send(error)
+        pass
     elif isinstance(error, commands.NotOwner):
         await ctx.reply(f'Owner-only command,\n{error}', mention_author=False)
     elif isinstance(error, commands.MissingRequiredArgument):
