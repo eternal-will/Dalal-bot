@@ -6,6 +6,7 @@ import random
 import praw
 from urllib.parse import urlparse
 from pygicord import Paginator
+import utils.embed as cembed
 
 load_dotenv('.env')
 
@@ -24,10 +25,9 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
     async def on_ready(self):
         print(f"{self.__class__.__name__} are ready")
 
-    em_notnsfw = discord.Embed(
+    em_notnsfw = cembed.embed_form(
                 title = "This is not an NSFW Channel!",
                 description= "The post fetched was marked as NSFW,\ntry rerunning the command after supplying an SFW Subreddit",
-                color=16737536
                 )
 
     async def setup_gallery(self, ctx, name, random_sub, subreddit_name):
@@ -38,11 +38,11 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
             gallery.append(url)
         pages = []
         for img in gallery:
-            em_gal = discord.Embed(
+            em_gal = cembed.embed_form(
                 title = name,
                 description = f"`This post was sent from:` __r/{subreddit_name}__.",
-                color = 16737536
-            ).set_image(url=img)
+                img_url=img
+            )
             pages.append(em_gal)
         pag = Paginator(pages=pages, compact=True)
         await pag.start(ctx)
@@ -57,13 +57,12 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
         elif url[23:30]== 'gallery':
             await self.setup_gallery(ctx, name, random_sub, subreddit_name)
         else:
-            em_sfw = discord.Embed(
-                title = name,
+            await cembed.reply(
+                ctx,
+                title=name,
                 description = f"`This post was sent from:` __r/{subreddit_name}__.",
-                color=16737536
+                img_url=url
             )
-            em_sfw.set_image(url = url)
-            await ctx.reply(embed = em_sfw, mention_author=False)
 
     async def sfw_post(self, ctx, subreddit_name):
         async with ctx.channel.typing():
@@ -121,22 +120,22 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
                 gallery.append(url)
             pages = []
             for img in gallery:
-                em_cp = discord.Embed(
+                em_cp = cembed.embed_form(
                     title = name,
                     description = f"`This post was sent from:` __r/{subreddit_name}__.",
-                    color = 16737536
-                ).set_image(url=img).set_footer(text="cp = 'cat pics' 😹")
+                    img_url=img,
+                    footer_txt="cp = 'cat pics' 😹"
+                )
                 pages.append(em_cp)
             pag = Paginator(pages=pages, compact=True)
             await pag.start(ctx)
         else:
-            em_sfw = discord.Embed(
+            em_sfw = cembed.embed_form(
                 title = name,
                 description = f"`This post was sent from:` __r/{subreddit_name}__.",
-                color=16737536
+                img_url=url,
+                footer_txt="cp = 'cat pics' 😹"
             )
-            em_sfw.set_image(url = url)
-            em_sfw.set_footer(text="cp = 'cat pics' 😹")
             await ctx.reply(embed = em_sfw, mention_author=False,delete_after=4)
             await ctx.message.add_reaction('✅')
 

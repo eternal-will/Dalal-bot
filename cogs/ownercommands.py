@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+import utils.embed as cembed
 
 class OwnerCommands(commands.Cog, name='Owner_only_Commands'):
 
@@ -23,14 +24,14 @@ class OwnerCommands(commands.Cog, name='Owner_only_Commands'):
     async def load(self, ctx, extension):
         self.client.load_extension(f'cogs.{extension}')
         print(f'successfully loaded {extension}!')
-        await ctx.reply(f'successfully loaded `{extension}`!', mention_author=False)
+        await cembed.reply(ctx, description=f'successfully loaded `{extension}`!')
 
     @commands.command(hidden = True)
     @commands.is_owner()
     async def unload(self, ctx, extension):
         self.client.unload_extension(f'cogs.{extension}')
         print(f'successfully unloaded {extension}!')
-        await ctx.reply(f'successfully unloaded `{extension}`!', mention_author=False)
+        await cembed.reply(ctx, description=f'successfully unloaded `{extension}`!')
 
     @commands.command(hidden = True)
     @commands.is_owner()

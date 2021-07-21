@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import asyncio
+import utils.embed as cembed
 
 Invite_Link = 'https://discord.com/api/oauth2/authorize?client_id=846816510306549770&permissions=104197440&scope=bot'
 
@@ -15,26 +16,24 @@ class Basic(commands.Cog, name='Basic_Commands'):
 
     @commands.command(name = "invite", description = f"• Provides **__[Invite Link for the Bot]({Invite_Link})__**")
     async def invite(self, ctx):
-        em3 = discord.Embed(title = "Invite Link", description = f"**__[Invite Link for the Bot]({Invite_Link})__**", color=16737536)
-        await ctx.reply(embed = em3)
+        await cembed.reply(ctx, title = "Invite Link", description = f"**__[Invite Link for the Bot]({Invite_Link})__**")
 
     @commands.command(name = "ping", description="• Shows bot's latency")
     async def ping(self, ctx):
-        em = discord.Embed(
+        em = cembed.embed_form(
             title = "Pinging...",
             description = "<a:atyping:854905456551657513>",
-            color = 16737536
+            auth_name='Checking bot latency...',
+            auth_ico='https://cdn.discordapp.com/emojis/854906394453344256.gif'
         )
-        em.set_author(name = 'Checking bot latency...', icon_url = 'https://cdn.discordapp.com/emojis/854906394453344256.gif')
         message = await ctx.reply(embed=em, mention_author=False)
-        em2 = discord.Embed(
+        em = cembed.embed_form(
             title = "Pong! :ping_pong:",
             description = f"Client Latency: `{round(self.client.latency * 1000)}ms`",
-            color = 16737536
+            footer_txt=f"issued by {ctx.author.name}"
         )
-        em2.set_footer(text=f"issued by {ctx.author.name}")
         await asyncio.sleep(0.5)
-        await message.edit(embed = em2)
+        await message.edit(embed = em)
 
     @commands.command(name='hi', hidden=True, aliases=['helo', 'hello', 'sup', 'hey'])
     async def greet(self, ctx):

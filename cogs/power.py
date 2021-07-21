@@ -1,5 +1,5 @@
-import discord
 from discord.ext import commands
+import utils.embed as cembed
 
 class Power(commands.Cog, name='Power_Command'):
 
@@ -13,7 +13,7 @@ class Power(commands.Cog, name='Power_Command'):
     @commands.command(aliases = ['sd'], hidden=True)
     @commands.is_owner()
     async def shutdown(self, ctx):
-        await ctx.reply('shutting down <a:aloading:854906394453344256>', mention_author=False)
+        await cembed.reply(ctx, description='shutting down <a:aloading:854906394453344256>')
         print('shutting the bot down, command recieved from discord...')
         await ctx.bot.logout()
 

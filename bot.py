@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import discord
 from discord.ext import commands
 from datetime import datetime
+import utils.embed as cembed
 
 load_dotenv('.env')
 
@@ -45,12 +46,12 @@ async def reload(ctx, extension='all'):
                 if filename.endswith('.py'):
                     client.unload_extension(f'cogs.{filename[:-3]}')
                     client.load_extension(f'cogs.{filename[:-3]}')
-                    await ctx.send(f'• successfully reloaded `{filename[:-3]}`')
+                    await cembed.send(ctx, description=f'• successfully reloaded `{filename[:-3]}`')
     else:
         client.unload_extension(f'cogs.{extension}')
         client.load_extension(f'cogs.{extension}')
         print(f'successfully reloaded {extension}!')
-        await ctx.reply(f'successfully reloaded `{extension}`!', mention_author=False)
+        await cembed.reply(ctx, description=f'successfully reloaded `{extension}`!')
 
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
@@ -61,9 +62,9 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         pass
     elif isinstance(error, commands.NotOwner):
-        await ctx.reply(f'Owner-only command,\n{error}', mention_author=False)
+        await cembed.reply(ctx, description=f'Owner-only command,\n{error}')
     elif isinstance(error, commands.MissingRequiredArgument):
-        await ctx.reply(f'{error}\nUse `{ctx.prefix}help` to know the proper usage of this command.', mention_author=False)
+        await cembed.reply(ctx, description=f'{error}\nUse `{ctx.prefix}help` to know the proper usage of this command.')
     else:
         channel = client.get_channel(855092929928364032)
         await channel.send(error)
@@ -98,12 +99,11 @@ async def prefix(ctx):
     with open('prefixes.json', 'r') as f:
         prefixes = json.load(f)
         pre = prefixes[str(ctx.guild.id)]
-        em = discord.Embed(
-            description = f'Current bot prefix: `{pre}`',
-            color=16737536
-        )
-        em.set_footer(text="to change it, use .prefix set <new_prefix>")
-    await ctx.reply(embed = em, mention_author=False)
+    await cembed.reply(
+        ctx,
+        description = f'Current bot prefix: `{pre}`',
+        footer_txt="to change it, use .prefix set <new_prefix>"
+    )
 
 @prefix.command(name='set', description="• Changes bot's prefix to supplied value.")
 @commands.has_permissions(manage_guild=True)
@@ -115,12 +115,12 @@ async def set(ctx, new_prefix):
 
     with open('prefixes.json', 'w') as f:
         json.dump(prefixes, f, indent=4)
-    await ctx.reply(f"Bot prefix changed to: `{new_prefix}`", mention_author=False)
+    await cembed.reply(ctx, description=f"Bot prefix changed to: `{new_prefix}`")
 
 @set.error
 async def prefix_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
-        await ctx.reply(f'{error}', mention_author=False)
+        await cembed.reply(ctx, description=error)
 
 @client.command(hidden = True)
 @commands.is_owner()
@@ -128,7 +128,6 @@ async def uptime(ctx):
     """Tells how long the bot has been running."""
     uptime_seconds = round(
         (datetime.now() - start_time).total_seconds())
-    await ctx.send(f"Current Uptime: {format_seconds(uptime_seconds)}"
-                    )
+    await cembed.reply(ctx, description=f"Current Uptime: {format_seconds(uptime_seconds)}")
 
 client.run(os.getenv('TOKEN'))
