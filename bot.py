@@ -19,7 +19,7 @@ def get_prefix(client, message):
         return commands.when_mentioned_or(pre)(client, message)
 
 intents = discord.Intents.all()
-client=commands.Bot(command_prefix=get_prefix, case_insensitive=True, intents = intents)
+client=commands.Bot(command_prefix=get_prefix, case_insensitive=True, intents = intents, status=discord.Status.idle)
 start_time = datetime.now()
 
 def format_seconds(time_seconds):
