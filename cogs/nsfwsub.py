@@ -3,13 +3,13 @@ import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 import random
-import praw
+import asyncpraw
 from urllib.parse import urlparse
 from pygicord import Paginator
 
 load_dotenv('.env')
 
-reddit = praw.Reddit(
+reddit = asyncpraw.Reddit(
     client_id = os.getenv('client_id'),
     client_secret = os.getenv('client_secret'),
     user_agent = "pythonPraw"
