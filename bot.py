@@ -10,10 +10,13 @@ import utils.embed as cembed
 load_dotenv('.env')
 
 def get_prefix(client, message):
-    with open('prefixes.json', 'r') as f:
-        prefixes = json.load(f)
-        pre = prefixes[str(message.guild.id)]
-    return commands.when_mentioned_or(pre)(client, message)
+    if not message.guild:
+        return commands.when_mentioned_or('.')(client, message)
+    else:
+        with open('prefixes.json', 'r') as f:
+            prefixes = json.load(f)
+            pre = prefixes[str(message.guild.id)]
+        return commands.when_mentioned_or(pre)(client, message)
 
 intents = discord.Intents.all()
 client=commands.Bot(command_prefix=get_prefix, case_insensitive=True, intents = intents)
