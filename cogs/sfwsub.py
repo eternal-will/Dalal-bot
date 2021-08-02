@@ -55,6 +55,13 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
             await ctx.reply(msg, mention_author=False)
         elif url[23:30]== 'gallery':
             await self.setup_gallery(ctx, name, random_sub, subreddit_name)
+        elif url.endswith('.gifv'):
+            await cembed.reply(
+                ctx,
+                title=name,
+                description = f"`This post was sent from:` __r/{subreddit_name}__.",
+                img_url=url[:-1]
+            )
         else:
             await cembed.reply(
                 ctx,
@@ -128,6 +135,15 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
                 pages.append(em_cp)
             pag = Paginator(pages=pages, compact=True)
             await pag.start(ctx)
+        elif url.endswith('.gifv'):
+            em_sfw= cembed.embed_form(
+                ctx,
+                title=name,
+                description = f"`This post was sent from:` __r/{subreddit_name}__.",
+                img_url=url[:-1]
+            )
+            await ctx.reply(embed = em_sfw, mention_author=False,delete_after=4)
+            await ctx.message.add_reaction('✅')
         else:
             em_sfw = cembed.embed_form(
                 title = name,
