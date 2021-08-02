@@ -41,7 +41,7 @@ class OwnerCommands(commands.Cog, name='Owner_only_Commands'):
         elif abc == 'b':
             servers = len(self.client.guilds)
             members = len(self.client.users)
-            await self.client.change_presence(activity = discord.Activity(type = discord.ActivityType.watching, name = f'{servers} servers and {members} members'))
+            await self.client.change_presence(activity = discord.Activity(type = discord.ActivityType.watching, name = f'{servers} servers and {members} users'))
         await ctx.reply('done', mention_author=False)
 
 def setup(client):
