@@ -60,7 +60,7 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
                 ctx,
                 title=name,
                 description = f"`This post was sent from:` __r/{subreddit_name}__.",
-                img_url=url[:-1]
+                img_url=f'{url[:-4]}webm'
             )
         else:
             await cembed.reply(
@@ -140,7 +140,7 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
                 ctx,
                 title=name,
                 description = f"`This post was sent from:` __r/{subreddit_name}__.",
-                img_url=url[:-1]
+                img_url=f'{url[:-4]}webm'
             )
             await ctx.reply(embed = em_sfw, mention_author=False,delete_after=4)
             await ctx.message.add_reaction('✅')
