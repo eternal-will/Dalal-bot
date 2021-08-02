@@ -49,7 +49,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
 
     async def nsfw_post(self, ctx, subreddit_name):
         async with ctx.channel.typing():
-            subreddit = reddit.subreddit(subreddit_name)
+            subreddit = await reddit.subreddit(subreddit_name)
         all_subs = []
         top = subreddit.hot(limit=100)
         for submission in top:
@@ -129,7 +129,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
     async def rnsfw(self, ctx):
         if not ctx.guild:
             async with ctx.channel.typing():
-                subreddit = reddit.subreddit("nsfw")
+                subreddit = await reddit.subreddit("nsfw")
                 all_subs = []
                 top = subreddit.hot(limit=100)
                 for submission in top:
@@ -154,7 +154,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
         else:
             if ctx.channel.is_nsfw():
                 async with ctx.channel.typing():
-                    subreddit = reddit.subreddit("nsfw")
+                    subreddit = await reddit.subreddit("nsfw")
                     all_subs = []
                     top = subreddit.hot(limit=100)
                     for submission in top:
@@ -194,7 +194,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
     async def hentai(self, ctx):
         if not ctx.guild:
             async with ctx.channel.typing():
-                subreddit = reddit.subreddit("hentai")
+                subreddit = await reddit.subreddit("hentai")
             all_subs = []
             top = subreddit.hot(limit=100)
             for submission in top:
@@ -219,7 +219,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
         else:
             if  ctx.channel.is_nsfw():
                 async with ctx.channel.typing():
-                    subreddit = reddit.subreddit("hentai")
+                    subreddit = await reddit.subreddit("hentai")
                 all_subs = []
                 top = subreddit.hot(limit=100)
                 for submission in top:
