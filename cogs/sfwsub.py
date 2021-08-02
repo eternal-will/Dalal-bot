@@ -68,7 +68,7 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
             subreddit = await reddit.subreddit(subreddit_name)
         all_subs = []
         top = subreddit.hot(limit=100)
-        for submission in top:
+        async for submission in top:
             all_subs.append(submission)
         random_sub = random.choice(all_subs)
         if random_sub.over_18:
@@ -99,7 +99,7 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
             subreddit = await reddit.subreddit(subreddit_name)
         all_subs = []
         top = subreddit.hot(limit=100)
-        for submission in top:
+        async for submission in top:
             all_subs.append(submission)
         random_sub = random.choice(all_subs)
         name = random_sub.title
