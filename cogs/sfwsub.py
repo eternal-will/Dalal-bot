@@ -1,5 +1,4 @@
 import os
-import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 import random
@@ -66,7 +65,7 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
 
     async def sfw_post(self, ctx, subreddit_name):
         async with ctx.channel.typing():
-            subreddit = reddit.subreddit(subreddit_name)
+            subreddit = await reddit.subreddit(subreddit_name)
         all_subs = []
         top = subreddit.hot(limit=100)
         for submission in top:
@@ -97,7 +96,7 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
     async def cp(self, ctx):
         subreddit_name = 'cat'
         async with ctx.channel.typing():
-            subreddit = reddit.subreddit(subreddit_name)
+            subreddit = await reddit.subreddit(subreddit_name)
         all_subs = []
         top = subreddit.hot(limit=100)
         for submission in top:
