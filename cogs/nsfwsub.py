@@ -67,7 +67,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
                 ctx,
                 title=name,
                 description = f"`This post was sent from:` __r/{subreddit_name}__.",
-                img_url=url[:-1]
+                img_url=f'{url[:-4]}webm'
             )
         elif url[23:30]== 'gallery':
             await self.setup_gallery(ctx, name, random_sub, subreddit_name)
@@ -156,7 +156,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
                         ctx,
                         title=name,
                         description = f"`This post was sent from:` __r/nsfw__.",
-                        img_url=url[:-1]
+                        img_url=f'{url[:-4]}webm'
                     )
                 else:
                     em1 = discord.Embed(
@@ -188,7 +188,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
                             ctx,
                             title=name,
                             description = f"`This post was sent from:` __r/nsfw__.",
-                            img_url=url[:-1]
+                            img_url=f'{url[:-4]}webm'
                         )
                     else:
                         em1 = discord.Embed(
@@ -235,7 +235,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
                     ctx,
                     title=name,
                     description = f"`This post was sent from:` __r/hentai__.",
-                    img_url=url[:-1]
+                    img_url=f'{url[:-4]}webm'
                 )
             else:
                 em1 = discord.Embed(
@@ -267,7 +267,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
                         ctx,
                         title=name,
                         description = f"`This post was sent from:` __r/hentai__.",
-                        img_url=url[:-1]
+                        img_url=f'{url[:-4]}webm'
                     )
                 else:
                     em1 = discord.Embed(
