@@ -52,7 +52,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
             subreddit = await reddit.subreddit(subreddit_name)
         all_subs = []
         top = subreddit.hot(limit=100)
-        for submission in top:
+        async for submission in top:
             all_subs.append(submission)
         random_sub = random.choice(all_subs)
         name = random_sub.title
@@ -132,7 +132,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
                 subreddit = await reddit.subreddit("nsfw")
                 all_subs = []
                 top = subreddit.hot(limit=100)
-                for submission in top:
+                async for submission in top:
                     all_subs.append(submission)
                 random_sub = random.choice(all_subs)
                 name = random_sub.title
@@ -157,7 +157,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
                     subreddit = await reddit.subreddit("nsfw")
                     all_subs = []
                     top = subreddit.hot(limit=100)
-                    for submission in top:
+                    async for submission in top:
                         all_subs.append(submission)
                     random_sub = random.choice(all_subs)
                     name = random_sub.title
@@ -197,7 +197,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
                 subreddit = await reddit.subreddit("hentai")
             all_subs = []
             top = subreddit.hot(limit=100)
-            for submission in top:
+            async for submission in top:
                 all_subs.append(submission)
             random_sub = random.choice(all_subs)
             url = random_sub.url
@@ -222,7 +222,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
                     subreddit = await reddit.subreddit("hentai")
                 all_subs = []
                 top = subreddit.hot(limit=100)
-                for submission in top:
+                async for submission in top:
                     all_subs.append(submission)
                 random_sub = random.choice(all_subs)
                 url = random_sub.url
