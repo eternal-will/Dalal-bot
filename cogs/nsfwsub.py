@@ -6,6 +6,7 @@ import random
 import asyncpraw
 from urllib.parse import urlparse
 from pygicord import Paginator
+import utils.embed as cembed
 
 load_dotenv('.env')
 
@@ -58,9 +59,16 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
         name = random_sub.title
         url = random_sub.url
         site = urlparse(url).netloc
-        if site == 'redgifs.com' or site == 'www.redgifs.com' or site == 'imgur.com' or url.endswith('.gifv') or site=='v.redd.it' or site=='youtu.be' or site=='youtube.com':
+        if site == 'redgifs.com' or site == 'www.redgifs.com' or site == 'imgur.com' or site=='v.redd.it' or site=='youtu.be' or site=='youtube.com':
             msg = f'`This post was sent from`: **r/{subreddit_name}** \n {url}'
             await ctx.reply(msg, mention_author=False)
+        elif url.endswith('.gifv'):
+            await cembed.reply(
+                ctx,
+                title=name,
+                description = f"`This post was sent from:` __r/{subreddit_name}__.",
+                img_url=url[:-1]
+            )
         elif url[23:30]== 'gallery':
             await self.setup_gallery(ctx, name, random_sub, subreddit_name)
         else:
@@ -143,6 +151,13 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
                     await ctx.reply(msg, mention_author=False)
                 elif url[23:30]== 'gallery':
                     await self.setup_gallery(ctx, name, random_sub, subreddit_name='nsfw')
+                elif url.endswith('.gifv'):
+                    cembed.reply(
+                        ctx,
+                        title=name,
+                        description = f"`This post was sent from:` __r/nsfw__.",
+                        img_url=url[:-1]
+                    )
                 else:
                     em1 = discord.Embed(
                         title = name,
@@ -168,6 +183,13 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
                         await ctx.reply(msg, mention_author=False)
                     elif url[23:30]== 'gallery':
                         await self.setup_gallery(ctx, name, random_sub, subreddit_name='nsfw')
+                    elif url.endswith('.gifv'):
+                        cembed.reply(
+                            ctx,
+                            title=name,
+                            description = f"`This post was sent from:` __r/nsfw__.",
+                            img_url=url[:-1]
+                        )
                     else:
                         em1 = discord.Embed(
                             title = name,
@@ -208,6 +230,13 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
                 await ctx.reply(msg, mention_author=False)
             elif url[23:30]== 'gallery':
                 await self.setup_gallery(ctx, name, random_sub, subreddit_name='hentai')
+            elif url.endswith('.gifv'):
+                cembed.reply(
+                    ctx,
+                    title=name,
+                    description = f"`This post was sent from:` __r/hentai__.",
+                    img_url=url[:-1]
+                )
             else:
                 em1 = discord.Embed(
                     title = name,
@@ -233,6 +262,13 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
                     await ctx.reply(msg, mention_author=False)
                 elif url[23:30]== 'gallery':
                     await self.setup_gallery(ctx, name, random_sub, subreddit_name='hentai')
+                elif url.endswith('.gifv'):
+                    cembed.reply(
+                        ctx,
+                        title=name,
+                        description = f"`This post was sent from:` __r/hentai__.",
+                        img_url=url[:-1]
+                    )
                 else:
                     em1 = discord.Embed(
                         title = name,
