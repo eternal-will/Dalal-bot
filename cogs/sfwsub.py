@@ -116,9 +116,9 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
             msg = f'`This post was sent from`: **r/{subreddit_name}** \n {url}'
             await ctx.reply(msg, mention_author=False,delete_after=4)
             await ctx.send("cp = 'cat pics' 😹",delete_after=4)
-            await ctx.message.add_reaction('✅')
+            await ctx.message.add_reaction('<:troll_dark:861167655763705896>')
         elif url[23:30]== 'gallery':
-            await ctx.message.add_reaction('✅')
+            await ctx.message.add_reaction('<:troll_dark:861167655763705896>')
             gallery = []
             for i in random_sub.media_metadata.items():
                 url = i[1]['p'][0]['u']
@@ -143,7 +143,7 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
                 img_url=f'{url[:-4]}webm'
             )
             await ctx.reply(embed = em_sfw, mention_author=False,delete_after=4)
-            await ctx.message.add_reaction('✅')
+            await ctx.message.add_reaction('<:troll_dark:861167655763705896>')
         else:
             em_sfw = cembed.embed_form(
                 title = name,
@@ -152,7 +152,7 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
                 footer_txt="cp = 'cat pics' 😹"
             )
             await ctx.reply(embed = em_sfw, mention_author=False,delete_after=4)
-            await ctx.message.add_reaction('✅')
+            await ctx.message.add_reaction('<:troll_dark:861167655763705896>')
 
     @commands.command(name='cat', aliases=['cats', 'kitten', 'kitty'], description='• Fetches cute cat pics <:CatBlush:861171913274949652>')
     async def cat(self, ctx):
