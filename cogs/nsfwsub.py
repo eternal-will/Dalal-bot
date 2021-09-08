@@ -7,6 +7,7 @@ import asyncpraw
 from urllib.parse import urlparse
 from pygicord import Paginator
 import utils.embed as cembed
+from settings.SubredConfig import NSFWSubConfig as SUB
 
 load_dotenv('.env')
 
@@ -82,16 +83,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
 
     @commands.command(name="boob", aliases = ['tits', 'tit', 'boobs', 'boobies', 'boobie', 'titties', 'titty', 'tittie'], description = "• Command for titty lovers :wink:. \n• Fetches a post containing boobies.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def boob(self, ctx):
-        REDDIT_BOOB_SUB = [
-                "boobs",
-                "tittydrop",
-                "burstingout",
-                "bustypetite",
-                "biggerthanyouthought",
-                "2busty2hide",
-                "femalepov",
-                ]
-        subreddit_name = random.choice(REDDIT_BOOB_SUB)
+        subreddit_name = random.choice(SUB.BOOB_SUBRED)
         if not ctx.guild:
             await self.nsfw_post(ctx, subreddit_name)
         else:
@@ -124,13 +116,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
     @nsfw.error
     async def nsfw_error(self, ctx, error):
         if isinstance(error, commands.CommandInvokeError):
-            channel = self.client.get_channel(855092929928364032)
-            await channel.send(f'nsfw_error, {error}')
             await ctx.reply('Failed to find such subreddit.', mention_author=False)
-            raise error
-        else:
-            channel = self.client.get_channel(855092929928364032)
-            await channel.send(f'nsfw_error, {error}')
             raise error
 
     @commands.command(name = "rnsfw", description = "• Shows an nsfw post from __r/nsfw__.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
@@ -200,17 +186,6 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
                         await ctx.reply(embed = em1, mention_author=False)
             else:
                 await ctx.reply(embed = self.em_notnsfw, mention_author=False)
-
-    @rnsfw.error
-    async def rnsfw_error(self, ctx, error):
-        if isinstance(error, commands.CommandInvokeError):
-            channel = self.client.get_channel(855092929928364032)
-            await channel.send(f'rnsfw_error, {error}')
-            raise error
-        else:
-            channel = self.client.get_channel(855092929928364032)
-            await channel.send(f'rnsfw_error, {error}')
-            raise error
 
     @commands.command(name = "hentai", description = "• Shows an nsfw post from r/hentai.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def hentai(self, ctx):
@@ -282,16 +257,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
 
     @commands.command(name= "malenudes", aliases = ['nudemale', 'nudemales', 'malenude', 'nakedmales', 'nakedmale'], description = "• Why shud boys have all the fun? <a:awink_thumbsup:855303753011691520>\n• Displays a post containing **__Male Nudes__**\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def malenudes(self, ctx):
-        #subreddit configuration
-        REDDIT_MN_SUB = [
-            "DadsGoneWild",
-            "Cunnilingus",
-            "NormalNudes",
-            "ladybonersgw",
-            "FullFrontalMaleNudity",
-            "ondww"
-        ]
-        subreddit_name = random.choice(REDDIT_MN_SUB)
+        subreddit_name = random.choice(SUB.MN_SUBRED)
         if not ctx.guild:                
             await self.nsfw_post(ctx, subreddit_name)
         else:
@@ -302,25 +268,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
 
     @commands.command(name="ass", aliases = ['butt', 'booty'], description = "• Command for booty lovers :peach:. \n• Fetches a post containing ass.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def ass(self, ctx):
-        #subreddit configuration
-        REDDIT_ASS_SUB = [
-        "AssOnTheGlass",
-        "BoltedOnBooty",
-        "ButtsAndBareFeet",
-        "HighResASS",
-        "HungryButts",
-        "LoveToWatchYouLeave",
-        "SpreadEm",
-        "TheUnderbun",
-        "Tushy",
-        "Underbun",
-        "ass",
-        "assgifs",
-        "booty",
-        "pawg",
-        "twerking"
-        ]
-        subreddit_name = random.choice(REDDIT_ASS_SUB)
+        subreddit_name = random.choice(SUB.ASS_SUBRED)
         if not ctx.guild:            
             await self.nsfw_post(ctx, subreddit_name)
         else:
@@ -331,86 +279,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
 
     @commands.command(name="pussy", aliases = ['clit', 'vulva', 'vagina'], description = "• Command for pussy lovers :cat:. \n• Fetches a post containing pussy :smiley_cat: .\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def pussy(self, ctx):
-    #subreddit configuration
-        REDDIT_PUSSY_SUB = [
-        'LipsThatGrip',
-        'pussy',
-        'GodPussy',
-        'grool',
-        'rearpussy',
-        'simps',
-        'Innie',
-        'LabiaGW',
-        'pelfie',
-        'CelebrityPussy',
-        'MoundofVenus',
-        'BreakingTheSeal',
-        'PussyMound',
-        'spreadeagle',
-        'spreading',
-        'wetspot',
-        'pussyjobs',
-        'PussyWedgie',
-        'PerfectPussies',
-        'Ratemypussy',
-        'vagina',
-        'GushingGirls',
-        'SideLips',
-        'pussyrating',
-        'beef_flaps',
-        'bigclit',
-        'Creaming',
-        'WomenLookingDown',
-        'PussyFlashing',
-        'ButterflyWings',
-        'AsianPussy',
-        'shavedpussies',
-        'PussyBeforeAndAfter',
-        'vulva',
-        'OpeningPussy',
-        'PinkChocolate',
-        'closeup',
-        'PinkandBare',
-        'PussyJuices',
-        'DarkBitsNPieces',
-        'Innies',
-        'PussySlip',
-        'TheRearPussy',
-        'pussypump',
-        'RubbingHerPussy',
-        'LipsThatUsedToGrip',
-        'beachpussy',
-        'puffypussy',
-        'ThePussyPop',
-        'Pink',
-        'legsSpread',
-        'BeefFlaps',
-        'NSFW_Pussy_Teen_Ass',
-        'labia',
-        'peachlips',
-        'shavedgirls',
-        'GROOLGW',
-        'Clits',
-        'pussystacking',
-        'shaved_asians',
-        'PerfectPussy',
-        'TinyAsianPussy',
-        'cutecunts',
-        'pumpedpussy',
-        'Outies',
-        'PUSSY_GIRLS',
-        'pantiesaside',
-        'clit',
-        'sidepussy',
-        'NSFW_PUSSY_HD',
-        'nsfwcloseups',
-        'Pumping',
-        'Pelfies',
-        'Creamywetpussies',
-        'PussyJuicy',
-        'TINYlips'
-        ]
-        subreddit_name = random.choice(REDDIT_PUSSY_SUB)
+        subreddit_name = random.choice(SUB.PUSSY_SUBRED)
         if not ctx.guild:
             await self.nsfw_post(ctx, subreddit_name)
         else:
@@ -421,16 +290,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
 
     @commands.command(name='bdsm', aliases=['kink', 'kinky'], description="• Command for BDSM lovers :<:hunter:861866842065993778>:.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def bdsm(self, ctx):
-        BDSM_SUBREDDIT = [
-                    'bdsm',
-                    'SheLikesItRough',
-                    'Spanking',
-                    'BDSM_NoSpam',
-                    'Cuffed',
-                    'boundgirls',
-                    'lezdom'
-                ]
-        subreddit_name = random.choice(BDSM_SUBREDDIT)
+        subreddit_name = random.choice(SUB.BDSM_SUBRED)
         if not ctx.guild:                
             await self.nsfw_post(ctx, subreddit_name)
         else:
