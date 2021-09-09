@@ -6,7 +6,7 @@ import asyncpraw
 from urllib.parse import urlparse
 from pygicord import Paginator
 import utils.embed as cembed
-from settings.SubredConfig import SFWSubConfig as SUB
+from settings.SubredConfig import SFWSub as redd
 
 load_dotenv('.env')
 
@@ -157,12 +157,12 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
 
     @commands.command(name='cat', aliases=['cats', 'kitten', 'kitty'], description='• Fetches cute cat pics <:CatBlush:861171913274949652>')
     async def cat(self, ctx):
-        subreddit_name = random.choice(SUB.CAT_SUBRED)
+        subreddit_name = random.choice(redd.CAT_PIC_SUB)
         await self.sfw_post(ctx, subreddit_name)
 
     @commands.command(name='dog', aliases=['dogs', 'puppy', 'puppies'], description='• Fetches cute dog pics <a:dog_vibe:861859566475542549>')
     async def dog(self, ctx):
-        subreddit_name = random.choice(SUB.DOG_SUBRED)
+        subreddit_name = random.choice(redd.DOG_PIC_SUB)
         await self.sfw_post(ctx, subreddit_name)
 
 def setup(client):
