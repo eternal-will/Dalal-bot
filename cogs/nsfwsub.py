@@ -59,7 +59,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
         name = random_sub.title
         url = random_sub.url
         site = urlparse(url).netloc
-        if site == 'redgifs.com' or site == 'imgur.com' or site=='youtu.be' or site=='youtube.com':
+        if site == 'redgifs.com' or site == 'imgur.com' or site=='fb.watch' or site=='youtu.be' or site=='youtube.com':
             msg = f'`This post was sent from`: **r/{subreddit_name}** \n {url}'
             await ctx.reply(msg, mention_author=False)
         elif  site=='v.redd.it':
