@@ -55,6 +55,43 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
         pag = Paginator(pages=pages, compact=True)
         await pag.start(ctx)
 
+    async def post_to_send(self, ctx, subreddit_name, random_sub):
+        name = random_sub.title
+        url = random_sub.url
+        site = urlparse(url).netloc
+        if site == 'redgifs.com' or site == 'imgur.com' or site=='youtu.be' or site=='youtube.com':
+            msg = f'`This post was sent from`: **r/{subreddit_name}** \n {url}'
+            await ctx.reply(msg, mention_author=False)
+        elif  site=='v.redd.it':
+            try:
+                r = requests.get(url)
+            except requests.exceptions.RequestException:
+                msg = f'`This post was sent from`: **r/{subreddit_name}** \n {url}'
+                await ctx.reply(msg, mention_author=False)
+            if r.status_code != 200:
+                msg = f'`This post was sent from`: **r/{subreddit_name}** \n {url}'
+                await ctx.reply(msg, mention_author=False)
+            else:
+                random_sub = await reddit.submission(url=r.url)
+                subreddit_name = random_sub.subreddit.name
+                await self.post_to_send(ctx, random_sub, subreddit_name)
+        elif url[23:30]== 'gallery':
+            await self.setup_gallery(ctx, name, random_sub, subreddit_name)
+        elif url.endswith('.gifv'):
+            await cembed.reply(
+                ctx,
+                title=name,
+                description = f"`This post was sent from:` __r/{subreddit_name}__.",
+                img_url=f'{url[:-4]}webm'
+            )
+        else:
+            await cembed.reply(
+                ctx,
+                title=name,
+                description = f"`This post was sent from:` __r/{subreddit_name}__.",
+                img_url=url
+            )
+            
     async def nsfw_post(self, ctx, subreddit_name):
         async with ctx.channel.typing():
             subreddit = await reddit.subreddit(subreddit_name)
@@ -63,22 +100,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
         async for submission in top:
             all_subs.append(submission)
         random_sub = random.choice(all_subs)
-        name = random_sub.title
-        url = random_sub.url
-        site = urlparse(url).netloc
-        if site == 'redgifs.com' or site == 'www.redgifs.com' or site == 'imgur.com' or url.endswith('.gifv') or site=='v.redd.it' or site=='youtu.be' or site=='youtube.com':
-            msg = f'`This post was sent from`: **r/{subreddit_name}** \n {url}'
-            await ctx.reply(msg, mention_author=False)
-        elif url[23:30]== 'gallery':
-            await self.setup_gallery(ctx, name, random_sub, subreddit_name)
-        else:
-            em_nsfw = discord.Embed(
-                title = name,
-                description = f"`This post was sent from:` __r/{subreddit_name}__.",
-                color=16737536
-            )
-            em_nsfw.set_image(url = url)
-            await ctx.reply(embed = em_nsfw, mention_author=False)
+        await self.post_to_send(ctx, subreddit_name, random_sub)
 
     @commands.command(name="boob", aliases = ['tits', 'tit', 'boobs', 'boobies', 'boobie', 'titties', 'titty', 'tittie'], description = "• Command for titty lovers :wink:. \n• Fetches a post containing boobies.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def boob(self, ctx):
