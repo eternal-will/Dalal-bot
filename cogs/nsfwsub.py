@@ -59,38 +59,26 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
         name = random_sub.title
         url = random_sub.url
         site = urlparse(url).netloc
-        if site == 'redgifs.com' or site == 'imgur.com' or site=='fb.watch' or site=='youtu.be' or site=='youtube.com':
+        if url[23:30]== 'gallery':
+            await self.setup_gallery(ctx, name, random_sub, subreddit_name)
+#        elif ((site=='i.redd.it') and (url.endswith('.jpg') or url.endswith('.jpeg') or url.endswith('.png'))):
+ #           async with aiohttp.ClientSession() as session:
+  #              async with session.get(url) as resp:
+   #                 if resp.status != 200:
+    #                    return await ctx.reply(f'`This post was sent from`: **r/{subreddit_name}** \n {url}', mention_author=False)
+     #               data = io.BytesIO(await resp.read())
+      #              await ctx.reply(f"`This post was sent from`: **r/{subreddit_name}**",file=discord.File(data, 'image.png'), mention_author=False)
+        elif url.endswith('.jpeg') or url.endswith('.png') or url.endswith('.jpg') or url.endswith('.gif') or url.endswith('.webp'):
+            em_nsfw = discord.Embed(
+                title = name,
+                description = f"`This post was sent from:` __r/{subreddit_name}__.",
+                color=16737536
+            )
+            em_nsfw.set_image(url = url)
+            await ctx.reply(embed = em_nsfw, mention_author=False)
+        else:
             msg = f'`This post was sent from`: **r/{subreddit_name}** \n {url}'
             await ctx.reply(msg, mention_author=False)
-        elif  site=='v.redd.it':
-            try:
-                r = requests.get(url)
-            except requests.exceptions.RequestException:
-                msg = f'`This post was sent from`: **r/{subreddit_name}** \n {url}'
-                await ctx.reply(msg, mention_author=False)
-            if r.status_code != 200:
-                msg = f'`This post was sent from`: **r/{subreddit_name}** \n {url}'
-                await ctx.reply(msg, mention_author=False)
-            else:
-                random_sub = await reddit.submission(url=r.url)
-                subreddit_name = random_sub.subreddit.name
-                await self.post_to_send(ctx, random_sub, subreddit_name)
-        elif url[23:30]== 'gallery':
-            await self.setup_gallery(ctx, name, random_sub, subreddit_name)
-        elif url.endswith('.gifv'):
-            await cembed.reply(
-                ctx,
-                title=name,
-                description = f"`This post was sent from:` __r/{subreddit_name}__.",
-                img_url=f'{url[:-4]}webm'
-            )
-        else:
-            await cembed.reply(
-                ctx,
-                title=name,
-                description = f"`This post was sent from:` __r/{subreddit_name}__.",
-                img_url=url
-            )
             
     async def nsfw_post(self, ctx, subreddit_name):
         async with ctx.channel.typing():
