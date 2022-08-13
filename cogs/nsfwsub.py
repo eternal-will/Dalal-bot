@@ -66,12 +66,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
         name = random_sub.title
         url = random_sub.url
         site = urlparse(url).netloc
-        if site == 'redgifs.com' or site == 'www.redgifs.com' or site == 'imgur.com' or url.endswith('.gifv') or site=='v.redd.it' or site=='youtu.be' or site=='youtube.com':
-            msg = f'`This post was sent from`: **r/{subreddit_name}** \n {url}'
-            await ctx.reply(msg, mention_author=False)
-        elif url[23:30]== 'gallery':
-            await self.setup_gallery(ctx, name, random_sub, subreddit_name)
-        else:
+        if url.endswith('.png') or url.endswith('.jpg') or url.endswith('.jpeg') or url.endswith('.gif') or url.endswith('webp'):
             em_nsfw = discord.Embed(
                 title = name,
                 description = f"`This post was sent from:` __r/{subreddit_name}__.",
@@ -79,6 +74,12 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
             )
             em_nsfw.set_image(url = url)
             await ctx.reply(embed = em_nsfw, mention_author=False)
+        elif url[23:30]== 'gallery':
+            await self.setup_gallery(ctx, name, random_sub, subreddit_name)
+        else:
+            msg = f'`This post was sent from`: **r/{subreddit_name}** \n {url}'
+            await ctx.reply(msg, mention_author=False)
+
 
     @commands.command(name="boob", aliases = ['tits', 'tit', 'boobs', 'boobies', 'boobie', 'titties', 'titty', 'tittie'], description = "• Command for titty lovers :wink:. \n• Fetches a post containing boobies.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def boob(self, ctx):

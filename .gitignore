@@ -1,6 +1,4 @@
 *.env
 *.pyc
-*.tmp
 *.json
-*.sh
-*.exe
+venv
