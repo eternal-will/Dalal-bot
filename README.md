@@ -2,4 +2,13 @@
 
 A reddit-discord bot which can be used to fetch posts from subreddits, either specified or from given categories...
 
-P.S. you may find some sensitive details in initial commits but those are now changed so yeah...
+## Installation
+
+1. In the main directory, create following files:
+`.env`, `prefixes.json`
+
+2. Fill the `.env` file in the format of `.env.example` provided.
+
+3. Install required python packages: `pip3 install -r requirements.txt`
+
+4. Run the bot: `python3 bot.py`
