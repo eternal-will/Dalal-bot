@@ -75,8 +75,6 @@ async def on_command_error(ctx, error):
 
 @client.event
 async def on_guild_join(guild):
-    channel = client.get_channel(855340868597055508)
-    await channel.send(f"**{client.user.name}** was added to **{guild.name}** - `{guild.id}`")
     with open('prefixes.json', 'r') as f:
         prefixes = json.load(f)
 
@@ -87,8 +85,6 @@ async def on_guild_join(guild):
 
 @client.event
 async def on_guild_remove(guild):
-    channel = client.get_channel(855340868597055508)
-    await channel.send(f"**{client.user.name}** was removed from **{guild.name}** - `{guild.id}`")
     with open('prefixes.json', 'r') as f:
         prefixes = json.load(f)
 
