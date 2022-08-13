@@ -9,6 +9,6 @@ A reddit-discord bot which can be used to fetch posts from subreddits, either sp
 
 2. Fill the `.env` file in the format of `.env.example` provided.
 
-3. Install required python packages: `pip3 install -r requirements.txt`
+3. Install required python packages: **`pip3 install -r requirements.txt`**
 
-4. Run the bot: `python3 bot.py`
+4. Run the bot: **`python3 bot.py`**
