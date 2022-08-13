@@ -1,6 +1,6 @@
 # Dalal-bot
 
-A reddit-discord bot which can be used to fetch posts from subreddits, either specified or from given categories...
+A reddit-discord bot which can be used  in discord to fetch posts from subreddits, either specified or from given categories...
 
 ## Installation
 
