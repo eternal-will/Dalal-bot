@@ -2,7 +2,7 @@ from discord.ext import commands
 import asyncio
 import utils.embed as cembed
 
-Invite_Link = 'https://discord.com/api/oauth2/authorize?client_id=846816510306549770&permissions=104197440&scope=bot'
+Invite_Link = "https://discord.com/api/oauth2/authorize?client_id=1008323478803447838&permissions=137439340608&scope=bot%20applications.commands"
 
 class Basic(commands.Cog, name='Basic_Commands'):
 
