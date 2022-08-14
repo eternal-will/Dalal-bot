@@ -7,6 +7,7 @@ from urllib.parse import urlparse
 from pygicord import Paginator
 import utils.embed as cembed
 from settings.SubredConfig import SFWSub as redd
+import requests
 
 load_dotenv('.env')
 
@@ -103,15 +104,9 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
     @commands.command(name = 'sfw', aliases = ['meme', 'memes', 'reddit', 'sfwreddit'], description = '**Command format:** `.sfw <subreddit_name>(optional)`\n• Wanna surf some reddit or watch some memes?\n• Feel free to use this command..')
     async def sfw(self, ctx, subreddit_name=''):
         if not subreddit_name:
-            #subreddit configuration
-            RANDOM_MEME_SUBREDDIT = [
-            'memes',
-            'meme'
-            ]
-            subreddit_name = random.choice(RANDOM_MEME_SUBREDDIT)
-            await self.sfw_post(ctx, subreddit_name)
-        else:
-            await self.sfw_post(ctx, subreddit_name)
+            subreddit_name = random.choice(redd.MEME_SUBREDDIT)
+        await self.sfw_post(ctx, subreddit_name)
+
 
     @commands.command(name='cp', description='• <:troll_dark:861167655763705896>')
     async def cp(self, ctx):

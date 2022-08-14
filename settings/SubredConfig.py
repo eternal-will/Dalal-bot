@@ -149,3 +149,12 @@ class SFWSub:
         'Barkour',
         'WhatsWrongWithYourDog'
     ]
+
+    MEME_SUBREDDIT = [
+        'memes',
+        'meme',
+        'dankmemes',
+        'PrequelMemes',
+        'PewdiepieSubmissions',
+        'funny'
+    ]
