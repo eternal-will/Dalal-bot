@@ -3,7 +3,7 @@ discord==1.7.3
 praw==7.4.0
 pygicord==1.0.0
 python-dotenv==0.19.0
-youtube_dl==2021.6.6
 buttons
 asyncpraw
 bs4
+requests
