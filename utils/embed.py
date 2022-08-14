@@ -1,7 +1,7 @@
-import discord
+from discord import Embed
 
 def embed_form(title=None, description=None, img_url=None, footer_txt=None, auth_name=None, auth_ico=None, auth_url=None):
-    em = discord.Embed(
+    em = Embed(
         title = title,
         description= description,
         color=16737536

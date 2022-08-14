@@ -1,8 +1,8 @@
 # bot.py
-import os
-import json
+from os import getenv, listdir
+from json import load, dump
 from dotenv import load_dotenv
-import discord
+from discord import Intents, Status
 from discord.ext import commands
 from datetime import datetime
 import utils.embed as cembed
@@ -14,12 +14,12 @@ def get_prefix(client, message):
         return commands.when_mentioned_or('.')(client, message)
     else:
         with open('prefixes.json', 'r') as f:
-            prefixes = json.load(f)
+            prefixes = load(f)
             pre = prefixes[str(message.guild.id)]
         return commands.when_mentioned_or(pre)(client, message)
 
-intents = discord.Intents.all()
-client=commands.Bot(command_prefix=get_prefix, case_insensitive=True, intents = intents, status=discord.Status.idle)
+intents = Intents.all()
+client=commands.Bot(command_prefix=get_prefix, case_insensitive=True, intents = intents, status=Status.idle)
 start_time = datetime.now()
 
 def format_seconds(time_seconds):
@@ -45,7 +45,7 @@ def format_seconds(time_seconds):
 @commands.is_owner()
 async def reload(ctx, extension='all'):
     if extension == 'all':
-            for filename in os.listdir('./cogs'):
+            for filename in listdir('./cogs'):
                 if filename.endswith('.py'):
                     client.unload_extension(f'cogs.{filename[:-3]}')
                     client.load_extension(f'cogs.{filename[:-3]}')
@@ -56,34 +56,34 @@ async def reload(ctx, extension='all'):
         print(f'successfully reloaded {extension}!')
         await cembed.reply(ctx, description=f'successfully reloaded `{extension}`!')
 
-for filename in os.listdir('./cogs'):
+for filename in listdir('./cogs'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
 
 @client.event
 async def on_guild_join(guild):
     with open('prefixes.json', 'r') as f:
-        prefixes = json.load(f)
+        prefixes = load(f)
 
     prefixes[str(guild.id)] = '.'
 
     with open('prefixes.json', 'w') as f:
-        json.dump(prefixes, f, indent=4)
+        dump(prefixes, f, indent=4)
 
 @client.event
 async def on_guild_remove(guild):
     with open('prefixes.json', 'r') as f:
-        prefixes = json.load(f)
+        prefixes = load(f)
 
     prefixes.pop(str(guild.id))
 
     with open('prefixes.json', 'w') as f:
-        json.dump(prefixes, f, indent=4)
+        dump(prefixes, f, indent=4)
 
 @client.group(invoke_without_command=True, name = 'prefix', description ="• Shows bot's current prefix.")
 async def prefix(ctx):
     with open('prefixes.json', 'r') as f:
-        prefixes = json.load(f)
+        prefixes = load(f)
         pre = prefixes[str(ctx.guild.id)]
     await cembed.reply(
         ctx,
@@ -95,12 +95,12 @@ async def prefix(ctx):
 @commands.has_permissions(manage_guild=True)
 async def set(ctx, new_prefix):
     with open('prefixes.json', 'r') as f:
-        prefixes = json.load(f)
+        prefixes = load(f)
 
     prefixes[str(ctx.guild.id)] = new_prefix
 
     with open('prefixes.json', 'w') as f:
-        json.dump(prefixes, f, indent=4)
+        dump(prefixes, f, indent=4)
     await cembed.reply(ctx, description=f"Bot prefix changed to: `{new_prefix}`")
 
 @set.error
@@ -116,4 +116,4 @@ async def uptime(ctx):
         (datetime.now() - start_time).total_seconds())
     await cembed.reply(ctx, description=f"Current Uptime: {format_seconds(uptime_seconds)}")
 
-client.run(os.getenv('TOKEN'))
+client.run(getenv('TOKEN'))

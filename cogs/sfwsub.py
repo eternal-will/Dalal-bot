@@ -1,8 +1,8 @@
-import os
+from os import getenv
 from discord.ext import commands
 from dotenv import load_dotenv
 from random import choice
-import asyncpraw
+from asyncpraw import Reddit
 from urllib.parse import urlparse
 from pygicord import Paginator
 import utils.embed as cembed
@@ -12,9 +12,9 @@ from bs4 import BeautifulSoup
 
 load_dotenv('.env')
 
-reddit = asyncpraw.Reddit(
-    client_id = os.getenv('client_id'),
-    client_secret = os.getenv('client_secret'),
+reddit = Reddit(
+    client_id = getenv('client_id'),
+    client_secret = getenv('client_secret'),
     user_agent = "pythonPraw"
 )
 

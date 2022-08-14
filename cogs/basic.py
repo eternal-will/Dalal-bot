@@ -1,5 +1,5 @@
 from discord.ext import commands
-import asyncio
+from asyncio import sleep
 import utils.embed as cembed
 
 Invite_Link = "https://discord.com/api/oauth2/authorize?client_id=1008323478803447838&permissions=137439340608&scope=bot%20applications.commands"
@@ -31,7 +31,7 @@ class Basic(commands.Cog, name='Basic_Commands'):
             description = f"Client Latency: `{round(self.client.latency * 1000)}ms`",
             footer_txt=f"issued by {ctx.author.name}"
         )
-        await asyncio.sleep(0.5)
+        await sleep(0.5)
         await message.edit(embed = em)
 
     @commands.command(name='hi', hidden=True, aliases=['helo', 'hello', 'sup', 'hey'])
