@@ -60,6 +60,10 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
                 description = f"`This post was sent from:` __r/{subreddit_name}__.",
                 img_url=url
             )
+        elif site=="v.redd.it":
+            link = get(url).url
+            msg = f'`This post was sent from`: **r/{subreddit_name}** \n {link}'
+            await ctx.reply(msg, mention_author=False)
         elif url[23:30]== 'gallery':
             await self.setup_gallery(ctx, name, random_sub, subreddit_name)
         elif site=="www.redgifs.com" or site=="redgifs.com":
@@ -82,11 +86,11 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
         random_sub = choice(all_subs)
         if random_sub.over_18:
             if not ctx.channel.is_nsfw():
-                await ctx.reply(embed = self.em_notnsfw, mention_author=False)
-            else:
-                await self.post_to_send(ctx, subreddit_name, random_sub)
-        else:
+                return await ctx.reply(embed = self.em_notnsfw, mention_author=False)
+        try:
             await self.post_to_send(ctx, subreddit_name, random_sub)
+        except:
+            await self.sfw_post(ctx, subreddit_name)
 
     @commands.command(name = 'sfw', aliases = ['meme', 'memes', 'reddit', 'sfwreddit'], description = '**Command format:** `.sfw <subreddit_name>(optional)`\n• Wanna surf some reddit or watch some memes?\n• Feel free to use this command..')
     async def sfw(self, ctx, subreddit_name=''):

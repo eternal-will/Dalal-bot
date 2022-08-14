@@ -56,14 +56,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
         pag = Paginator(pages=pages, compact=True)
         await pag.start(ctx)
 
-    async def nsfw_post(self, ctx, subreddit_name):
-        async with ctx.channel.typing():
-            subreddit = await reddit.subreddit(subreddit_name)
-        all_subs = []
-        top = subreddit.hot(limit=100)
-        async for submission in top:
-            all_subs.append(submission)
-        random_sub = choice(all_subs)
+    async def post_to_send(self, ctx, random_sub, subreddit_name):
         name = random_sub.title
         url = random_sub.url
         site = urlparse(url).netloc
@@ -74,6 +67,10 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
                 img_url=url
             )
             await ctx.reply(embed = em_nsfw, mention_author=False)
+        elif site=="v.redd.it":
+            link = get(url).url
+            msg = f'`This post was sent from`: **r/{subreddit_name}** \n {link}'
+            await ctx.reply(msg, mention_author=False)
         elif url[23:30]== 'gallery':
             await self.setup_gallery(ctx, name, random_sub, subreddit_name)
         elif site=="www.redgifs.com" or site=="redgifs.com":
@@ -86,6 +83,18 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
             msg = f'`This post was sent from`: **r/{subreddit_name}** \n {url}'
             await ctx.reply(msg, mention_author=False)
 
+    async def nsfw_post(self, ctx, subreddit_name):
+        async with ctx.channel.typing():
+            subreddit = await reddit.subreddit(subreddit_name)
+        all_subs = []
+        top = subreddit.hot(limit=100)
+        async for submission in top:
+            all_subs.append(submission)
+        random_sub = choice(all_subs)
+        try:
+            await self.post_to_send(ctx, subreddit_name, random_sub)
+        except:
+            await self.nsfw_post(ctx, subreddit_name)
 
     @commands.command(name="boob", aliases = ['tits', 'tit', 'boobs', 'boobies', 'boobie', 'titties', 'titty', 'tittie'], description = "• Command for titty lovers :wink:. \n• Fetches a post containing boobies.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
     async def boob(self, ctx):
