@@ -61,19 +61,6 @@ for filename in os.listdir('./cogs'):
         client.load_extension(f'cogs.{filename[:-3]}')
 
 @client.event
-async def on_command_error(ctx, error):
-    if isinstance(error, commands.CommandNotFound):
-        pass
-    elif isinstance(error, commands.NotOwner):
-        await cembed.reply(ctx, description=f'Owner-only command,\n{error}')
-    elif isinstance(error, commands.MissingRequiredArgument):
-        await cembed.reply(ctx, description=f'{error}\nUse `{ctx.prefix}help` to know the proper usage of this command.')
-    else:
-        channel = client.get_channel(855092929928364032)
-        await channel.send(error)
-        raise error
-
-@client.event
 async def on_guild_join(guild):
     with open('prefixes.json', 'r') as f:
         prefixes = json.load(f)
