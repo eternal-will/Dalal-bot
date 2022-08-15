@@ -92,7 +92,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
             all_subs.append(submission)
         random_sub = choice(all_subs)
         try:
-            await self.post_to_send(ctx, subreddit_name, random_sub)
+            await self.post_to_send(ctx, random_sub, subreddit_name)
         except:
             await self.nsfw_post(ctx, subreddit_name)
 
