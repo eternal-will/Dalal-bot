@@ -3,8 +3,6 @@ from discord.ext import commands
 from dotenv import load_dotenv
 from random import choice
 from asyncpraw import Reddit
-from urllib.parse import urlparse
-from pygicord import Paginator
 import utils.embed as cembed
 from settings.SubredConfig import SFWSub as redd
 from utils.post import post_to_send

@@ -1,6 +1,6 @@
 from urllib.parse import urlparse
-from pygicord import Paginator
 import utils.embed as cembed
+from utils.util import Pag
 from requests import get
 from bs4 import BeautifulSoup
 
@@ -18,7 +18,7 @@ async def setup_gallery(ctx, name, random_sub, subreddit_name):
             img_url=img
         )
         pages.append(em_gal)
-    pag = Paginator(pages=pages, compact=True)
+    pag = Pag(extra_pages=pages)
     await pag.start(ctx)
 
 async def post_to_send(ctx, subreddit_name, random_sub):
