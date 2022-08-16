@@ -54,7 +54,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
         await self.run_comm(ctx, subreddit_name)
 
     @commands.command(name = "nsfw", description = f"**Command format:** `.nsfw <subreddit name>`\n• Provides an nsfw post from the mentioned subreddit.\n• __r/nsfw__ is default and is used if no subreddit is provided.\n• Can only be used in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)")
-    async def nsfw(self, ctx, subreddit_name = nsfw):
+    async def nsfw(self, ctx, subreddit_name = "nsfw"):
         await self.run_comm(ctx, subreddit_name)
 
     @nsfw.error
