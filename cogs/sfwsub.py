@@ -45,7 +45,7 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
         except:
             await self.sfw_post(ctx, subreddit_name)
 
-    @commands.command(name = 'sfw', aliases = ['meme', 'memes', 'reddit', 'sfwreddit'], description = '**Command format:** `.sfw <subreddit_name>(optional)`\n• Wanna surf some reddit or watch some memes?\n• Feel free to use this command..')
+    @commands.command(name = 'sfw', aliases = ['meme', 'memes', 'reddit', 'sfwreddit'], description = '**Command format:** `.sfw <subreddit_name>`\n• Wanna surf some reddit or watch some memes?\n• Feel free to use this command..')
     async def sfw(self, ctx, subreddit_name=''):
         if not subreddit_name:
             subreddit_name = choice(redd.MEME_SUBREDDIT)
