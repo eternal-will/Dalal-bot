@@ -1,111 +1,131 @@
 from discord.ext import commands
+from discord import Embed
 from utils.util import Pag
 
 class Help(commands.Cog, name="Help_command"):
     def __init__(self, client):
         self.client = client
         self.client.remove_command("help")
-        self.cmds_per_page = 4
 
-    def get_command_signature(self, command: commands.Command, ctx: commands.Context):
-        aliases = "|".join(command.aliases)
-        cmd_invoke = f"[{command.name}|{aliases}]" if command.aliases else command.name
+    def comm_sign(self, cmd, pref):
+        aliases = "|".join(cmd.aliases)
+        cmd_invoke = f"[{cmd.name}|{aliases}]" if cmd.aliases else cmd.name
+        full_invoke = cmd.qualified_name.replace(cmd.name, "")
+        prefix = f"@{self.client.user.name} " if pref == f"<@{self.client.user.id}> " else pref
 
-        full_invoke = command.qualified_name.replace(command.name, "")
+        return f"{prefix}{full_invoke}{cmd_invoke} {cmd.signature}"
 
-        signature = f"{ctx.prefix}{full_invoke}{cmd_invoke} {command.signature}"
-        return signature
+    def get_specific_comm_desc(self, cmd, ctx):
+        if not ctx.channel.is_nsfw() and ctx.guild and cmd.cog_name == "NSFW_Commands":
+            desc = "**Run this help command in a [channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content) to know more.**"
+            return f"{desc}\n"
+        else:
+            desc = f"{cmd.short_doc or cmd.description}" + f"\n\n**This command has subcommands:**" if hasattr(cmd, "all_commands") else f"{cmd.short_doc or cmd.description}"
+            signature = self.comm_sign(cmd, ctx.prefix)
+            return f"`{signature}`\n{desc}\n"
 
-    def get_command_aliases(self, command: commands.Command, ctx: commands.Context):
-        aliases = "|".join(command.aliases)
-        cmd_invoke = f"[{command.name}|{aliases}]" if command.aliases else command.name
+    async def cmd_specific_help(self, ctx, cmd):
+        comm_help_em = Embed(
+                title=f"{self.client.user.name} Help!",
+                description=f"Help for **{cmd or self.client.user.name}** command!",
+                color=16737536
+            )
+        comm_help_em.add_field(
+                name=f"{cmd.name}",
+                value=self.get_specific_comm_desc(cmd, ctx)
+            )
+        if hasattr(cmd, "all_commands"):
+                for cmd in list(set(cmd.all_commands.values())):
+                    comm_help_em.add_field(
+                        name=f"{cmd.name}",
+                        value=self.get_specific_comm_desc(cmd, ctx),
+                        inline=False
+                    )
+        await ctx.reply(embed=comm_help_em, mention_author=False)
 
-        full_invoke = command.qualified_name.replace(command.name, "")
-
-        signature = f"{full_invoke}{cmd_invoke}"
-        return signature
-
-    async def return_filtered_commands(self, walkable, ctx):
+    def get_cmd_list(self):
         filtered = []
 
-        for c in walkable.walk_commands():
-            try:
-                if c.hidden:
-                    continue
-
-                elif c.parent:
-                    continue
-
-                await c.can_run(ctx)
-                filtered.append(c)
-            except commands.CommandError:
+        for c in self.client.walk_commands():
+            if c.hidden or c.parent:
                 continue
-
+            filtered.append(c)
+        
         return self.return_sorted_commands(filtered)
 
     def return_sorted_commands(self, commandList):
         return sorted(commandList, key=lambda x: x.name)
 
-    async def setup_help_pag(self, ctx, entity=None, title=None):
-        entity = entity or self.client
-        title = f"{self.client.user.name} Help!"
+    def comm_alias(self, cmd):
+        aliases = "|".join(cmd.aliases)
+        cmd_invoke = f"[{cmd.name}|{aliases}]" if cmd.aliases else cmd.name
+        full_invoke = cmd.qualified_name.replace(cmd.name, "")
 
-        pages = []
+        return f"{full_invoke}{cmd_invoke}"
 
-        if isinstance(entity, commands.Command):
-            filtered_commands = (
-                list(set(entity.all_commands.values()))
-                if hasattr(entity, "all_commands")
-                else []
-            )
-            filtered_commands.insert(0, entity)
+    def get_com_desc(self, cmd, ctx):
+        if not ctx.channel.is_nsfw() and ctx.guild and cmd.cog_name == "NSFW_Commands":
+            desc = "Run this help command in a **[channel marked as nsfw](https://support.discord.com/hc/en-us/articles/115000084051-NSFW-Channels-and-Content)** to know more."
+            return f"{desc}\n"
+        desc = f"{cmd.short_doc or cmd.description}" + f"\n**This command has subcommands**\n• Use {ctx.prefix}`help {cmd.name}` to know more." if hasattr(cmd, "all_commands") else f"{cmd.short_doc or cmd.description}"
+        alias = self.comm_alias(cmd)
+        return f"`{alias}`\n{desc}\n"
 
-        else:
-            filtered_commands = await self.return_filtered_commands(entity, ctx)
-
-        for i in range(0, len(filtered_commands), self.cmds_per_page):
-            next_commands = filtered_commands[i : i + self.cmds_per_page]
-            commands_entry = ""
-
-            for cmd in next_commands:
-                aliases = self.get_command_aliases(cmd, ctx)
-                desc = cmd.short_doc or cmd.description
-                signature = self.get_command_signature(cmd, ctx)
-                subcommand = f"**This command has subcommands:**\n• Use {ctx.prefix}`help {cmd}` to know more.\n" if hasattr(cmd, "all_commands") else ""
-
-                commands_entry += (
-                    f"• **__{cmd.name}__**\n```\n{signature}\n```\n{desc}\n"
-                    if isinstance(entity, commands.Command)
-                    else f"• **__{cmd.name}__**\n{ctx.prefix}`{aliases}`\n{desc}\n{subcommand}\n"
+    async def bot_help(self, ctx):
+        cmd_list = self.get_cmd_list()
+        title=f"{self.client.user.name} Help!"
+        em1 = Embed(
+            title=title,
+            description = "Help for __**SFW Commands**__!",
+            color=16737536
+        )
+        em2 = Embed(
+            title=title,
+            description = "Help for __**NSFW Commands**__!",
+            color=16737536
+        )
+        em3 = Embed(
+            title=title,
+            description = "Help for __Other Commands__!",
+            color=16737536
+        )
+        for cmd in cmd_list:
+            if cmd.cog_name == "SFW_Commands":
+                em1.add_field(
+                    name=f"{cmd.name}",
+                    value=self.get_com_desc(cmd, ctx),
+                    inline=False
                 )
-            pages.append(commands_entry)
-
-        await Pag(title=title, color=16737536, entries=pages, length=1).start(ctx)
+            elif cmd.cog_name == "NSFW_Commands":
+                em2.add_field(
+                    name=f"{cmd.name}",
+                    value=self.get_com_desc(cmd, ctx),
+                    inline=False
+                )
+            else:
+                em3.add_field(
+                    name=f"{cmd.name}",
+                    value=self.get_com_desc(cmd, ctx),
+                    inline=False
+                )
+        pages = [em1, em2, em3]
+        pag = Pag(extra_pages=pages)
+        await pag.start(ctx)
 
     @commands.Cog.listener()
     async def on_ready(self):
         print(f"{self.__class__.__name__} is ready")
 
-    @commands.command(
-        name="help", aliases=["h", "commands"], description="Provides list of commands and their usage!"
-    )
+    @commands.command(name="help", aliases=["h", "commands"], description="Provides list of commands and their usage!")
     async def help_command(self, ctx, *, entity=None):
         if not entity:
-            await self.setup_help_pag(ctx)
-
+            await self.bot_help(ctx)
         else:
-            cog = self.client.get_cog(entity)
-            if cog:
-                await self.setup_help_pag(ctx, cog, f"{cog.qualified_name}'s commands")
-
+            command = self.client.get_command(entity)
+            if command:
+                await self.cmd_specific_help(ctx, entity)
             else:
-                command = self.client.get_command(entity)
-                if command:
-                    await self.setup_help_pag(ctx, command, command.name)
+                await ctx.reply("Entity not found.", mention_author=False)
 
-                else:
-                    await ctx.send("Entity not found.")
-
-
-def setup(bot):
-    bot.add_cog(Help(bot))
+def setup(client):
+    client.add_cog(Help(client))
