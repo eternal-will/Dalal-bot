@@ -123,7 +123,7 @@ class Help(commands.Cog, name="Help_command"):
         else:
             command = self.client.get_command(entity)
             if command:
-                await self.cmd_specific_help(ctx, entity)
+                await self.cmd_specific_help(ctx, command)
             else:
                 await ctx.reply("Entity not found.", mention_author=False)
 
