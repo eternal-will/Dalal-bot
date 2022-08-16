@@ -34,5 +34,12 @@ class OwnerCommands(commands.Cog, name='Owner_only_Commands'):
         print(f'successfully unloaded {extension}!')
         await cembed.reply(ctx, description=f'successfully unloaded `{extension}`!')
 
+    @commands.command(aliases = ['sd'], hidden=True)
+    @commands.is_owner()
+    async def shutdown(self, ctx):
+        await cembed.reply(ctx, description='shutting down <a:aloading:854906394453344256>')
+        print('shutting the bot down, command recieved from discord...')
+        await self.client.close()
+
 def setup(client):
     client.add_cog(OwnerCommands(client))

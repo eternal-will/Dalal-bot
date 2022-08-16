@@ -3,12 +3,9 @@ from discord.ext import commands
 from dotenv import load_dotenv
 from random import choice
 from asyncpraw import Reddit
-from urllib.parse import urlparse
-from pygicord import Paginator
 from settings.SubredConfig import NSFWSub as redd
 from utils.embed import embed_form as Embed
-from requests import get
-from bs4 import BeautifulSoup
+from utils.post import post_to_send
 
 load_dotenv('.env')
 
@@ -37,51 +34,6 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
             await self.nsfw_post(ctx, subreddit_name)
         else:
             await ctx.reply(embed = self.em_notnsfw, mention_author=False)
-            
-
-    async def setup_gallery(self, ctx, name, random_sub, subreddit_name):
-        gallery = []
-        for i in random_sub.media_metadata.items():
-            url = i[1]['p'][0]['u']
-            url = url.split("?")[0].replace("preview", "i")
-            gallery.append(url)
-        pages = []
-        for img in gallery:
-            em_gal = Embed(
-                title = name,
-                description = f"`This post was sent from:` __r/{subreddit_name}__.",
-                img_url=img
-            )
-            pages.append(em_gal)
-        pag = Paginator(pages=pages, compact=True)
-        await pag.start(ctx)
-
-    async def post_to_send(self, ctx, random_sub, subreddit_name):
-        name = random_sub.title
-        url = random_sub.url
-        site = urlparse(url).netloc
-        if url.endswith('.png') or url.endswith('.jpg') or url.endswith('.jpeg') or url.endswith('.gif') or url.endswith('webp'):
-            em_nsfw = Embed(
-                title = name,
-                description = f"`This post was sent from:` __r/{subreddit_name}__.",
-                img_url=url
-            )
-            await ctx.reply(embed = em_nsfw, mention_author=False)
-        elif site=="v.redd.it":
-            link = get(url).url
-            msg = f'`This post was sent from`: **r/{subreddit_name}** \n {link}'
-            await ctx.reply(msg, mention_author=False)
-        elif url[23:30]== 'gallery':
-            await self.setup_gallery(ctx, name, random_sub, subreddit_name)
-        elif site=="www.redgifs.com" or site=="redgifs.com":
-            page = get(url=url).text
-            soup = BeautifulSoup(page, 'html.parser')
-            l = soup.find_all("meta", property="og:video")[1]
-            msg = f'`This post was sent from`: **r/{subreddit_name}** \n {l["content"]}'
-            await ctx.reply(msg, mention_author=False)
-        else:
-            msg = f'`This post was sent from`: **r/{subreddit_name}** \n {url}'
-            await ctx.reply(msg, mention_author=False)
 
     async def nsfw_post(self, ctx, subreddit_name):
         async with ctx.channel.typing():
@@ -92,7 +44,7 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
             all_subs.append(submission)
         random_sub = choice(all_subs)
         try:
-            await self.post_to_send(ctx, random_sub, subreddit_name)
+            await post_to_send(ctx, subreddit_name, random_sub)
         except:
             await self.nsfw_post(ctx, subreddit_name)
 
