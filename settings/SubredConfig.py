@@ -10,15 +10,6 @@ class NSFWSub:
             "femalepov",
             ]
 
-    MN_SUB = [
-        "DadsGoneWild",
-        "Cunnilingus",
-        "NormalNudes",
-        "ladybonersgw",
-        "FullFrontalMaleNudity",
-        "ondww"
-    ]
-
     ASS_SUB = [
     "AssOnTheGlass",
     "BoltedOnBooty",
