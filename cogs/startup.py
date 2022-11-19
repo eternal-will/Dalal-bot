@@ -1,6 +1,7 @@
 from discord import Status, Game
 from discord.ext import commands
 import json
+from os import listdir
 
 class Startup(commands.Cog, name='Startup_Cog'):
 
@@ -8,7 +9,14 @@ class Startup(commands.Cog, name='Startup_Cog'):
         self.client = client
 
     async def prefix_check(self):
+
         print('Checking and fixing prefix entries...')
+
+        if not 'prefixes.json' in listdir('./'):
+            print('No prefixes.json file found, creating one...')
+            with open('prefixes.json', 'w') as f:
+                json.dump({}, f, indent=4)
+
         with open('prefixes.json', 'r') as f:
             prefixes = json.load(f)
         
