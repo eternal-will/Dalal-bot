@@ -1,7 +1,7 @@
 from urllib.parse import urlparse
 import utils.embed as cembed
-from utils.util import Pag
 from requests import get
+from discord.ext import pages
 
 async def setup_gallery(ctx, name, random_sub, subreddit_name):
     gallery = []
@@ -9,7 +9,7 @@ async def setup_gallery(ctx, name, random_sub, subreddit_name):
         url = i[1]['p'][0]['u']
         url = url.split("?")[0].replace("preview", "i")
         gallery.append(url)
-    pages = []
+    ems = []
     for img in gallery:
         em_gal = cembed.embed_form(
             title = name,
@@ -17,8 +17,19 @@ async def setup_gallery(ctx, name, random_sub, subreddit_name):
             img_url=img
         )
         pages.append(em_gal)
-    pag = Pag(extra_pages=pages)
-    await pag.start(ctx)
+    pag = pages.Paginator(
+            pages=ems,
+            show_disabled=False,
+            show_indicator=True,
+            show_menu=False,
+            author_check=True,
+            disable_on_timeout=True,
+            use_default_buttons=True,
+            loop_pages=False,
+            default_button_row=1
+
+        )
+    await pag.send(ctx)
 
 async def post_to_send(ctx, subreddit_name, random_sub):
     name = random_sub.title

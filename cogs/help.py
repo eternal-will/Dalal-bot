@@ -1,6 +1,6 @@
 from discord.ext import commands
 from discord import Embed
-from utils.util import Pag
+from discord.ext import pages
 
 class Help(commands.Cog, name="Help_command"):
     def __init__(self, client):
@@ -108,9 +108,20 @@ class Help(commands.Cog, name="Help_command"):
                     value=self.get_com_desc(cmd, ctx),
                     inline=False
                 )
-        pages = [em1, em2, em3]
-        pag = Pag(extra_pages=pages)
-        await pag.start(ctx)
+        ems = [em1, em2, em3]
+        pag = pages.Paginator(
+            pages=ems,
+            show_disabled=False,
+            show_indicator=True,
+            show_menu=False,
+            author_check=True,
+            disable_on_timeout=True,
+            use_default_buttons=True,
+            loop_pages=False,
+            default_button_row=1
+
+        )
+        await pag.send(ctx)
 
     @commands.Cog.listener()
     async def on_ready(self):
