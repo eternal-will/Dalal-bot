@@ -61,5 +61,5 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
         subreddit_name = choice(redd.DOG_PIC_SUB)
         await self.sfw_post(ctx, subreddit_name)
 
-def setup(client):
-    client.add_cog(SFWSub(client))
+async def setup(client):
+    await client.add_cog(SFWSub(client))

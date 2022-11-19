@@ -48,12 +48,12 @@ async def reload(ctx, extension='all'):
     if extension == 'all':
             for filename in listdir('./cogs'):
                 if filename.endswith('.py'):
-                    await client.unload_extension(f'cogs.{filename[:-3]}')
-                    await client.load_extension(f'cogs.{filename[:-3]}')
+                    client.unload_extension(f'cogs.{filename[:-3]}')
+                    client.load_extension(f'cogs.{filename[:-3]}')
                     await cembed.send(ctx, description=f'• successfully reloaded `{filename[:-3]}`')
     else:
-        await client.unload_extension(f'cogs.{extension}')
-        await client.load_extension(f'cogs.{extension}')
+        client.unload_extension(f'cogs.{extension}')
+        client.load_extension(f'cogs.{extension}')
         print(f'successfully reloaded {extension}!')
         await cembed.reply(ctx, description=f'successfully reloaded `{extension}`!')
 
