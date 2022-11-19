@@ -1,4 +1,11 @@
+#environment variables
 *.env
+
+#python cache
 *.pyc
+
+#json files
 *.json
+
+#python virtual environment
 venv
