@@ -41,5 +41,5 @@ class OwnerCommands(commands.Cog, name='Owner_only_Commands'):
         print('shutting the bot down, command recieved from discord...')
         await self.client.close()
 
-def setup(client):
-    client.add_cog(OwnerCommands(client))
+async def setup(client):
+    await client.add_cog(OwnerCommands(client))

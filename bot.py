@@ -6,6 +6,7 @@ from discord import Intents, Status
 from discord.ext import commands
 from datetime import datetime
 import utils.embed as cembed
+from asyncio import run as async_run
 
 load_dotenv('.env')
 
@@ -47,18 +48,19 @@ async def reload(ctx, extension='all'):
     if extension == 'all':
             for filename in listdir('./cogs'):
                 if filename.endswith('.py'):
-                    client.unload_extension(f'cogs.{filename[:-3]}')
-                    client.load_extension(f'cogs.{filename[:-3]}')
+                    await client.unload_extension(f'cogs.{filename[:-3]}')
+                    await client.load_extension(f'cogs.{filename[:-3]}')
                     await cembed.send(ctx, description=f'• successfully reloaded `{filename[:-3]}`')
     else:
-        client.unload_extension(f'cogs.{extension}')
-        client.load_extension(f'cogs.{extension}')
+        await client.unload_extension(f'cogs.{extension}')
+        await client.load_extension(f'cogs.{extension}')
         print(f'successfully reloaded {extension}!')
         await cembed.reply(ctx, description=f'successfully reloaded `{extension}`!')
 
-for filename in listdir('./cogs'):
-    if filename.endswith('.py'):
-        client.load_extension(f'cogs.{filename[:-3]}')
+async def load_extensions():
+    for filename in listdir('./cogs'):
+        if filename.endswith('.py'):
+            client.load_extension(f'cogs.{filename[:-3]}')
 
 @client.event
 async def on_guild_join(guild):
@@ -116,4 +118,9 @@ async def uptime(ctx):
         (datetime.now() - start_time).total_seconds())
     await cembed.reply(ctx, description=f"Current Uptime: {format_seconds(uptime_seconds)}")
 
-client.run(getenv('TOKEN'))
+async def main():
+    async with client:
+        await load_extensions()
+        await client.start(getenv('TOKEN'))
+
+async_run(main())

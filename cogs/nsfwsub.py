@@ -83,5 +83,5 @@ class NSFWSub(commands.Cog, name='NSFW_Commands'):
         subreddit_name = choice(redd.BDSM_SUB)
         await self.run_comm(ctx, subreddit_name)
 
-def setup(client):
-    client.add_cog(NSFWSub(client))
+async def setup(client):
+    await client.add_cog(NSFWSub(client))

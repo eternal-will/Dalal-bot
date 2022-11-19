@@ -38,5 +38,5 @@ class Basic(commands.Cog, name='Basic_Commands'):
     async def greet(self, ctx):
         await ctx.reply(f'Hello {ctx.author.name}!', mention_author=False)
 
-def setup(client):
-    client.add_cog(Basic(client))
+async def setup(client):
+    await client.add_cog(Basic(client))
