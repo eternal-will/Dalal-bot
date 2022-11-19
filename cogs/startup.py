@@ -59,5 +59,5 @@ class Startup(commands.Cog, name='Startup_Cog'):
         await self.prefix_check()
         print('--------------------------------------')
 
-async def setup(client):
-    await client.add_cog(Startup(client))
+def setup(client):
+    client.add_cog(Startup(client))

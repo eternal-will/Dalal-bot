@@ -138,5 +138,5 @@ class Help(commands.Cog, name="Help_command"):
             else:
                 await ctx.reply("Entity not found.", mention_author=False)
 
-async def setup(client):
-    await client.add_cog(Help(client))
+def setup(client):
+    client.add_cog(Help(client))
