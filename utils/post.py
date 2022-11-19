@@ -2,7 +2,6 @@ from urllib.parse import urlparse
 import utils.embed as cembed
 from utils.util import Pag
 from requests import get
-from bs4 import BeautifulSoup
 
 async def setup_gallery(ctx, name, random_sub, subreddit_name):
     gallery = []
@@ -38,12 +37,6 @@ async def post_to_send(ctx, subreddit_name, random_sub):
         await ctx.reply(msg, mention_author=False)
     elif url[23:30]== 'gallery':
         await setup_gallery(ctx, name, random_sub, subreddit_name)
-    elif site=="www.redgifs.com" or site=="redgifs.com":
-        page = get(url=url).text
-        soup = BeautifulSoup(page, 'html.parser')
-        l = soup.find_all("meta", property="og:video")[1]
-        msg = f'`This post was sent from`: **r/{subreddit_name}** \n {l["content"]}'
-        await ctx.reply(msg, mention_author=False)
     else:
         msg = f'`This post was sent from`: **r/{subreddit_name}** \n {url}'
         await ctx.reply(msg, mention_author=False)
