@@ -113,8 +113,8 @@ async def uptime(ctx):
         (datetime.now() - start_time).total_seconds())
     await cembed.reply(ctx, description=f"Current Uptime: {format_seconds(uptime_seconds)}")
 
-    for filename in listdir('./cogs'):
-        if filename.endswith('.py'):
-            client.load_extension(f'cogs.{filename[:-3]}')
+for filename in listdir('./cogs'):
+    if filename.endswith('.py'):
+        client.load_extension(f'cogs.{filename[:-3]}')
 
 client.run(getenv('TOKEN'), reconnect=True)
