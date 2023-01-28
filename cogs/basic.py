@@ -1,8 +1,8 @@
-from discord.ext import commands
+from discord.ext import commands, bridge
 from asyncio import sleep
 import utils.embed as cembed
 
-Invite_Link = "https://discord.com/api/oauth2/authorize?client_id=1008323478803447838&permissions=137439340608&scope=bot%20applications.commands"
+Invite_Link = "https://discord.com/api/oauth2/authorize?client_id=1008323478803447838&permissions=414531841088&scope=bot%20applications.commands"
 
 class Basic(commands.Cog, name='Basic_Commands'):
 
@@ -13,11 +13,11 @@ class Basic(commands.Cog, name='Basic_Commands'):
     async def on_ready(self):
         print(f"{self.__class__.__name__} are ready")
 
-    @commands.command(name = "invite", description = f"• Provides **__[Invite Link for the Bot]({Invite_Link})__**")
+    @bridge.bridge_command(name = "invite", description = f"• Provides **__[Invite Link for the Bot]({Invite_Link})__**")
     async def invite(self, ctx):
         await cembed.reply(ctx, title = "Invite Link", description = f"**__[Invite Link for the Bot]({Invite_Link})__**")
 
-    @commands.command(name = "ping", description="• Shows bot's latency")
+    @bridge.bridge_command(name = "ping", description="• Shows bot's latency")
     async def ping(self, ctx):
         em = cembed.embed_form(
             title = "Pinging...",
@@ -34,7 +34,7 @@ class Basic(commands.Cog, name='Basic_Commands'):
         await sleep(0.5)
         await message.edit(embed = em)
 
-    @commands.command(name='hi', hidden=True, aliases=['helo', 'hello', 'sup', 'hey'])
+    @bridge.bridge_command(name='hi', hidden=True, aliases=['helo', 'hello', 'sup', 'hey'])
     async def greet(self, ctx):
         await ctx.reply(f'Hello {ctx.author.name}!', mention_author=False)
 
