@@ -19,20 +19,27 @@ class Basic(commands.Cog, name='Basic_Commands'):
 
     @bridge.bridge_command(name = "ping", description="• Shows bot's latency")
     async def ping(self, ctx):
-        em = cembed.embed_form(
-            title = "Pinging...",
-            description = "<a:atyping:854905456551657513>",
-            auth_name='Checking bot latency...',
-            auth_ico='https://cdn.discordapp.com/emojis/854906394453344256.gif'
-        )
-        message = await ctx.reply(embed=em, mention_author=False)
-        em = cembed.embed_form(
-            title = "Pong! :ping_pong:",
-            description = f"Client Latency: `{round(self.client.latency * 1000)}ms`",
-            footer_txt=f"issued by {ctx.author.name}"
-        )
-        await sleep(0.5)
-        await message.edit(embed = em)
+        if isinstance(ctx, bridge.BridgeApplicationContext):
+            await cembed.reply(
+                ctx,
+                title="Pong! :ping_pong:",
+                description=f"Client Latency: `{round(self.client.latency * 1000)}ms`",
+            )
+        else:
+            em = cembed.embed_form(
+                title = "Pinging...",
+                description = "<a:atyping:854905456551657513>",
+                auth_name='Checking bot latency...',
+                auth_ico='https://cdn.discordapp.com/emojis/854906394453344256.gif'
+            )
+            message = await ctx.reply(embed=em, mention_author=False)
+            em = cembed.embed_form(
+                title = "Pong! :ping_pong:",
+                description = f"Client Latency: `{round(self.client.latency * 1000)}ms`",
+                footer_txt=f"issued by {ctx.author.name}"
+            )
+            await sleep(0.5)
+            await message.edit(embed = em)
 
     @bridge.bridge_command(name='hi', hidden=True, aliases=['helo', 'hello', 'sup', 'hey'])
     async def greet(self, ctx):
