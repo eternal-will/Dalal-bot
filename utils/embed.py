@@ -1,4 +1,5 @@
 from discord import Embed
+from discord.ext import bridge
 
 def embed_form(title=None, description=None, img_url=None, footer_txt=None, auth_name=None, auth_ico=None, auth_url=None):
     em = Embed(
@@ -20,8 +21,14 @@ def embed_form(title=None, description=None, img_url=None, footer_txt=None, auth
 
 async def reply(ctx, title='', description='', img_url='', footer_txt='', auth_name='', auth_ico='', auth_url=''):
     em=embed_form(title, description, img_url, footer_txt, auth_name, auth_ico, auth_url)
-    await ctx.reply(embed=em, mention_author=False)
+    if isinstance(ctx, bridge.BridgeApplicationContext):
+        await ctx.respond(embed=em)
+    else:
+        await ctx.respond(embed=em, mention_author=False)
 
 async def send(ctx, title='', description='', img_url='', footer_txt='', auth_name='', auth_ico='', auth_url=''):
     em=embed_form(title, description, img_url, footer_txt, auth_name, auth_ico, auth_url)
-    await ctx.send(embed=em)
+    if isinstance(ctx, bridge.BridgeApplicationContext):
+        await ctx.respond(embed=em)
+    else:
+        await ctx.send(embed=em)

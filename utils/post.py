@@ -1,7 +1,7 @@
 from urllib.parse import urlparse
 import utils.embed as cembed
 from requests import get
-from discord.ext import pages
+from discord.ext import pages, bridge
 
 async def setup_gallery(ctx, name, random_sub, subreddit_name):
     gallery = []
@@ -45,9 +45,15 @@ async def post_to_send(ctx, subreddit_name, random_sub):
     elif site=="v.redd.it":
         link = get(url).url
         msg = f'`This post was sent from`: **r/{subreddit_name}** \n {link}'
-        await ctx.reply(msg, mention_author=False)
+        if isinstance(ctx, bridge.BridgeApplicationContext):
+            await ctx.respond(msg)
+        else:
+            await ctx.respond(msg, mention_author=False)
     elif url[23:30]== 'gallery':
         await setup_gallery(ctx, name, random_sub, subreddit_name)
     else:
         msg = f'`This post was sent from`: **r/{subreddit_name}** \n {url}'
-        await ctx.reply(msg, mention_author=False)
+        if isinstance(ctx, bridge.BridgeApplicationContext):
+            await ctx.respond(msg)
+        else:
+            await ctx.respond(msg, mention_author=False)

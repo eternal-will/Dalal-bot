@@ -3,10 +3,9 @@ from os import getenv, listdir
 from json import load, dump
 from dotenv import load_dotenv
 from discord import Intents, Status
-from discord.ext import commands
+from discord.ext import bridge, commands
 from datetime import datetime
 import utils.embed as cembed
-from asyncio import run as async_run
 
 load_dotenv('.env')
 
@@ -20,7 +19,7 @@ def get_prefix(client, message):
         return commands.when_mentioned_or(pre)(client, message)
 
 intents = Intents.all()
-client=commands.Bot(command_prefix=get_prefix, case_insensitive=True, intents = intents, status=Status.idle)
+client=bridge.Bot(command_prefix=get_prefix, case_insensitive=True, intents = intents, status=Status.idle)
 start_time = datetime.now()
 
 def format_seconds(time_seconds):
@@ -77,8 +76,19 @@ async def on_guild_remove(guild):
     with open('prefixes.json', 'w') as f:
         dump(prefixes, f, indent=4)
 
-@client.group(invoke_without_command=True, name = 'prefix', description ="• Shows bot's current prefix.")
+@client.bridge_group(invoke_without_command=True, description ="• Commands related to bot prefix")
 async def prefix(ctx):
+    with open('prefixes.json', 'r') as f:
+        prefixes = load(f)
+        pre = prefixes[str(ctx.guild.id)]
+    await cembed.reply(
+        ctx,
+        description = f'Current bot prefix: `{pre}`',
+        footer_txt="to change it, use .prefix set <new_prefix>"
+    )
+
+@prefix.command(name='show', description ="• Shows bot's current prefix.")
+async def show(ctx):
     with open('prefixes.json', 'r') as f:
         prefixes = load(f)
         pre = prefixes[str(ctx.guild.id)]
