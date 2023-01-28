@@ -13,7 +13,7 @@ class Basic(commands.Cog, name='Basic_Commands'):
     async def on_ready(self):
         print(f"{self.__class__.__name__} are ready")
 
-    @bridge.bridge_command(name = "invite", description = f"• Provides **__[Invite Link for the Bot]({Invite_Link})__**")
+    @bridge.bridge_command(name = "invite", description = f"• Provides invite link for the Bot")
     async def invite(self, ctx):
         await cembed.reply(ctx, title = "Invite Link", description = f"**__[Invite Link for the Bot]({Invite_Link})__**")
 
