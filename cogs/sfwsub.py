@@ -33,7 +33,7 @@ class SFWSub(commands.Cog, name='SFW_Commands'):
         await ctx.defer()
         subreddit = await reddit.subreddit(subreddit_name)
         all_subs = []
-        top = subreddit.hot(limit=100)
+        top = subreddit.hot(limit=20)
         async for submission in top:
             all_subs.append(submission)
         random_sub = choice(all_subs)
