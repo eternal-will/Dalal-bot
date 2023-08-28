@@ -8,6 +8,8 @@ class NSFWSub:
         "biggerthanyouthought",
         "2busty2hide",
         "femalepov",
+        "hugeboobs",
+        "Boobies",
     ]
 
     ASS_SUB = [
